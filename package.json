@@ -1,0 +1,12 @@
+{
+  "name": "GardeningStats",
+  "version": "0.1.0",
+  "main": "app.js",
+  "description": "Gardening Statistics",
+  "repository": "http://bitbucket.org/bitumin/gardening-stats",
+  "license": "MIT",
+  "author": "Mitxel Moriana",
+  "dependencies": {
+    "lokijs": "^1.3.13"
+  }
+}
