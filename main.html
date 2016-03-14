@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gardening Tools</title>
+
+  <!--CSS-->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/daterangepicker.css">
+  <link rel="stylesheet" href="css/select2.min.css">
+  <link rel="stylesheet" href="css/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="css/animate.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+
+</head>
+<body>
+
+<!--Main Window-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-3 col-lg-2" id="left-menu"></div>
+    <div class="col-xs-9 col-lg-10" id="content"></div>
+  </div>
+</div>
+
+<!--Modals-->
+<div id="modals"></div>
+
+<!--Node integrated JS-->
+<script>
+  window.$ = window.jQuery = require('jquery');
+  var bootstrap = require('bootstrap');
+  var d3 = require('d3');
+  var loki = require('lokijs');
+  var path = require('path');
+</script>
+
+<!--Extraneous JS-->
+<script src="js/jquery.dataTables.js"></script>
+<script src="js/dataTables.bootstrap.js"></script>
+<script src="js/moment-with-locales.min.js"></script>
+<script src="js/daterangepicker.js"></script>
+<script src="js/select2.min.js"></script>
+<script src="js/i18n/es.js"></script>
+
+<!--Custom JS-->
+<script type="application/javascript">
+
+  var db = new loki('loki.json'); //create a database
+  var shows = db.addCollection('shows'); //create a collection
+  shows.insert({name:'House of Cards', seasons: 3, actors: ['Kevin Spacey', 'Robin Wright']}); //insert a document
+  var myShow = shows.findOne({name: 'House of Cards'}); //Get the show
+  console.log(myShow);
+
+//  //Example: Get the 2 most popular shows starring Kevin Spacey
+//  shows
+//    .chain()
+//    .find(function(show){return show.actors.indexOf('Kevin Spacey')})
+//    .simpleSort('popularity')
+//    .limit(2)
+//    .data();
+
+</script>
+
+</body>
+</html>
