@@ -33,7 +33,7 @@
   window.$ = window.jQuery = require('jquery');
   var bootstrap = require('bootstrap');
   var d3 = require('d3');
-  var loki = require('lokijs');
+  var PouchDB = require('pouchdb');
   var path = require('path');
 </script>
 
@@ -47,21 +47,50 @@
 
 <!--Custom JS-->
 <script type="application/javascript">
+  PouchDB.debug.enable('*');
 
-  var db = new loki('loki.json'); //create a database
-  var shows = db.addCollection('shows'); //create a collection
-  shows.insert({name:'House of Cards', seasons: 3, actors: ['Kevin Spacey', 'Robin Wright']}); //insert a document
-  var myShow = shows.findOne({name: 'House of Cards'}); //Get the show
-  console.log(myShow);
+  //CREATING DB!!!
+  var db = new PouchDB('my_first_pouchdb');
 
-//  //Example: Get the 2 most popular shows starring Kevin Spacey
-//  shows
-//    .chain()
-//    .find(function(show){return show.actors.indexOf('Kevin Spacey')})
-//    .simpleSort('popularity')
-//    .limit(2)
-//    .data();
+  db.info().then(function (info) {
+    console.log(info);
+  });
 
+  //INSERTING!!!
+  var doc = {
+    "_id": "mittens",
+    "name": "Mittens",
+    "occupation": "kitten",
+    "age": 3,
+    "hobbies": [
+      "playing with balls of yarn",
+      "chasing laser pointers",
+      "lookin' hella cute"
+    ]
+  };
+  db.put(doc);
+
+  //SELECTING!!!
+  db.get('mittens').then(function (doc) { //get by _id
+    console.log(doc);
+  });
+
+  //UPDATING!!!
+  // fetch mittens
+  db.get('mittens').then(function (doc) {
+    // update their age
+    doc.age = 4;
+    // put them back
+    return db.put(doc);
+  }).then(function () {
+    // fetch mittens again
+    return db.get('mittens');
+  }).then(function (doc) {
+    console.log(doc);
+  });
+
+
+  PouchDB.debug.disable();
 </script>
 
 </body>
