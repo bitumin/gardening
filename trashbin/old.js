@@ -47,39 +47,39 @@ $(document).ready(function() {
   };
 
 //    WINDOWS
-  window.openPlantWindow = function(elem) {
-    var plantId = $(elem).closest('li').attr('data-plant-id');
+  window.openPlantWindow = function() {
+    var plantId = $(this).closest('li').attr('data-plant-id');
     console.log(plantId);
   };
 
 //    MODALS
-  window.openAddChildModal = function(elem) {
+  window.openAddChildModal = function() {
     addChildModal.modal('show');
   };
 
-  window.openEditChildModal = function(elem) {
+  window.openEditChildModal = function() {
     //load child specific info into modal
 
     editChildModal.modal('show');
   };
 
-  window.openDeleteChildModal = function(elem) {
+  window.openDeleteChildModal = function() {
     //load child specific info into modal
 
     deleteChildModal.modal('show');
   };
 
-  window.openAddPlantModal = function(elem) {
+  window.openAddPlantModal = function() {
     addPlantModal.modal('show');
   };
 
-  window.openEditPlantModal = function(elem) {
+  window.openEditPlantModal = function() {
     //load plant specific info into modal
 
     editPlantModal.modal('show');
   };
 
-  window.openDeletePlantModal = function(elem) {
+  window.openDeletePlantModal = function() {
     //load plant specific info into modal
 
     deletePlantModal.modal('show');
