@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "backbone": "^1.3.3",
+    "backbone.localstorage": "^1.1.16",
     "body-parser": "~1.13.2",
     "bootstrap": "^3.3.6",
     "cookie-parser": "~1.3.5",
@@ -18,7 +19,9 @@
     "mongoose": "^4.4.15",
     "morgan": "~1.6.1",
     "requirejs": "^2.2.0",
+    "requirejs-text": "^2.0.12",
     "serve-favicon": "~2.3.0",
-    "text": "requirejs/text"
+    "text": "requirejs/text",
+    "underscore": "^1.8.3"
   }
 }
