@@ -1,10 +1,166 @@
-$a-color: #00b7ff;
+@import 'bootstrap.min.css';
+@import 'font-awesome.min.css';
+@import 'bootstrap-theme.min.css';
+@import 'daterangepicker.css';
+@import 'select2.min.css';
+@import 'dataTables.bootstrap.css';
+@import 'animate.min.css';
 
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  padding: 50px;
+// Fonts
+@font-face {
+  font-family: 'Open Sans Regular';
+  src: url('../fonts/OpenSans-Regular.ttf');
 }
 
-a {
-  color: $a-color;
+body {
+  font-family: 'Open Sans Regular', sans-serif;
+  min-width: 800px;
+}
+
+// --- Left menu CSS
+
+//Colors
+$lm-bck: #7a9735; //$body-back
+$lm-txt: #eee;
+$lm-h1: #eee;
+$lm-h2: #ddd;
+$lm-active: #0d4d4d; //226666
+$lm-hover: #567714;
+$lm-list: #ddd;
+$lm-icon: #ccc;
+$lm-icon-hover: #ddd;
+
+//Styles
+#left-menu {
+  background-color: $lm-bck;
+  color: $lm-txt;
+  min-height: 100vh;
+  padding-left: 0;
+  padding-right: 7px;
+
+  h1 { //app title
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 15px;
+  }
+
+  h2 { //plants title
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-right: 7px;
+
+    a > i { //add plant plus icon
+      color: $lm-icon;
+      float: right;
+    }
+    a > i:hover {
+      color: $lm-icon-hover;
+    }
+  }
+
+  //hide/show plant icons on li hover
+  ul > li {
+    a > i {
+      opacity: 0;
+    }
+  }
+
+  ul > li:hover {
+    a > i {
+      opacity: 1;
+    }
+  }
+
+  //plant list and icons style
+  ul > li { //plant list
+    margin: 0;
+
+    a { //plant item
+      padding: 2px 7px 2px 15px;
+      border-radius: 0 5px 5px 0;
+
+      i { //plant item edit/delete icon
+        float: right;
+        margin-top: 3px;
+        color: $lm-icon;
+      }
+      i:hover {
+        color: $lm-icon-hover;
+      }
+      i.fa-times-circle {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  //list item hover colors
+  ul > li {
+    a, a:focus {
+      color: $lm-list;
+      background-color: $lm-bck;
+    }
+    a:hover {
+      background-color: $lm-hover;
+    }
+  }
+  ul > li.active {
+    a, a:focus, a:hover {
+      background-color: $lm-active;
+    }
+  }
+
+}
+
+/*Content Windows Style */
+.contentWindow {
+  min-height: 100vh;
+}
+
+/*Overview window*/
+#overview {
+  text-align: center;
+  padding-top: 150px;
+}
+
+/*Modals general CSS*/
+
+/*Plant window*/
+
+//Plant tabs Styles
+.nav-tabs {
+  margin-top: 15px;
+}
+
+.tab-pane {
+  padding-top: 15px;
+}
+
+#plantChildrenDatatable_wrapper, #plantStatsDatatable_wrapper {
+  margin-top: 15px;
+}
+
+//Plant > Stats Styles
+.tabPlantStats {
+
+}
+
+//Plant > Children Styles
+.tabPlantChildren {
+
+}
+
+//select2 styles
+.select2 > span.selection > span.select2-selection {
+  height: 34px;
+  span.select2-selection__rendered {
+    line-height: 31px;
+  }
+  span.select2-selection__arrow {
+    top: 4px;
+  }
+}
+
+.btn-xs, .form-inline {
+  display: inline-block;
 }

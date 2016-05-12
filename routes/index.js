@@ -1,13 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { 
+    appTitle: 'Gardening Tools',
+    menuTitle: 'PLANTS'
+  });
 });
 
 
-app.post('/login', function(req, res) {
+
+
+
+router.post('/login', function(req, res) {
   console.log('login request');
   var email = req.param('email', null);
   var password = req.param('password', null);
@@ -30,7 +35,7 @@ app.post('/login', function(req, res) {
   });
 });
 
-app.post('/register', function(req, res) {
+router.post('/register', function(req, res) {
   var firstName = req.param('firstName', '');
   var lastName = req.param('lastName', '');
   var email = req.param('email', null);
@@ -44,7 +49,7 @@ app.post('/register', function(req, res) {
   res.send(200);
 });
 
-app.get('/account/authenticated', function(req, res) {
+router.get('/account/authenticated', function(req, res) {
   if ( req.session.loggedIn ) {
     res.send(200);
   } else {
@@ -52,7 +57,7 @@ app.get('/account/authenticated', function(req, res) {
   }
 });
 
-app.get('/accounts/:id/activity', function(req, res) {
+router.get('/accounts/:id/activity', function(req, res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;
@@ -61,7 +66,7 @@ app.get('/accounts/:id/activity', function(req, res) {
   });
 });
 
-app.get('/accounts/:id/status', function(req, res) {
+router.get('/accounts/:id/status', function(req, res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;
@@ -69,7 +74,7 @@ app.get('/accounts/:id/status', function(req, res) {
     res.send(account.status);
   });
 });
-app.post('/accounts/:id/status', function(req, res) {
+router.post('/accounts/:id/status', function(req, res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;
@@ -89,7 +94,7 @@ app.post('/accounts/:id/status', function(req, res) {
   });
   res.send(200);
 });
-app.get('/accounts/:id', function(req, res) {
+router.get('/accounts/:id', function(req, res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;
@@ -98,7 +103,7 @@ app.get('/accounts/:id', function(req, res) {
   });
 });
 
-app.get('/accounts/:id/contacts', function(req, res) {
+router.get('/accounts/:id/contacts', function(req, res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;
@@ -107,7 +112,7 @@ app.get('/accounts/:id/contacts', function(req, res) {
   });
 });
 
-app.post('/forgotpassword', function(req, res) {
+router.post('/forgotpassword', function(req, res) {
   var hostname = req.headers.host;
   var resetPasswordUrl = 'http://' + hostname + '/resetPassword';
   var email = req.param('email', null);
@@ -126,12 +131,12 @@ app.post('/forgotpassword', function(req, res) {
   });
 });
 
-app.get('/resetPassword', function(req, res) {
+router.get('/resetPassword', function(req, res) {
   var accountId = req.param('account', null);
   res.render('resetPassword.jade', { locals: { accountId:accountId } });
 });
 
-app.post('/resetPassword', function(req, res) {
+router.post('/resetPassword', function(req, res) {
   var accountId = req.param('accountId', null);
   var password = req.param('password', null);
   if ( null != accountId && null != password ) {
@@ -140,7 +145,7 @@ app.post('/resetPassword', function(req, res) {
   res.render('resetPasswordSuccess.jade');
 });
 
-app.post('/contacts/find', function(req, res) {
+router.post('/contacts/find', function(req, res) {
   var searchStr = req.param('searchStr', null);
   if ( null == searchStr ) {
     res.send(400);
@@ -155,7 +160,7 @@ app.post('/contacts/find', function(req, res) {
   });
 });
 
-app.post('/accounts/:id/contact', function(req,res) {
+router.post('/accounts/:id/contact', function(req,res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;
@@ -180,7 +185,7 @@ app.post('/accounts/:id/contact', function(req,res) {
   res.send(200);
 });
 
-app.delete('/accounts/:id/contact', function(req,res) {
+router.delete('/accounts/:id/contact', function(req,res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;
@@ -204,7 +209,7 @@ app.delete('/accounts/:id/contact', function(req,res) {
   res.send(200);
 });
 
-app.get('/accounts/:id', function(req, res) {
+router.get('/accounts/:id', function(req, res) {
   var accountId = req.params.id == 'me'
     ? req.session.accountId
     : req.params.id;

@@ -1,7 +1,3 @@
-require(['GardeningTools'], function(GardeningTools) {
-  GardeningTools.initialize();
-});
-
 'use strict';
 
 // Require.js allows us to configure shortcut alias
@@ -25,11 +21,11 @@ require.config({
     }
   },
   paths: {
-    jquery: '../node_modules/jquery/dist/jquery',
-    underscore: '../node_modules/underscore/underscore',
-    backbone: '../node_modules/backbone/backbone',
-    backboneLocalstorage: '../node_modules/backbone.localstorage/backbone.localStorage',
-    text: '../node_modules/requirejs-text/text'
+    jquery: 'jquery-1.12.1.min',
+    underscore: 'underscore-min',
+    backbone: 'backbone-min',
+    backboneLocalstorage: 'backbone.localStorage-min',
+    text: 'text'
   }
 });
 
