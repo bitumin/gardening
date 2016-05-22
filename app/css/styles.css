@@ -1,9 +1,8 @@
 @import url(../libs/font-awesome/css/font-awesome.min.css);
 @import url(../libs/bootstrap/dist/css/bootstrap.min.css);
 @import url(../libs/bootstrap/dist/css/bootstrap-theme.min.css);
-@import url(daterangepicker.css);
-@import url(bootstrap-datetimepicker.min.css);
-@import url(../libs/select2/dist/css/select2.min.css);
+@import url(../libs/bootstrap-daterangepicker/daterangepicker.css);
+@import url(../libs/EasyAutocomplete/dist/easy-autocomplete.min.css);
 @import url(../libs/datatables/media/css/dataTables.bootstrap.css);
 @import url(../libs/animate.css/animate.min.css);
 @font-face {
@@ -40,34 +39,36 @@ body {
   #left-menu ul > li {
     margin: 0; }
     #left-menu ul > li a {
-      padding: 2px 7px 2px 15px;
-      border-radius: 0 5px 5px 0; }
+      border-radius: 0 5px 5px 0;
+      padding: 2px 7px 2px 15px; }
       #left-menu ul > li a i {
+        color: #ccc;
         float: right;
-        margin-top: 3px;
-        color: #ccc; }
+        margin-top: 3px; }
       #left-menu ul > li a i:hover {
         color: #ddd; }
       #left-menu ul > li a i.fa-times-circle {
         margin-left: 5px; }
   #left-menu ul > li a, #left-menu ul > li a:focus {
-    color: #ddd;
-    background-color: #7a9735; }
+    background-color: #7a9735;
+    color: #ddd; }
   #left-menu ul > li a:hover {
     background-color: #567714; }
   #left-menu ul > li.active a, #left-menu ul > li.active a:focus, #left-menu ul > li.active a:hover {
     background-color: #0d4d4d; }
 
-#contentWindow {
+#content {
   min-height: 100vh; }
 
-#overview {
-  text-align: center;
-  padding-top: 150px; }
+#content-welcome {
+  padding-top: 150px;
+  text-align: center; }
 
-#editPlantGeneticsCombobox,
-#editChildGeneticsCombobox {
-  width: 100%; }
+#content-plant {
+  display: none; }
+
+#content-child {
+  display: none; }
 
 .nav-tabs {
   margin-top: 15px; }

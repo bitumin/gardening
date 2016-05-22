@@ -21,8 +21,8 @@
       <ul class="nav nav-pills nav-stacked">
         <!--TEST DATA-->
         <li class="active" data-plant-id="1">
-          <a href="javascript:">
-            <span class="btn-load-plant-view">Plant 1</span>
+          <a href="javascript:" class="btn-load-plant-view">
+            <span>Plant 1</span>
             <i class="btn-open-delete-plant-modal fa fa-times-circle"></i>
             <i class="btn-open-edit-plant-modal fa fa-pencil"></i>
           </a>
@@ -37,7 +37,7 @@
     <div class="col-xs-9 col-lg-10" id="content">
 
       <!--welcome-->
-      <div id="content-welcome" class="row">
+      <div id="content-welcome" class="row animated">
         <div class="col-xs-12">
           <h1>Bienvenido/a a <br>Gardening Tools</h1>
         </div>
@@ -60,7 +60,7 @@
           </ul>
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane tabPlantChildren active" id="plant-children">
+            <div role="tabpanel" class="tab-pane active" id="plant-children">
               <a id="btn-open-add-child-modal" class="btn btn-primary">
                 <i class="fa fa-plus-circle"></i> Añadir hijo
               </a>
@@ -77,7 +77,7 @@
                   <th>Producción</th>
                   <th>Defectos</th>
                   <th>Comentarios</th>
-                  <th>Actions</th>
+                  <th>Acciones</th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -92,7 +92,7 @@
                   <th>Producción</th>
                   <th>Defectos</th>
                   <th>Comentarios</th>
-                  <th>Actions</th>
+                  <th>Acciones</th>
                 </tr>
                 </tfoot>
                 <tbody>
@@ -101,13 +101,13 @@
               </table>
             </div>
             <div role="tabpanel" class="tab-pane tabPlantStats" id="plant-stats">
-              <form action="javascript:filterPlantStats();">
-                <label for="plantStatsFromTo">Filter by data range:</label><br>
-                <input id="plantStatsFromTo" name="plantStatsForm" value="" type="text">
+              <form action="javascript:">
+                <label for="plant-stats-date-range">Filter by date range:</label><br>
+                <input id="plant-stats-date-range" name="plantStatsForm" value="" type="text">
               </form>
               <!--PLANT STATS-->
               <div class="plantDatatablesWrapper">
-                <table class="display" id="plantStatsDatatable" cellspacing="0" width="100%">
+                <table class="display" id="plant-stats-datatable" cellspacing="0" width="100%">
                   <thead>
                   <tr>
                     <th>Fecha entrada</th>
@@ -148,7 +148,7 @@
       <!--/plant-->
 
       <!--child view-->
-      <div id="content-child" class="row">
+      <div id="content-child" class="row animated">
         <div class="col-xs-12">
           <h1>Child content</h1>
         </div>
@@ -185,14 +185,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="addPlantGeneticsCombobox">Genetics:</label>
+            <label class="control-label col-xs-3" for="add-plant-genetics-combobox">Genetics:</label>
             <div class="col-xs-9">
-              <select id="addPlantGeneticsCombobox" style="width:100%;">
-                <option value="Gen1">Gen1</option>
-                <option value="Gen2">Gen2</option>
-                <option value="Gen3">Gen3</option>
-                <option value="Gen4">Gen4</option>
-              </select>
+              <input type="text" class="form-control" id="add-plant-genetics-combobox">
             </div>
           </div>
           <div class="form-group">
@@ -213,7 +208,7 @@
 <!--End Modal: Add new plant-->
 
 <!--Start Modal: Edit existing plant-->
-<div class="modal fade" id="editPlantModal" tabindex="-1" role="dialog" aria-labelledby="editPlantModalLabel">
+<div class="modal fade" id="edit-plant-modal" tabindex="-1" role="dialog" aria-labelledby="editPlantModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -237,14 +232,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="editPlantGeneticsCombobox">Genetics:</label>
+            <label class="control-label col-xs-3" for="edit-plant-genetics-combobox">Genetics:</label>
             <div class="col-xs-9">
-              <select id="editPlantGeneticsCombobox">
-                <option value="Gen1">Gen1</option>
-                <option value="Gen2">Gen2</option>
-                <option value="Gen3">Gen3</option>
-                <option value="Gen4">Gen4</option>
-              </select>
+              <input type="text" class="form-control"  id="edit-plant-genetics-combobox" style="width: 100%;">
             </div>
           </div>
           <div class="form-group">
@@ -265,7 +255,7 @@
 <!--End Modal: Edit existing plant-->
 
 <!--Start Modal: Delete existing plant-->
-<div class="modal fade" id="deletePlantModal" tabindex="-1" role="dialog" aria-labelledby="deletePlantModalLabel">
+<div class="modal fade" id="delete-plant-modal" tabindex="-1" role="dialog" aria-labelledby="deletePlantModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -291,7 +281,7 @@
 <!--End Modal: Delete existing plant-->
 
 <!--Start Modal: Add new child-->
-<div class="modal fade" id="addChildModal" tabindex="-1" role="dialog" aria-labelledby="addChildModalLabel">
+<div class="modal fade" id="add-child-modal" tabindex="-1" role="dialog" aria-labelledby="addChildModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -420,7 +410,7 @@
 </div>
 <!--End Modal: Delete existing child-->
 
-<!--TODO: use require.js to load all this more 'modularly'-->
+<!--todo: use require.js to load all this more 'modularly'-->
 <!--------------
   JS Libraries
 ---------------->
@@ -434,9 +424,10 @@
 <script src="libs/moment/min/moment-with-locales.min.js"></script>
 <script>moment.locale('es');</script>
 <script src="libs/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
-<script src="libs/daterangepicker/lib/daterangepicker/daterangepicker.js"></script>
-<script src="libs/select2/dist/js/select2.min.js"></script>
-<script src="libs/select2/dist/js/i18n/es.js"></script>
+<script src="libs/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!--<script src="libs/select2/dist/js/select2.min.js"></script>-->
+<!--<script src="libs/select2/dist/js/i18n/es.js"></script>-->
+<script src="libs/EasyAutocomplete/dist/jquery.easy-autocomplete.min.js"></script>
 <script src="libs/nedb/browser-version/out/nedb.min.js"></script>
 
 <!--------------
@@ -446,45 +437,12 @@
 <script src="js/db.init.js"></script>
 <script src="js/app.selectors.js"></script>
 <script src="js/app.templates.js"></script>
-<!--<script src="js/app.handlers.js"></script>-->
+<script src="js/app.handlers.js"></script>
 <script src="js/app.deps.init.js"></script>
 <script type="application/javascript">
   $(function() {
-
-//    DATATABLES
-//    var testData = [
-//      [
-//        "2011/04/25",
-//        "2011/04/29",
-//        1.23,
-//        2.45,
-//        "Buena",
-//        "Muy buena",
-//        "Sala 1",
-//        15,
-//        "Ninguno",
-//        "Comentarios",
-//        "<form class='form-inline' action='javascript:editChild();'><button class='btn btn-xs btn-primary' type='submit'><i class='fa fa-pencil'></i></button></form>" +
-//        "<form class='form-inline' action='javascript:deleteChild();'><button class='btn btn-xs btn-warning' type='submit'><i class='fa fa-times'></i></button></form>"
-//      ],
-//      [
-//        "2011/04/25",
-//        "2011/04/29",
-//        1.23,
-//        2.45,
-//        "Mala",
-//        "Buena",
-//        "Sala 2",
-//        25,
-//        "Ninguno",
-//        "Comentarios",
-//        "<form class='form-inline' action='javascript:editChild();'><button class='btn btn-xs btn-primary' type='submit'><i class='fa fa-pencil'></i></button></form>" +
-//        "<form class='form-inline' action='javascript:deleteChild();'><button class='btn btn-xs btn-warning' type='submit'><i class='fa fa-times'></i></button></form>"
-//      ]
-//    ];
-//
+    //todo: remove splash screen
   });
-
 </script>
 </body>
 </html>

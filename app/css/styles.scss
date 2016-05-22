@@ -1,9 +1,11 @@
 @import '../libs/font-awesome/css/font-awesome.min.css';
 @import '../libs/bootstrap/dist/css/bootstrap.min.css';
 @import '../libs/bootstrap/dist/css/bootstrap-theme.min.css';
-@import 'daterangepicker.css';
-@import 'bootstrap-datetimepicker.min.css';
-@import '../libs/select2/dist/css/select2.min.css';
+//@import 'daterangepicker.css';
+//@import 'bootstrap-datetimepicker.min.css';
+@import '../libs/bootstrap-daterangepicker/daterangepicker.css';
+//@import '../libs/select2/dist/css/select2.min.css';
+@import '../libs/EasyAutocomplete/dist/easy-autocomplete.min.css';
 @import '../libs/datatables/media/css/dataTables.bootstrap.css';
 @import '../libs/animate.css/animate.min.css';
 
@@ -75,12 +77,12 @@ $lm-icon-hover: #ddd;
   ul > li { //plant list
     margin: 0;
     a { //plant item
-      padding: 2px 7px 2px 15px;
       border-radius: 0 5px 5px 0;
+      padding: 2px 7px 2px 15px;
       i { //plant item edit/delete icon
+        color: $lm-icon;
         float: right;
         margin-top: 3px;
-        color: $lm-icon;
       }
       i:hover {
         color: $lm-icon-hover;
@@ -93,8 +95,8 @@ $lm-icon-hover: #ddd;
   //list item hover colors
   ul > li {
     a, a:focus {
-      color: $lm-list;
       background-color: $lm-bck;
+      color: $lm-list;
     }
     a:hover {
       background-color: $lm-hover;
@@ -108,21 +110,28 @@ $lm-icon-hover: #ddd;
 }
 
 // --- content
-#contentWindow {
+#content {
   min-height: 100vh;
 }
 
-// --- overview
-#overview {
-  text-align: center;
+// --- overview view
+#content-welcome {
   padding-top: 150px;
+  text-align: center;
+}
+
+// --- plant view
+#content-plant {
+  display: none;
+}
+
+// --- child view
+#content-child {
+  display: none;
 }
 
 // --- modals
-#editPlantGeneticsCombobox,
-#editChildGeneticsCombobox {
-  width: 100%;
-}
+
 
 // --- plants
 .nav-tabs {
