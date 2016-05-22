@@ -1,0 +1,35 @@
+{
+  "name": "gardening",
+  "description": "gardening tools",
+  "main": "index.html",
+  "authors": [
+    "Mitxel Moriana <moriana.mitxel@gmail.com>"
+  ],
+  "license": "GPLv3",
+  "keywords": [
+    "gardening",
+    "tools"
+  ],
+  "homepage": "https://github.com/bitumin/gardening",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "daterangepicker": "^1.4.2",
+    "font-awesome": "^4.6.3",
+    "jquery": "^2.2.4",
+    "nedb": "^1.6.0",
+    "select2": "^4.0.2",
+    "underscore": "^1.8.3",
+    "datatables": "^1.10.11",
+    "animate.css": "animate-css#^3.5.1",
+    "d3": "^3.5.17",
+    "moment-timezone": "^0.5.4"
+  }
+}

@@ -1,0 +1,92 @@
+@import url(../libs/font-awesome/css/font-awesome.min.css);
+@import url(../libs/bootstrap/dist/css/bootstrap.min.css);
+@import url(../libs/bootstrap/dist/css/bootstrap-theme.min.css);
+@import url(daterangepicker.css);
+@import url(bootstrap-datetimepicker.min.css);
+@import url(../libs/select2/dist/css/select2.min.css);
+@import url(../libs/datatables/media/css/dataTables.bootstrap.css);
+@import url(../libs/animate.css/animate.min.css);
+@font-face {
+  font-family: 'Open Sans Regular';
+  src: url("../fonts/OpenSans-Regular.ttf"); }
+body {
+  font-family: 'Open Sans Regular', sans-serif;
+  min-width: 800px; }
+
+#left-menu {
+  background-color: #7a9735;
+  color: #eee;
+  min-height: 100vh;
+  padding-left: 0;
+  padding-right: 7px; }
+  #left-menu h1 {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 15px; }
+  #left-menu h2 {
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-right: 7px; }
+    #left-menu h2 a > i {
+      color: #ccc;
+      float: right; }
+    #left-menu h2 a > i:hover {
+      color: #ddd; }
+  #left-menu ul > li a > i {
+    opacity: 0; }
+  #left-menu ul > li:hover a > i {
+    opacity: 1; }
+  #left-menu ul > li {
+    margin: 0; }
+    #left-menu ul > li a {
+      padding: 2px 7px 2px 15px;
+      border-radius: 0 5px 5px 0; }
+      #left-menu ul > li a i {
+        float: right;
+        margin-top: 3px;
+        color: #ccc; }
+      #left-menu ul > li a i:hover {
+        color: #ddd; }
+      #left-menu ul > li a i.fa-times-circle {
+        margin-left: 5px; }
+  #left-menu ul > li a, #left-menu ul > li a:focus {
+    color: #ddd;
+    background-color: #7a9735; }
+  #left-menu ul > li a:hover {
+    background-color: #567714; }
+  #left-menu ul > li.active a, #left-menu ul > li.active a:focus, #left-menu ul > li.active a:hover {
+    background-color: #0d4d4d; }
+
+#contentWindow {
+  min-height: 100vh; }
+
+#overview {
+  text-align: center;
+  padding-top: 150px; }
+
+#editPlantGeneticsCombobox,
+#editChildGeneticsCombobox {
+  width: 100%; }
+
+.nav-tabs {
+  margin-top: 15px; }
+
+.tab-pane {
+  padding-top: 15px; }
+
+.plant-children-datatable-wrapper,
+.plant-stats-datatable-wrapper {
+  margin-top: 15px; }
+
+.select2 > .selection > .select2-selection {
+  height: 34px; }
+  .select2 > .selection > .select2-selection .select2-selection__rendered {
+    line-height: 31px; }
+  .select2 > .selection > .select2-selection .select2-selection__arrow {
+    top: 4px; }
+
+.btn-xs, .form-inline {
+  display: inline-block; }
+
+/*# sourceMappingURL=styles.css.map */
