@@ -4,9 +4,7 @@ app.config = app.c = {
   appName: 'GardeningTools',
   env: 'dev',
   inAnimation: 'fadeIn',
-  outAnimation: 'fadeOut',
-  storagePath: '../storage',
-  dbFilename: 'gardening'
+  outAnimation: 'fadeOut'
 };
 
 app.start = new Date().getTime();
