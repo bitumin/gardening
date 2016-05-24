@@ -1,9 +1,9 @@
 @import url(../libs/font-awesome/css/font-awesome.min.css);
 @import url(../libs/bootstrap/dist/css/bootstrap.min.css);
 @import url(../libs/bootstrap/dist/css/bootstrap-theme.min.css);
-@import url(../libs/bootstrap-daterangepicker/daterangepicker.css);
+@import url(../libs/bootstrap-daterangepicker/daterangepicker.min.css);
 @import url(../libs/EasyAutocomplete/dist/easy-autocomplete.min.css);
-@import url(../libs/datatables/media/css/dataTables.bootstrap.css);
+@import url(../libs/datatables/media/css/dataTables.bootstrap.min.css);
 @import url(../libs/animate.css/animate.min.css);
 @font-face {
   font-family: 'Open Sans Regular';

@@ -5,7 +5,10 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/public" />
+            <path value="file://$PROJECT_DIR$/app/css" />
+            <path value="file://$PROJECT_DIR$/app/fonts" />
+            <path value="file://$PROJECT_DIR$/app/js" />
+            <path value="file://$PROJECT_DIR$/app/libs" />
           </resourceRoots>
         </entryData>
       </entry>

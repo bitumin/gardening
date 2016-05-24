@@ -93,3 +93,7 @@ fabric.properties
 
 trashbin
 app/libs
+###Minified static files
+!app/libs/bootstrap-daterangepicker/daterangepicker.min.css
+!app/libs/datatables/media/css/dataTables.bootstrap.min.css
+!app/libs/bootstrap-daterangepicker/daterangepicker.min.js
