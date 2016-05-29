@@ -1,0 +1,29 @@
+{
+  "name": "gardening",
+  "description": "Gardening production management",
+  "version": "0.0.1",
+  "author": "Mitxel Moriana",
+  "homepage": "http://mitxelmoriana.com",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitumin/gardening"
+  },
+  "bugs": {
+    "url": "https://github.com/bitumin/gardening/issues"
+  },
+  "keywords": [
+    "gardening",
+    "production",
+    "manager",
+    "management"
+  ],
+  "main": "index.html",
+  "window": {
+    "title": "Gardening",
+    "resizable": false,
+    "width": 1024,
+    "height": 768,
+    "position": "center"
+  }
+}
