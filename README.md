@@ -1,20 +1,39 @@
 # Gardening
 
+Gardening production manager
+
+### Details and project directory structure
+
+This app has been developed using well known front end JS libraries, including JQuery and Underscore. For the database management I have implemented NeDB, a full JS database based in the MongoDB API.
+
+- `./app`
+    - `./app/css` Custom CSS.
+    - `./app/fonts` Fonts.
+    - `./app/js` Custom JS.
+    - `./app/libs` Front end dependencies.
+    - `./app/node_modules` Node modules required to run the app.
+    - `./app/index.html` Main file. Contains all the html code.
+- `./build` App builds for different platforms and NW.js versions
+- `./icons` Icons for desktop builds of the app
+- `./node_modules` Node modules required to develop and build the app.
+- `./build.js` Script to build the app using NW.js
+- `./README.md` This file
+
 ### Development environment setup
 
 1. Run `npm install` within `./app` folder.
 2. Run `bower install` within `./app` folder.
 3. Run `npm install` within the root `./` folder.
-4. Run `gulp` within `./app` folder (wip).
+4. Check that all required CSS, JS libs are present and run file watchers/minifiers if needed.
 
-### App building and packaging setup (nw-builder)
+### App building and packaging setup (nwjs-builder)
 
-1. For nw-builder with NW.js versions >=0.15.0 fix `./node_modules/nw-builder/lib/platforms.js` included files list:
+1. Run `node build.js`
 
-    Linux 32, 64:
-    ```
-    '>0.10.1 <0.15.0': ['nw', 'nw.pak', 'libffmpegsumo.so', 'icudtl.dat', 'locales'],
-    '>=0.15.0': ['nw', 'icudtl.dat', 'natives_blob.bin', 'resources.pak', 'snapshot_blob.bin', 'locales', 'lib', 'nw_100_percent.pak', 'nw_200_percent.pak', 'nw_material_100_percent.pak', 'nw_material_200_percent.pak']
-    ```
+### Contact
 
-2. Run `node build.js`
+Mitxel Moriana [moriana.mitxel@gmail.com](moriana.mitxel@gmail.com)
+
+### License
+
+GPLv3

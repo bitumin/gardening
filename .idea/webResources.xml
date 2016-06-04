@@ -9,6 +9,7 @@
             <path value="file://$PROJECT_DIR$/app/fonts" />
             <path value="file://$PROJECT_DIR$/app/js" />
             <path value="file://$PROJECT_DIR$/app/libs" />
+            <path value="file://$PROJECT_DIR$/app/icons" />
           </resourceRoots>
         </entryData>
       </entry>

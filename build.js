@@ -1,17 +1,20 @@
-var NwBuilder = require('nw-builder');
+var NwjsBuilder = require('nwjs-builder');
 
-var nw = new NwBuilder({
-  files: './app/**/**',
-  platforms: ['linux64'],
-  version: 'latest',
-  buildDir: './build',
-  cacheDir: './cache'
-});
+var version = '0.15.1-sdk';
 
-nw.on('log',  console.log);
-
-nw.build().then(function () {
-  console.log('all done!');
-}).catch(function (error) {
-  console.error(error);
+NwjsBuilder.commands.nwbuild('./app/', {
+  //run: true,
+  version: version,
+  platforms: 'linux64',
+  outputDir: './build/'+version,
+  includes: [
+    ['./', 'README.md', './'] // cp -r ./README.md ${DIR_BUILD}/README.md
+  ],
+  withFFmpeg: true,
+  sideBySide: false,
+  production: true,
+  macIcns: './icons/dummy.icns',
+  winIco: './icons/dummy.ico'
+}, function(err) {
+  if(err) throw err;
 });
