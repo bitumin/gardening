@@ -3,7 +3,6 @@ var NwjsBuilder = require('nwjs-builder');
 var version = '0.15.1-sdk';
 
 NwjsBuilder.commands.nwbuild('./app/', {
-  //run: true,
   version: version,
   platforms: 'linux64',
   outputDir: './build/'+version,

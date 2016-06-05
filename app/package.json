@@ -25,5 +25,11 @@
     "width": 1024,
     "height": 768,
     "position": "center"
+  },
+  "devDependencies": {
+    "faker": "^3.1.0"
+  },
+  "dependencies": {
+    "nedb": "^1.8.0"
   }
 }

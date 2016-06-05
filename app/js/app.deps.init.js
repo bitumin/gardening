@@ -1,12 +1,8 @@
 //init datatables 
 app.s.plantDatatable.DataTable();
 app.s.childDatatable.DataTable();
-
 app.l('Datatables initialized');
 
-//init genetics combobox
-// app.s.addGeneticsCombobox.select2();
-// app.s.editGeneticsCombobox.select2();
 //todo: preload genetics from database
 var genetics = {
   //fake data
@@ -14,7 +10,6 @@ var genetics = {
 };
 app.s.addGeneticsCombobox.easyAutocomplete(genetics);
 app.s.editGeneticsCombobox.easyAutocomplete(genetics);
-
 app.l('Select2 comboboxes initialized');
 
 //init plant stats date range picker
@@ -31,5 +26,4 @@ app.s.plantStatsDateRange.daterangepicker({
     firstDay: moment.localeData().firstDayOfWeek()
   }
 });
-
 app.l('Date-range picker initialized');
