@@ -9,6 +9,18 @@ app.db = {
   children: new NeDB({ filename: '../datastores/children.db', autoload: true })
 };
 
+//todo: fix new plants not setting a random genId properly
+//todo: refactor this callback nightmare with promises, eg
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+//Example:
+//var p1 = new Promise(function(resolve, reject) {
+//  window.setTimeout(function() {
+//    resolve(thisPromiseCount)
+//  }, 2000);
+//});
+//p1.then(function(val) {
+//  console.log(val);
+//});
 app.db.options.count({}, function (err, count) {
   if(count === 0) {
     app.l('Initializing datastores for the first time', 'DB');
@@ -50,7 +62,7 @@ app.db.options.count({}, function (err, count) {
             // Plants seeder
             _.times(app.c.seeder.plants, function() {
               var randomGen;
-              var nGens = Math.floor(Math.random() * app.c.seeder.genetics-1);
+              var nGens = Math.floor(Math.random() * (app.c.seeder.genetics - 1));
               app.db.genetics.find({}).skip(nGens).limit(1).exec(function (err, docs) {
                 if(err) {
                   app.l('Unable to find random gen in genetics datastore with error: '+err, 'DB');
