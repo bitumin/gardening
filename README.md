@@ -4,7 +4,7 @@ Gardening production manager
 
 ### Details and project directory structure
 
-This app has been developed using well known front end JS libraries, including JQuery and Underscore. For the database management I have implemented NeDB, a full JS database based in the MongoDB API.
+This app has been developed using well known front end JS libraries, including JQuery and Underscore. For the database management I use NeDB, a full JS database based in the MongoDB API.
 
 - `./app`
     - `./app/css` Custom CSS.

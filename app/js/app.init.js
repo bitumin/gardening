@@ -5,10 +5,11 @@ app.config = app.c = {
   env: 'dev', //dev, pre, pro
   inAnimation: 'fadeIn',
   outAnimation: 'fadeOut',
-  seeder: {
+  seeders: {
     genetics: 50,
     plants: 25,
-    childrenPerPlant: 10
+    childrenPerPlant: 10,
+    childIsOutProbability: 0.8
   }
 };
 

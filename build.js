@@ -4,7 +4,7 @@ var version = '0.15.1-sdk';
 
 NwjsBuilder.commands.nwbuild('./app/', {
   version: version,
-  platforms: 'linux64',
+  platforms: 'osx64',
   outputDir: './build/'+version,
   includes: [
     ['./', 'README.md', './'] // cp -r ./README.md ${DIR_BUILD}/README.md
