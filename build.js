@@ -1,10 +1,10 @@
 var NwjsBuilder = require('nwjs-builder');
 
-var version = '0.15.1-sdk';
+var version = '0.15.3-sdk';
 
 NwjsBuilder.commands.nwbuild('./app/', {
   version: version,
-  platforms: 'osx64',
+  platforms: 'linux64',
   outputDir: './build/'+version,
   includes: [
     ['./', 'README.md', './'] // cp -r ./README.md ${DIR_BUILD}/README.md
