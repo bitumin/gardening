@@ -2,6 +2,7 @@ app.selector = app.s = {
   //main regions
   app: $('#app'),
   leftMenu: $('#left-menu'),
+  leftMenuItemsList: $('#left-menu-items-list'),
   content: $('#content'),
   //modals
   addPlantModal: $("#add-plant-modal"),
@@ -11,8 +12,8 @@ app.selector = app.s = {
   editChildModal: $("#edit-child-modal"),
   delChildModal: $("#delete-child-modal"),
   //comboboxes
-  addGeneticsCombobox: $("#add-plant-genetics-combobox"),
-  editGeneticsCombobox: $("#edit-plant-genetics-combobox"),
+  addGeneticsCombobox: $("#addPlantGenetics"),
+  editGeneticsCombobox: $("#editPlantGenetics"),
   //date-range picker
   plantStatsDateRange: $('#plant-stats-date-range'),
   //left menu buttons

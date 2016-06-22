@@ -18,7 +18,7 @@
         <a id="btn-open-add-plant-modal"><i class="fa fa-plus-circle"></i></a>
       </h2>
 
-      <ul class="nav nav-pills nav-stacked">
+      <ul id="left-menu-items-list" class="nav nav-pills nav-stacked">
         <!--TEST DATA-->
         <li class="active" data-plant-id="1">
           <a href="javascript:" class="btn-load-plant-view">
@@ -189,9 +189,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-plant-genetics-combobox">Genetics:</label>
+            <label class="control-label col-xs-3" for="addPlantGenetics">Genetics:</label>
             <div class="col-xs-9">
-              <input type="text" class="form-control" id="add-plant-genetics-combobox">
+              <input type="text" class="form-control" id="addPlantGenetics">
             </div>
           </div>
           <div class="form-group">
@@ -223,6 +223,7 @@
       </div>
       <form role="form" class="form-horizontal" id="editPlantForm" action="javascript:editPlant">
         <div class="modal-body">
+          <input type="hidden" id="editPlantId" value="">
           <div class="form-group">
             <label class="control-label col-xs-3" for="editPlantName">Name:</label>
             <div class="col-xs-9">
@@ -236,9 +237,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-plant-genetics-combobox">Genetics:</label>
+            <label class="control-label col-xs-3" for="editPlantGenetics">Genetics:</label>
             <div class="col-xs-9">
-              <input type="text" class="form-control"  id="edit-plant-genetics-combobox" style="width: 100%;">
+              <input type="text" class="form-control" id="editPlantGenetics" style="width: 100%;">
             </div>
           </div>
           <div class="form-group">
