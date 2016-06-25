@@ -1,5 +1,5 @@
 var NeDB = require('nedb');
-app.l('NeDB database node module required', 'Node');
+app.l('NeDB database node module imported', 'Node');
 
 app.l('Initializing NeDB datastores', 'DB');
 app.db = {
@@ -8,7 +8,7 @@ app.db = {
   plants: new NeDB({filename: '../datastores/plants.db', autoload: true})
 };
 
-// DB helpers
+// Async NeDB "promisified" helpers
 app.db.countDocs = function (datastore) {
   return new Promise(function (resolve, reject) {
     app.db[datastore].count({}, function (err, count) {
@@ -86,8 +86,8 @@ app.db.removeAllDocs = function (datastores) {
 // Seeders
 app.db.seeders = {};
 app.db.seeders.genetics = function () {
-  app.l('Seeding genetics...', 'DB');
   return new Promise(function (resolve, reject) {
+    app.l('Seeding genetics...', 'DB');
     var faker = require('faker');
     var counter = 0;
 
@@ -109,8 +109,8 @@ app.db.seeders.genetics = function () {
   });
 };
 app.db.seeders.plants = function () {
-  app.l('Seeding plants...', 'DB');
   return new Promise(function (resolve, reject) {
+    app.l('Seeding plants...', 'DB');
     var faker = require('faker');
     var counter = 0;
 
@@ -137,9 +137,8 @@ app.db.seeders.plants = function () {
   });
 };
 app.db.seeders.children = function () {
-  app.l('Seeding children...', 'DB');
-
   return new Promise(function (resolve, reject) {
+    app.l('Seeding children...', 'DB');
     var faker = require('faker');
     var counter = 0;
     var qualities = ['extremely bad','very bad','bad','normal','fine','good','very good','excellent'];
@@ -190,7 +189,8 @@ app.db.seeders.children = function () {
 };
 
 // Seeders wrapper
-app.db.seed = function () {
+app.db.runSeeder = function () {
+  app.l('Seeding datastores...', 'DB');
   app.db.seeders.genetics()
     .then(app.db.seeders.plants)
     .then(app.db.seeders.children)
@@ -212,8 +212,8 @@ app.db.options.count({}, function (err, count) {
       }
     });
     if (app.c.env === 'dev' || app.c.env === 'development') {
-      app.l('Developer mode detected, seeding database...', 'DB');
-      app.db.seed();
+      app.l('Developer mode detected', 'DB');
+      app.db.runSeeder();
     }
   }
 });

@@ -1,6 +1,6 @@
 var NwjsBuilder = require('nwjs-builder');
 
-var version = '0.15.3-sdk';
+var version = '0.15.4-sdk';
 
 NwjsBuilder.commands.nwbuild('./app/', {
   version: version,

@@ -41,8 +41,16 @@
         <div class="col-xs-12">
           <h1>Bienvenido/a a <br>Gardening Tools</h1>
           <p>
-            Powered by Node.js <script>document.write(process.versions.node)</script>
-            and NW.js <script>document.write(process.versions['node-webkit'])</script>
+            Powered by Node.js <script>document.write(process.versions.node);</script>,
+            <script>
+              (function(){
+                let match = navigator.userAgent.match(/(Chrom[e|ium])\/([0-9]+)\./);
+                let browser = match[1];
+                let version = match[2];
+                document.write(browser + ' ' + version);
+              })();
+            </script>
+            and NW.js <script>document.write(process.versions['node-webkit']);</script>
           </p>
         </div>
       </div>
