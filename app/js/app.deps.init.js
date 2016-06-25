@@ -3,15 +3,6 @@ app.s.plantDatatable.DataTable();
 app.s.childDatatable.DataTable();
 app.l('Datatables initialized');
 
-//todo: preload genetics from database
-var genetics = {
-  //fake data
-  data: ["blue", "green", "pink", "red", "yellow"]
-};
-app.s.addGeneticsCombobox.easyAutocomplete(genetics);
-app.s.editGeneticsCombobox.easyAutocomplete(genetics);
-app.l('Select2 comboboxes initialized');
-
 //init plant stats date range picker
 app.s.plantStatsDateRange.daterangepicker({
   locale: {

@@ -9,9 +9,9 @@ NwjsBuilder.commands.nwbuild('./app/', {
   includes: [
     ['./', 'README.md', './'] // cp -r ./README.md ${DIR_BUILD}/README.md
   ],
-  withFFmpeg: true,
+  withFfmpeg: false,
   sideBySide: false,
-  production: true,
+  production: false,
   macIcns: './icons/dummy.icns',
   winIco: './icons/dummy.ico'
 }, function(err) {

@@ -25,23 +25,8 @@ app.log = app.l = function(msg, mode) {
     console.log(s.lpad(app.execTime(), 8, '0')+' '+app.config.appName+' ['+mode+']: '+msg);
 };
 
-app.switchView = function(contentEl) {
-  if(! contentEl.attr('id').startsWith('content-'))
-    return;
-  
-  if(contentEl.is(':hidden')) {
-    app.s.content.children()
-      .filter(function() {
-        return $(this).is(':visible');
-      })
-      .hide()
-      .removeClass(app.c.inAnimation);
-
-    contentEl.addClass(app.c.inAnimation).show();
-  }
-};
-
-if(app.config.env === 'dev')
+if(app.config.env === 'dev') {
   app.l('Developer mode is ON', 'Warning');
+}
 
 app.l('Initializing app...');

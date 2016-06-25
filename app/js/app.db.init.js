@@ -3,9 +3,9 @@ app.l('NeDB database node module imported', 'Node');
 
 app.l('Initializing NeDB datastores', 'DB');
 app.db = {
-  options: new NeDB({filename: '../datastores/options.db', autoload: true}),
-  genetics: new NeDB({filename: '../datastores/genetics.db', autoload: true}),
-  plants: new NeDB({filename: '../datastores/plants.db', autoload: true})
+  options: new NeDB({filename: './datastores/options.db', autoload: true}),
+  genetics: new NeDB({filename: './datastores/genetics.db', autoload: true}),
+  plants: new NeDB({filename: './datastores/plants.db', autoload: true})
 };
 
 // Async NeDB "promisified" helpers
@@ -48,15 +48,25 @@ app.db.getRandomDoc = function (datastore) {
       });
   });
 };
-app.db.getAllDocs = function (datastore) {
+app.db.getAllDocs = function (datastore, sortField) {
   return new Promise(function (resolve, reject) {
-    app.db[datastore].find({}, function (err, docs) {
-      if (err) {
-        reject(Error('Unable to all docs from datastore ' + datastore + ', with error: ' + err));
-      } else {
-        resolve(docs);
-      }
-    })
+    if(typeof sortField === 'string') {
+      app.db[datastore].find({}).sort({ [sortField]: 1 }).exec(function (err, docs) {
+        if (err) {
+          reject(Error('Unable to all docs from datastore ' + datastore + ', with error: ' + err));
+        } else {
+          resolve(docs);
+        }
+      });
+    } else {
+      app.db[datastore].find({}, function (err, docs) {
+        if (err) {
+          reject(Error('Unable to all docs from datastore ' + datastore + ', with error: ' + err));
+        } else {
+          resolve(docs);
+        }
+      })
+    }
   });
 };
 app.db.removeAllDocs = function (datastores) {
@@ -97,7 +107,7 @@ app.db.seeders.genetics = function () {
         insertDate: new Date(),
         lastModDate: new Date()
       }, function (err) {
-        if (err) {
+        if (err && err.errorType !== 'uniqueViolated') {
           reject(Error('Unable to seed genetics datastore, with error: ' + err));
         }
         counter++;
@@ -171,7 +181,7 @@ app.db.seeders.children = function () {
             defects: faker.lorem.sentence(),
             comments: faker.lorem.paragraph(),
             insertDate: new Date(),
-            lastModDate: null
+            lastModDate: new Date()
           } } }, {}, function (err) {
             if (err) {
               reject(Error('Unable to seed the children of plant ' + plant.name + ', with error: ' + err));
@@ -191,7 +201,7 @@ app.db.seeders.children = function () {
 // Seeders wrapper
 app.db.runSeeder = function () {
   app.l('Seeding datastores...', 'DB');
-  app.db.seeders.genetics()
+  return app.db.seeders.genetics()
     .then(app.db.seeders.plants)
     .then(app.db.seeders.children)
     .then(function () {
@@ -202,19 +212,67 @@ app.db.runSeeder = function () {
     });
 };
 
-// Main db init script
+// Datastore handlers
+app.db.addPlant = function(plant) {
+  return new Promise(function (resolve, reject) {
+    app.db.plants.insert({
+      name: plant.name,
+      number: plant.number,
+      gen: plant.gen,
+      origin: plant.origin,
+      insertDate: new Date(),
+      lastModDate: new Date()
+    }, function (err, newPlant) {
+      if (err) {
+        reject(Error('Unable to add plant to plants datastore, with error: ' + err));
+      } else {
+        resolve(newPlant);
+      }
+    });
+  });
+};
+app.db.addGenetic = function(genetic) {
+  return new Promise(function (resolve, reject) {
+    app.db.genetics.insert({
+      name: genetic.name,
+      insertDate: new Date(),
+      lastModDate: new Date()
+    }, function (err, newGenetic) {
+      if (err) {
+        if(err.errorType === 'uniqueViolated') {
+          resolve();
+        } else {
+          reject(Error('Unable to add genetic to genetics datastore, with error: ' + err));
+        }
+      } else {
+        resolve(newGenetic);
+      }
+    });
+  });
+};
+
+//todo: put this init script within a single main init script somewhere
 app.db.options.count({}, function (err, count) {
   if (count === 0) {
     app.l('Initializing datastores for the first time', 'DB');
     app.db.options.insert({name: 'firstRun', value: false, insertDate: new Date()}, function (err) {
-      if (err) {
-        app.l('Unable to insert firstRun doc in options datastore with error: ' + err, 'DB');
-      }
+      if (err) { app.l('Unable to insert firstRun doc in options datastore with error: ' + err, 'DB'); }
     });
+
+    app.l('Indexing datastores...', 'DB');
+    app.db.genetics.ensureIndex({ fieldName: 'name', unique: true }, function (err) {
+      if (err) { app.l('Unable to set name fields as an index with unique constraint, with error: ' + err, 'DB'); }
+    });
+
     if (app.c.env === 'dev' || app.c.env === 'development') {
       app.l('Developer mode detected', 'DB');
-      app.db.runSeeder();
+      app.db.runSeeder()
+        .then(app.v.populateLeftMenu())
+        .then(app.v.populateGeneticsComboboxes());
     }
+  } else {
+    app.v.populateLeftMenu()
+      .then(app.v.populateGeneticsComboboxes());
   }
 });
 

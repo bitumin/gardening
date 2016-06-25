@@ -5,4 +5,7 @@
     <option name="id" value="1461916487523" />
     <option name="name" value="default" />
   </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
 </project>

@@ -1,12 +1,12 @@
 //todo: implementar toastr messages
-//todo: implementar loading... state to in-modal actions 
+//todo: filter form to db data
+//todo: implementar loading spinners within modals
+//todo: build up plants stats by date range
+//todo: pick date range -> filter plants stats by date range
+//todo: update genetics combobox at start app and at adding genetics form any form
 
-/*
- * Event handlers
- */
-
-// left menu navigation
-app.s.leftMenu.on('click', '.btn-open-add-plant-modal', function() {
+// left menu event handlers
+app.s.leftMenu.on('click', '#btn-open-add-plant-modal', function() {
   // todo: to inject all genetics to the genetics combobox input, then...
   app.s.addPlantModal.modal('show');
 });
@@ -19,24 +19,50 @@ app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function() {
 });
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
   //todo: load all plant data and related children to the plant view
-  app.switchView(app.s.contentPlant);
+  app.v.switchView(app.s.contentPlant);
+  app.v.toggleActiveItem(this.closest('li'));
 });
 
 // modals - add/edit data
 app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
-  //disable button
+  var submitBtn = this;
+  var form = submitBtn.closest("form");
+  var formData = $(form).serializeObject();
+  var formElements = $(form).find(':input');
   
-  //close modal
+  //disable all form inputs, buttons, etc.
+  formElements.prop("disabled", true);
   
-  //gather form data in single var
+  //prepare plant and genetic data
+  var plant = {
+    name: formData.addPlantName,
+    number: formData.addPlantNumber,
+    gen: formData.addPlantGenetics,
+    origin: formData.addPlantOrigin
+  };
+  var genetic = {
+    name: formData.addPlantGenetics
+  };
   
   //add plant passing plant data
-  
-  //add new plant to menu
-  
-  //clear form
-  
-  //re-enable button
+  app.db.addPlant(plant)
+    .then(function(newPlant) {
+      //add new plant to menu
+      app.v.addNewPlantToLeftMenu(newPlant);
+      //add new genetics (if it doesn't exist)
+      return app.db.addGenetic(genetic);
+    })
+    .catch(function(err) {
+      app.l('Add plant aborted with error: ' + err, 'DB');
+    })
+    .then(function() {
+      //close modal
+      app.s.addPlantModal.modal('hide');
+      //clear form
+      $(form)[0].reset();
+      //re-enable button
+      formElements.prop("disabled", false);
+    });
 });
 app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
   //disable button
@@ -116,46 +142,4 @@ app.s.delChildModal.on('click', 'button[type="submit"]', function() {
   //re-enable button
 });
 
-/*
- * View update helpers
- */
-app.addNewPlantToLeftMenu = function(newPlant) {
-  var newPlantId = newPlant._id;
-  var newPlantName = newPlant.name;
-  
-  app.s.leftMenuItemsList.append(
-    '<li class="active" data-plant-id="' + newPlantId + '">' +
-      '<a href="javascript:" class="btn-load-plant-view">' +
-        '<span>' + newPlantName + '</span>' +
-        '<i class="btn-open-delete-plant-modal fa fa-times-circle"></i>' +
-      '</a>' +
-    '</li>'
-  );
-};
-
-/*
- * DB helpers
- */
-app.db.addPlant = function(newPlantData) {
-  return new Promise(function (resolve, reject) {
-    app.db.plants.insert({
-      name: newPlantData.addPlantName,
-      number: newPlantData.addPlantNumber,
-      gen: newPlantData.addPlantGenetics,
-      origin: newPlantData.addPlantOrigin,
-      insertDate: new Date(),
-      lastModDate: null
-    }, function (err, newPlant) {
-      if (err) {
-        reject(Error('Unable to seed plants datastore, with error: ' + err));
-      } else {
-        resolve(newPlant);
-      }
-    });
-  });
-};
-
-//todo: build up plants stats by date range
-//todo: pick date range -> filter plants stats by date range
-
-app.l('All handlers set');
+app.l('All event handlers set');

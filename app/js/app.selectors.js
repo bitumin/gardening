@@ -12,8 +12,8 @@ app.selector = app.s = {
   editChildModal: $("#edit-child-modal"),
   delChildModal: $("#delete-child-modal"),
   //comboboxes
-  addGeneticsCombobox: $("#addPlantGenetics"),
-  editGeneticsCombobox: $("#editPlantGenetics"),
+  addGeneticsCombobox: $("#add-plant-genetics"),
+  editGeneticsCombobox: $("#edit-plant-genetics"),
   //date-range picker
   plantStatsDateRange: $('#plant-stats-date-range'),
   //left menu buttons
@@ -36,7 +36,6 @@ app.selector = app.s = {
   //plant view > stats tab
   plantDatatable: $('#plant-stats-datatable')
   //child view
-  //...
 };
 
 app.l('Selectors loaded');

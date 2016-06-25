@@ -9,7 +9,6 @@ b='\033[01;34m' #blue
 g='\033[01;32m' #green
 n='\033[00m' #normal
 
-# Constants
 EXPECTED_ARGS=1
 BADARGS_ERROR=65
 
@@ -18,7 +17,7 @@ if [ $# -ne ${EXPECTED_ARGS} ]; then
     exit ${BADARGS_ERROR}
 fi
 
-echo -e "\n${b}- Staging all changes within the working space${n}\n${b}- Commiting with the message \"${r}${1}${b}\"${n}\n${b}- Pushing to origin, master branch\n${n}"
+echo -e "\n${b}- Stage all changes within the working space${n}\n${b}- Commit with the message \"${r}${1}${b}\"${n}\n${b}- Push to origin, master branch\n${n}"
 
 git add -A && echo -e "${b}Stage ---> [${g}OK${b}]${n}" || echo -e "${b}Stage ---> [${r}BAD${b}]${n}"
 git commit -m "${1}" && echo -e "${b}Commit ---> [${g}OK${b}]${n}" || echo -e "${b}Commit ---> [${r}BAD${b}]${n}"
