@@ -14,10 +14,10 @@ As for the database I use [NeDB](https://github.com/louischatriot/nedb), an awes
     - `./app/libs` Front end dependencies.
     - `./app/node_modules` Node modules required to run the app.
     - `./app/index.html` Main file. Contains all the html code.
-- `./build` App builds for different platforms and NW.js versions
-- `./icons` Icons for desktop builds of the app
+- `./build` App builds for different platforms and NW.js versions.
+- `./icons` App icons.
 - `./node_modules` Node modules required to develop and build the app.
-- `./build.js` Script to build the app using NW.js
+- `./build.js` Script to build the app using NW.js.
 - `./README.md` You're reading it!
 
 ### Development environment setup
@@ -32,7 +32,7 @@ As for the database I use [NeDB](https://github.com/louischatriot/nedb), an awes
 
 ### Contact
 
-[Mitxel Moriana](moriana.mitxel@gmail.com)
+[Mitxel Moriana](email:moriana.mitxel@gmail.com)
 
 ### License
 
