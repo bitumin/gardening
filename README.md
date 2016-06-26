@@ -32,7 +32,7 @@ As for the database I use [NeDB](https://github.com/louischatriot/nedb), an awes
 
 ### Contact
 
-[Mitxel Moriana](email:moriana.mitxel@gmail.com)
+[Mitxel Moriana](mailto:moriana.mitxel@gmail.com)
 
 ### License
 
