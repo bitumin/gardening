@@ -37,7 +37,8 @@ body {
   left: 0;
   overflow-y: auto;
   padding-left: 0;
-  padding-right: 7px; }
+  padding-right: 7px;
+  z-index: 201; }
   #left-menu h1 {
     font-size: 16px;
     font-weight: bold;
@@ -81,6 +82,7 @@ body {
  * Main content
  */
 #content {
+  z-index: 101;
   min-height: 100vh;
   max-height: 100vh;
   overflow: auto;
@@ -99,9 +101,6 @@ body {
 #content-child {
   display: none; }
 
-.easy-autocomplete {
-  width: 100% !important; }
-
 .nav-tabs {
   margin-top: 15px; }
 
@@ -111,6 +110,12 @@ body {
 .plant-children-datatable-wrapper,
 .plant-stats-datatable-wrapper {
   margin-top: 15px; }
+
+/*
+ * Modals
+ */
+.easy-autocomplete {
+  width: 100% !important; }
 
 .select2 > .selection > .select2-selection {
   height: 34px; }

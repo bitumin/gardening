@@ -1,10 +1,3 @@
-//todo: implementar toastr messages
-//todo: filter form to db data
-//todo: implementar loading spinners within modals
-//todo: build up plants stats by date range
-//todo: pick date range -> filter plants stats by date range
-//todo: update genetics combobox at start app and at adding genetics form any form
-
 // left menu event handlers
 app.s.leftMenu.on('click', '#btn-open-add-plant-modal', function() {
   // todo: to inject all genetics to the genetics combobox input, then...
@@ -144,4 +137,4 @@ app.s.delChildModal.on('click', 'button[type="submit"]', function() {
   //re-enable button
 });
 
-app.l('All event handlers set');
+app.l('Event handlers set');

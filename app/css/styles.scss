@@ -17,7 +17,6 @@
 /*
  * Html, body
  */
-
 html, body {
   margin:0;
   padding:0;
@@ -54,6 +53,7 @@ $lm-icon-hover: #ddd;
   overflow-y: auto;
   padding-left: 0;
   padding-right: 7px;
+  z-index: 201;
   h1 { //app title
     font-size: 16px;
     font-weight: bold;
@@ -123,6 +123,7 @@ $lm-icon-hover: #ddd;
  * Main content
  */
 #content {
+  z-index: 101;
   min-height: 100vh;
   max-height: 100vh;
   overflow: auto;
@@ -132,28 +133,23 @@ $lm-icon-hover: #ddd;
   padding-left: 250px;
 }
 
-// --- overview view
+//welcome
 #content-welcome {
   padding-top: 150px;
   text-align: center;
 }
 
-// --- plant view
+//plant
 #content-plant {
   display: none;
 }
 
-// --- child view
+//child
 #content-child {
   display: none;
 }
 
-// --- modals
-.easy-autocomplete {
-  width: 100% !important;
-}
-
-// --- plants
+//plants
 .nav-tabs {
   margin-top: 15px;
 }
@@ -175,6 +171,13 @@ $lm-icon-hover: #ddd;
 // --- plants > children
 .tab-plant-children {
 
+}
+
+/*
+ * Modals
+ */
+.easy-autocomplete {
+  width: 100% !important;
 }
 
 // --- select2

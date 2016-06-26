@@ -1,4 +1,3 @@
-// view handlers
 app.view = app.v = {};
 app.v.switchView = function(contentEl) {
   if(! contentEl.attr('id').startsWith('content-'))

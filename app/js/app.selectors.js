@@ -38,4 +38,4 @@ app.selector = app.s = {
   //child view
 };
 
-app.l('Selectors loaded');
+app.l('Selectors set');

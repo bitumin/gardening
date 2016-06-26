@@ -1,12 +1,11 @@
 var NeDB = require('nedb');
-app.l('NeDB database node module imported', 'Node');
 
-app.l('Initializing NeDB datastores', 'DB');
 app.db = {
   options: new NeDB({filename: './datastores/options.db', autoload: true}),
   genetics: new NeDB({filename: './datastores/genetics.db', autoload: true}),
   plants: new NeDB({filename: './datastores/plants.db', autoload: true})
 };
+app.l('NeDB datastores initialized', 'DB');
 
 // Async NeDB "promisified" helpers
 app.db.countDocs = function (datastore) {
@@ -200,16 +199,9 @@ app.db.seeders.children = function () {
 
 // Seeders wrapper
 app.db.runSeeder = function () {
-  app.l('Seeding datastores...', 'DB');
   return app.db.seeders.genetics()
-    .then(app.db.seeders.plants)
-    .then(app.db.seeders.children)
-    .then(function () {
-      app.l('Seeding done without errors', 'DB');
-    })
-    .catch(function (err) {
-      app.l('Seeding aborted with error: ' + err, 'DB');
-    });
+      .then(app.db.seeders.plants)
+      .then(app.db.seeders.children);
 };
 
 // Datastore handlers
@@ -250,30 +242,3 @@ app.db.addGenetic = function(genetic) {
     });
   });
 };
-
-//todo: put this init script within a single main init script somewhere
-app.db.options.count({}, function (err, count) {
-  if (count === 0) {
-    app.l('Initializing datastores for the first time', 'DB');
-    app.db.options.insert({name: 'firstRun', value: false, insertDate: new Date()}, function (err) {
-      if (err) { app.l('Unable to insert firstRun doc in options datastore with error: ' + err, 'DB'); }
-    });
-
-    app.l('Indexing datastores...', 'DB');
-    app.db.genetics.ensureIndex({ fieldName: 'name', unique: true }, function (err) {
-      if (err) { app.l('Unable to set name fields as an index with unique constraint, with error: ' + err, 'DB'); }
-    });
-
-    if (app.c.env === 'dev' || app.c.env === 'development') {
-      app.l('Developer mode detected', 'DB');
-      app.db.runSeeder()
-        .then(app.v.populateLeftMenu())
-        .then(app.v.populateGeneticsComboboxes());
-    }
-  } else {
-    app.v.populateLeftMenu()
-      .then(app.v.populateGeneticsComboboxes());
-  }
-});
-
-app.l('Database initialized', 'DB');
