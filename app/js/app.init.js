@@ -43,13 +43,13 @@ app.db.options.count({}, function (err, count) {
         .then(function () { app.l('Datastores seeded without errors', 'DB'); })
         .catch(function (err) { app.l('Unable to seed datastores, with error: ' + err); })
         .then(app.v.populateLeftMenu)
-        .then(app.v.populateGeneticsComboboxes)
+        .then(app.v.populateGenetics)
         .then(function () {app.l('Views populated with datastores data');})
         .catch(function (err) {app.l('Unable to populate views with datastore data, with error: ' + err);});
     }
   } else {
     app.v.populateLeftMenu()
-      .then(app.v.populateGeneticsComboboxes)
+      .then(app.v.populateGenetics)
       .then(function () {app.l('Views populated with datastores data');})
       .catch(function (err) {app.l('Unable to populate views with datastore data, with error: ' + err);});
   }

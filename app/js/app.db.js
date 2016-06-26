@@ -68,6 +68,17 @@ app.db.getAllDocs = function (datastore, sortField) {
     }
   });
 };
+app.db.removeDoc = function (datastore, query) {
+  return new Promise(function (resolve, reject) {
+    app.db[datastore].remove(query, {}, function (err, numRemoved) {
+      if (err) {
+        reject(Error('Unable to remove doc in ' + datastore + ' datastore, with error: ' + err));
+      } else {
+        resolve(numRemoved);
+      }
+    });
+  });
+};
 app.db.removeAllDocs = function (datastores) {
   return new Promise(function (resolve, reject) {
     if (typeof datastores === 'string') {
@@ -89,6 +100,54 @@ app.db.removeAllDocs = function (datastores) {
         });
       });
     }
+  });
+};
+app.db.getOneDoc = function(datastore, query) {
+  return new Promise(function (resolve, reject) {
+    app.db[datastore].findOne(query, function (err, doc) {
+      if (err) {
+        reject(Error('Unable to find doc in ' + datastore + ', with error: ' + err));
+      } else {
+        resolve(doc);
+      }
+    });
+  });
+};
+app.db.insertDoc = function(datastore, doc) {
+  return new Promise(function (resolve, reject) {
+    app.db[datastore].insert(doc, function (err, newDoc) {
+      if (err) {
+        reject(Error('Unable to add plant to plants datastore, with error: ' + err));
+      } else {
+        resolve(newDoc);
+      }
+    });
+  });
+};
+app.db.insertDocIfDoesNotExist = function(datastore, doc) {
+  return new Promise(function (resolve, reject) {
+    app.db[datastore].insert(doc, function (err, newDoc) {
+      if (err) {
+        if(err.errorType === 'uniqueViolated') {
+          resolve();
+        } else {
+          reject(Error('Unable to add new doc to ' + datastore + ' datastore, with error: ' + err));
+        }
+      } else {
+        resolve(newDoc);
+      }
+    });
+  });
+};
+app.db.updateDoc = function(datastore, query, doc) {
+  return new Promise(function (resolve, reject) {
+    app.db[datastore].update(query, { $set: doc }, function (err, nReplaced) {
+      if (err) {
+        reject(Error('Unable to update doc in ' + datastore + ' datastore, with error: ' + err));
+      } else {
+        resolve(nReplaced);
+      }
+    });
   });
 };
 
@@ -128,7 +187,7 @@ app.db.seeders.plants = function () {
         app.db.plants.insert({
           name: faker.commerce.productName(),
           number: Math.floor(Math.random() * 99) + 1, //random int from 1 to 100
-          gen: gen.name,
+          genetic: gen.name,
           origin: faker.address.country(),
           insertDate: new Date(),
           lastModDate: new Date()
@@ -202,43 +261,4 @@ app.db.runSeeder = function () {
   return app.db.seeders.genetics()
       .then(app.db.seeders.plants)
       .then(app.db.seeders.children);
-};
-
-// Datastore handlers
-app.db.addPlant = function(plant) {
-  return new Promise(function (resolve, reject) {
-    app.db.plants.insert({
-      name: plant.name,
-      number: plant.number,
-      gen: plant.gen,
-      origin: plant.origin,
-      insertDate: new Date(),
-      lastModDate: new Date()
-    }, function (err, newPlant) {
-      if (err) {
-        reject(Error('Unable to add plant to plants datastore, with error: ' + err));
-      } else {
-        resolve(newPlant);
-      }
-    });
-  });
-};
-app.db.addGenetic = function(genetic) {
-  return new Promise(function (resolve, reject) {
-    app.db.genetics.insert({
-      name: genetic.name,
-      insertDate: new Date(),
-      lastModDate: new Date()
-    }, function (err, newGenetic) {
-      if (err) {
-        if(err.errorType === 'uniqueViolated') {
-          resolve();
-        } else {
-          reject(Error('Unable to add genetic to genetics datastore, with error: ' + err));
-        }
-      } else {
-        resolve(newGenetic);
-      }
-    });
-  });
 };

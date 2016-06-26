@@ -1,16 +1,31 @@
 // left menu event handlers
 app.s.leftMenu.on('click', '#btn-open-add-plant-modal', function() {
-  // todo: to inject all genetics to the genetics combobox input, then...
   app.s.addPlantModal.modal('show');
 });
 app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function(e) {
-  // todo: inject selected plant data to respective inputs, including plant id, then...
-  app.s.editPlantModal.modal('show');
   e.stopPropagation();
+  var plantId = $(this).closest('li').data('plantId');
+  app.db.getOneDoc('plants', { _id: plantId })
+    .then(function (doc) {
+      //load data into modal
+      app.s.editPlantTitle.text(doc.name);
+      app.s.editPlantId.val(doc._id);
+      app.s.editPlantName.val(doc.name);
+      app.s.editPlantNumber.val(doc.number);
+      app.s.editPlantGenetics.val(doc.genetic);
+      app.s.editPlantOrigin.val(doc.origin);
+      //open modal
+      app.s.editPlantModal.modal('show');
+    })
+    .catch(function(err) {
+      //todo: do something on exception
+    });
 });
-app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function() {
-  app.s.delPlantModal.modal('show');
+app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
   e.stopPropagation();
+  var plantId = $(this).closest('li').data('plantId');
+  app.s.delPlantId.val(plantId);
+  app.s.delPlantModal.modal('show');
 });
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
   //todo: load all plant data and related children to the plant view
@@ -20,32 +35,36 @@ app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
 
 // modals - add/edit data
 app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
-  var submitBtn = this;
-  var form = submitBtn.closest("form");
-  var formData = $(form).serializeObject();
-  var formElements = $(form).find(':input');
+  var formData = app.s.addPlantForm.serializeObject();
+  var formElements = app.s.addPlantForm.find(':input');
   
   //disable all form inputs, buttons, etc.
   formElements.prop("disabled", true);
   
-  //prepare plant and genetic data
+  //plant doc
   var plant = {
     name: formData.addPlantName,
     number: formData.addPlantNumber,
-    gen: formData.addPlantGenetics,
-    origin: formData.addPlantOrigin
-  };
-  var genetic = {
-    name: formData.addPlantGenetics
+    genetic: formData.addPlantGenetics,
+    origin: formData.addPlantOrigin,
+    insertDate: new Date(),
+    lastModDate: new Date()
   };
   
-  //add plant passing plant data
-  app.db.addPlant(plant)
+  //genetic doc
+  var genetic = {
+    name: formData.addPlantGenetics,
+    insertDate: new Date(),
+    lastModDate: new Date()
+  };
+  
+  //add plant
+  app.db.insertDoc('plants', plant)
     .then(function(newPlant) {
       //add new plant to menu
       app.v.addNewPlantToLeftMenu(newPlant);
       //add new genetics (if it doesn't exist)
-      return app.db.addGenetic(genetic);
+      return app.db.insertDocIfDoesNotExist('genetics', genetic);
     })
     .catch(function(err) {
       app.l('Add plant aborted with error: ' + err, 'DB');
@@ -54,38 +73,79 @@ app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
       //close modal
       app.s.addPlantModal.modal('hide');
       //clear form
-      $(form)[0].reset();
+      app.s.addPlantForm[0].reset();
       //re-enable button
       formElements.prop("disabled", false);
     });
 });
 app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
-  //disable button
+  var formData = app.s.editPlantForm.serializeObject();
+  var formElements = app.s.editPlantForm.find(':input');
 
-  //close modal
+  //disable all form inputs, buttons, etc.
+  formElements.prop("disabled", true);
 
-  //gather form data in single var
+  //query
+  var query = {
+    _id: formData.editPlantId
+  };
 
-  //update plant passing new plant data
+  //plant doc
+  var plant = {
+    name: formData.editPlantName,
+    number: formData.editPlantNumber,
+    genetic: formData.editPlantGenetics,
+    origin: formData.editPlantOrigin,
+    lastModDate: new Date()
+  };
 
-  //update plant name in left menu
+  //genetic doc
+  var genetic = {
+    name: formData.editPlantGenetics,
+    lastModDate: new Date()
+  };
 
-  //clear form
-
-  //re-enable button
+  //update plant
+  app.db.updateDoc('plants', query, plant)
+    //concurrently add new genetics (if it doesn't exist)
+    .then(app.db.insertDocIfDoesNotExist('genetics', genetic))
+    .catch(function(err) {
+      app.l('Edit plant rejected with error: ' + err, 'DB');
+    })
+    .then(function() {
+      //close modal
+      app.s.editPlantModal.modal('hide');
+      //clear form
+      app.s.editPlantForm[0].reset();
+      //re-enable button
+      formElements.prop("disabled", false);
+    });
 });
 app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
-  //disable button
+  var formData = app.s.delPlantForm.serializeObject();
+  var formElements = app.s.delPlantForm.find(':input');
 
-  //close modal
+  //disable all form inputs, buttons, etc.
+  formElements.prop("disabled", true);
+
+  //query
+  var query = {
+    _id: formData.deletePlantId
+  };
 
   //delete plant
-
-  //delete plant from menu
-
-  //clear form
-
-  //re-enable button
+  app.db.removeDoc('plants', query)
+    .catch(function(err) {
+      app.l('Remove plant rejected with error: ' + err, 'DB');
+    })
+    .then(function() {
+      //close modal
+      app.s.delPlantModal.modal('hide');
+      //clear form
+      app.s.delPlantForm[0].reset();
+      //re-enable button
+      formElements.prop("disabled", false);
+    });
 });
 app.s.addChildModal.on('click', 'button[type="submit"]', function() {
   //disable button

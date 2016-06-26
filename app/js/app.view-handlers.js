@@ -40,12 +40,14 @@ app.v.populateLeftMenu = function() {
       })
     });
 };
-app.v.populateGeneticsComboboxes = function() {
+app.v.populateGenetics = function() {
   return app.db.getAllDocs('genetics', 'insertDate')
     .then(function(genetics) {
       var geneticsList = [];
       _.each(genetics, function(gen) {
-        geneticsList.push(gen.name);
+        if(typeof gen.name === 'string') {
+          geneticsList.push(gen.name); 
+        }
       });
       var options = {
         data: geneticsList,
@@ -55,7 +57,7 @@ app.v.populateGeneticsComboboxes = function() {
         },
         theme: 'bootstrap'
       };
-      app.s.addGeneticsCombobox.easyAutocomplete(options);
-      app.s.editGeneticsCombobox.easyAutocomplete(options);
+      app.s.addPlantGenetics.easyAutocomplete(options);
+      app.s.editPlantGenetics.easyAutocomplete(options);
     });
 };

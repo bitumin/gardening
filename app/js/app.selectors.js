@@ -4,16 +4,29 @@ app.selector = app.s = {
   leftMenu: $('#left-menu'),
   leftMenuItemsList: $('#left-menu-items-list'),
   content: $('#content'),
-  //modals
+  //add plant modal
   addPlantModal: $("#add-plant-modal"),
+  addPlantForm: $('#add-plant-form'),
+  addPlantGenetics: $('#add-plant-genetics'),
+  //edit plant modal
   editPlantModal: $("#edit-plant-modal"),
+  editPlantForm: $('#edit-plant-form'),
+  editPlantTitle: $('#edit-plant-title'),
+  editPlantId: $('#edit-plant-id'),
+  editPlantName: $('#edit-plant-name'),
+  editPlantNumber: $('#edit-plant-number'),
+  editPlantGenetics: $('#edit-plant-genetics'),
+  editPlantOrigin: $('#edit-plant-origin'),
+  //delete plant modal
   delPlantModal: $("#delete-plant-modal"),
+  delPlantForm: $('#delete-plant-form'),
+  delPlantId: $('#delete-plant-id'),
+  //add child modal
   addChildModal: $("#add-child-modal"),
+  //edit child modal
   editChildModal: $("#edit-child-modal"),
+  //delete child modal
   delChildModal: $("#delete-child-modal"),
-  //comboboxes
-  addGeneticsCombobox: $("#add-plant-genetics"),
-  editGeneticsCombobox: $("#edit-plant-genetics"),
   //date-range picker
   plantStatsDateRange: $('#plant-stats-date-range'),
   //left menu buttons
