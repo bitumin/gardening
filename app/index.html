@@ -2,161 +2,156 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=960">
   <title>Gardening Tools</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<div id="app" class="container-fluid">
 
-  <div class="row">
+<!--app-->
+<div id="app">
 
-    <!--left menu-->
-    <div class="col-xs-3 col-lg-2" id="left-menu">
-      <h1 class="title">Gardening Tools</h1>
-      <h2 class="parent-title">
-        PLANTAS
-        <a id="btn-open-add-plant-modal"><i class="fa fa-plus-circle"></i></a>
-      </h2>
+  <!--left menu-->
+  <div id="left-menu">
+    <h1 class="title">Gardening Tools</h1>
+    <h2 class="parent-title">
+      PLANTAS
+      <a id="btn-open-add-plant-modal"><i class="fa fa-plus-circle"></i></a>
+    </h2>
+    <ul id="left-menu-items-list" class="nav nav-pills nav-stacked">
+      <!--li items will be populated on app initialization-->
+    </ul>
+    <!--/left menu-->
+  </div>
 
-      <ul id="left-menu-items-list" class="nav nav-pills nav-stacked">
-        <!--li items will be populated on app initialization-->
-      </ul>
-      <!--/left menu-->
+  <!--content-->
+  <div id="content">
 
+    <!--welcome-->
+    <div id="content-welcome" class="row animated">
+      <h1>Bienvenido/a a <br>Gardening Tools</h1>
+      <p>
+        Powered by Node.js <script>document.write(process.versions.node);</script>,
+        <script>(function(){let match = navigator.userAgent.match(/(Chrom[e|ium])\/([0-9]+)\./);
+          document.write(match[1] + ' ' + match[2]);})();</script>
+        and NW.js <script>document.write(process.versions['node-webkit']);</script>
+      </p>
     </div>
 
-    <!--content-->
-    <div class="col-xs-9 col-lg-10" id="content">
+    <!--/welcome-->
 
-      <!--welcome-->
-      <div id="content-welcome" class="row animated">
-        <div class="col-xs-12">
-          <h1>Bienvenido/a a <br>Gardening Tools</h1>
-          <p>
-            Powered by Node.js <script>document.write(process.versions.node);</script>,
-            <script>(function(){let match = navigator.userAgent.match(/(Chrom[e|ium])\/([0-9]+)\./);
-              document.write(match[1] + ' ' + match[2]);})();</script>
-            and NW.js <script>document.write(process.versions['node-webkit']);</script>
-          </p>
+    <!--plant-->
+    <div id="content-plant" class="animated" data-plant-id="0">
+      <h2 id="content-plant-title">Plant name 1</h2>
+      <span id="content-plant-subtitle">Calidad, genética, procedencia</span>
+        <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#plant-children" aria-controls="children" role="tab" data-toggle="tab">Hijos</a>
+        </li>
+        <li role="presentation">
+          <a href="#plant-stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a>
+        </li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="plant-children">
+          <a id="btn-open-add-child-modal" class="btn btn-primary">
+            <i class="fa fa-plus-circle"></i> Añadir hijo
+          </a>
+          <table class="display" id="plant-children-datatable" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+              <th>Fecha entrada</th>
+              <th>Fecha salida</th>
+              <th>Altura entrada</th>
+              <th>Altura salida</th>
+              <th>Calidad entrada</th>
+              <th>Calidad salida</th>
+              <th>Sala</th>
+              <th>Producción</th>
+              <th>Defectos</th>
+              <th>Comentarios</th>
+              <th>Acciones</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+              <th>Fecha entrada</th>
+              <th>Fecha salida</th>
+              <th>Altura entrada</th>
+              <th>Altura salida</th>
+              <th>Calidad entrada</th>
+              <th>Calidad salida</th>
+              <th>Sala</th>
+              <th>Producción</th>
+              <th>Defectos</th>
+              <th>Comentarios</th>
+              <th>Acciones</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            <!--data loads here-->
+            </tbody>
+          </table>
         </div>
-      </div>
-      <!--/welcome view-->
+        <div role="tabpanel" class="tab-pane tabPlantStats" id="plant-stats">
+          <form action="javascript:">
+            <label for="plant-stats-date-range">Filter by date range:</label><br>
+            <input id="plant-stats-date-range" name="plantStatsForm" value="" type="text">
+          </form>
+          <!--PLANT STATS-->
+          <div class="plantDatatablesWrapper">
+            <table class="display" id="plant-stats-datatable" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                <th>Fecha entrada</th>
+                <th>Fecha salida</th>
+                <th>Altura entrada</th>
+                <th>Altura salida</th>
+                <th>Calidad entrada</th>
+                <th>Calidad salida</th>
+                <th>Sala</th>
+                <th>Producción</th>
+                <th>Defectos</th>
+                <th>Comentarios</th>
+              </tr>
+              </thead>
+              <tfoot>
+              <tr>
+                <th>Fecha entrada</th>
+                <th>Fecha salida</th>
+                <th>Altura entrada</th>
+                <th>Altura salida</th>
+                <th>Calidad entrada</th>
+                <th>Calidad salida</th>
+                <th>Sala</th>
+                <th>Producción</th>
+                <th>Defectos</th>
+                <th>Comentarios</th>
+              </tr>
+              </tfoot>
+              <tbody>
+              <!--data loads here-->
+              </tbody>
+            </table>
+          </div>
+        </div><!--/tab panel-->
+      </div><!--/tab content-->
+    </div>
+    <!--/plant-->
 
-      <!--plant view-->
-      <div id="content-plant" class="row animated" data-plant-id="0">
-        <div class="col-xs-12">
-          <h2 id="content-plant-title">Plant name 1</h2>
-          <span id="content-plant-subtitle">Calidad, genética, procedencia</span>
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#plant-children" aria-controls="children" role="tab" data-toggle="tab">Hijos</a>
-            </li>
-            <li role="presentation">
-              <a href="#plant-stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a>
-            </li>
-          </ul>
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="plant-children">
-              <a id="btn-open-add-child-modal" class="btn btn-primary">
-                <i class="fa fa-plus-circle"></i> Añadir hijo
-              </a>
-              <table class="display" id="plant-children-datatable" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                  <th>Fecha entrada</th>
-                  <th>Fecha salida</th>
-                  <th>Altura entrada</th>
-                  <th>Altura salida</th>
-                  <th>Calidad entrada</th>
-                  <th>Calidad salida</th>
-                  <th>Sala</th>
-                  <th>Producción</th>
-                  <th>Defectos</th>
-                  <th>Comentarios</th>
-                  <th>Acciones</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                  <th>Fecha entrada</th>
-                  <th>Fecha salida</th>
-                  <th>Altura entrada</th>
-                  <th>Altura salida</th>
-                  <th>Calidad entrada</th>
-                  <th>Calidad salida</th>
-                  <th>Sala</th>
-                  <th>Producción</th>
-                  <th>Defectos</th>
-                  <th>Comentarios</th>
-                  <th>Acciones</th>
-                </tr>
-                </tfoot>
-                <tbody>
-                <!--data loads here-->
-                </tbody>
-              </table>
-            </div>
-            <div role="tabpanel" class="tab-pane tabPlantStats" id="plant-stats">
-              <form action="javascript:">
-                <label for="plant-stats-date-range">Filter by date range:</label><br>
-                <input id="plant-stats-date-range" name="plantStatsForm" value="" type="text">
-              </form>
-              <!--PLANT STATS-->
-              <div class="plantDatatablesWrapper">
-                <table class="display" id="plant-stats-datatable" cellspacing="0" width="100%">
-                  <thead>
-                  <tr>
-                    <th>Fecha entrada</th>
-                    <th>Fecha salida</th>
-                    <th>Altura entrada</th>
-                    <th>Altura salida</th>
-                    <th>Calidad entrada</th>
-                    <th>Calidad salida</th>
-                    <th>Sala</th>
-                    <th>Producción</th>
-                    <th>Defectos</th>
-                    <th>Comentarios</th>
-                  </tr>
-                  </thead>
-                  <tfoot>
-                  <tr>
-                    <th>Fecha entrada</th>
-                    <th>Fecha salida</th>
-                    <th>Altura entrada</th>
-                    <th>Altura salida</th>
-                    <th>Calidad entrada</th>
-                    <th>Calidad salida</th>
-                    <th>Sala</th>
-                    <th>Producción</th>
-                    <th>Defectos</th>
-                    <th>Comentarios</th>
-                  </tr>
-                  </tfoot>
-                  <tbody>
-                  <!--data loads here-->
-                  </tbody>
-                </table>
-              </div>
-            </div><!--/tab panel-->
-          </div><!--/tab content-->
-        </div><!--/col-->
-      </div><!--/row-->
-      <!--/plant-->
+    <!--child-->
+    <div id="content-child" class="animated">
+      <h1>Child content</h1>
+    </div>
+    <!--/child-->
 
-      <!--child view-->
-      <div id="content-child" class="row animated">
-        <div class="col-xs-12">
-          <h1>Child content</h1>
-        </div>
-      </div>
-      <!--/child view-->
+  </div>
+  <!--/content-->
 
-    </div><!--/content .col-->
-  </div><!--/row-->
-
-</div><!--/app .container-->
+</div>
+<!--/app-->
 
 <!--Start Modal: Add new plant-->
 <div class="modal fade" id="add-plant-modal" tabindex="-1" role="dialog" aria-labelledby="addPlantModalLabel">
@@ -168,7 +163,7 @@
           Add new plant
         </h4>
       </div>
-      <form role="form" class="form-horizontal" id="newPlantForm" action="javascript:addPlant">
+      <form role="form" class="form-horizontal" id="newPlantForm" action="javascript:">
         <div class="modal-body">
           <div class="form-group">
             <label class="control-label col-xs-3" for="add-plant-name">Name:</label>
@@ -215,7 +210,7 @@
           Edit plant
         </h4>
       </div>
-      <form role="form" class="form-horizontal" id="editPlantForm" action="javascript:editPlant">
+      <form role="form" class="form-horizontal" id="editPlantForm" action="javascript:">
         <div class="modal-body">
           <input type="hidden" name="editPlantId" value="">
           <div class="form-group">
@@ -269,7 +264,7 @@
         Once confirmed, this action can not be undone!
       </div>
       <div class="modal-footer">
-        <form role="form" class="form-horizontal" id="deletePlantForm" action="javascript:app.deletePlant">
+        <form role="form" class="form-horizontal" id="deletePlantForm" action="javascript:">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           <button type="submit" class="btn btn-danger"><i class="fa fa-warning"></i> Confirm delete</button>
         </form>
@@ -289,7 +284,7 @@
           Add new child
         </h4>
       </div>
-      <form role="form" class="form-horizontal" id="newChildForm" action="javascript:addChild">
+      <form role="form" class="form-horizontal" id="newChildForm" action="javascript:">
         <div class="modal-body">
           <div class="form-group">
             <label class="control-label col-xs-3" for="add-child-name">Name:</label>
@@ -341,7 +336,7 @@
           Edit child
         </h4>
       </div>
-      <form role="form" class="form-horizontal" id="editChildForm" action="javascript:editChild">
+      <form role="form" class="form-horizontal" id="editChildForm" action="javascript:">
         <div class="modal-body">
           <div class="form-group">
             <label class="control-label col-xs-3" for="edit-child-name">Name:</label>
@@ -399,7 +394,7 @@
         Once confirmed, this action can not be undone!
       </div>
       <div class="modal-footer">
-        <form role="form" class="form-horizontal" id="deleteChildForm" action="javascript:deleteChild">
+        <form role="form" class="form-horizontal" id="deleteChildForm" action="javascript:">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-danger"><i class="fa fa-warning"></i> Confirm delete</button>
         </form>
@@ -437,6 +432,7 @@
 <script src="js/app.events.init.js"></script>
 <script src="js/app.deps.init.js"></script>
 <script type="application/javascript">
+  //todo: refactor init main script
   $(function() {
     //todo: remove splash screen
   });

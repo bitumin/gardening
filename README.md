@@ -2,9 +2,10 @@
 
 Gardening production manager
 
-### Details and project directory structure
+### Directory structure
 
-This app has been developed using well known front end JS libraries, including JQuery and Underscore. For the database management I use NeDB, a full JS database based in the MongoDB API.
+This app has been developed using well known front end JS libraries, including JQuery and Underscore.
+As for the database I use [NeDB](https://github.com/louischatriot/nedb), an awesome full JS database based in MongoDB API.
 
 - `./app`
     - `./app/css` Custom CSS.
@@ -17,14 +18,13 @@ This app has been developed using well known front end JS libraries, including J
 - `./icons` Icons for desktop builds of the app
 - `./node_modules` Node modules required to develop and build the app.
 - `./build.js` Script to build the app using NW.js
-- `./README.md` This file
+- `./README.md` You're reading it!
 
 ### Development environment setup
 
-1. Run `npm install` within `./app` folder.
-2. Run `bower install` within `./app` folder.
-3. Run `npm install` within the root `./` folder.
-4. Check that all required CSS, JS libs are present and run file watchers/minifiers if needed.
+1. Run `npm install` within `./app` folder to install node packages for the app.
+2. Run `bower install` within `./app` folder to install front end JS libraries for the app.
+3. Run `npm install` within the root `./` folder to install node packages for development.
 
 ### App building and packaging setup (nwjs-builder)
 
@@ -32,8 +32,19 @@ This app has been developed using well known front end JS libraries, including J
 
 ### Contact
 
-Mitxel Moriana [moriana.mitxel@gmail.com](moriana.mitxel@gmail.com)
+[Mitxel Moriana](moriana.mitxel@gmail.com)
 
 ### License
 
-GPLv3
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.

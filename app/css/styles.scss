@@ -6,25 +6,32 @@
 @import '../libs/datatables/media/css/dataTables.bootstrap.min.css';
 @import '../libs/animate.css/animate.min.css';
 
-// fonts
+/*
+ * Fonts
+ */
 @font-face {
   font-family: 'Open Sans Regular';
   src: url('../fonts/OpenSans-Regular.ttf');
 }
 
-// --- html, body
+/*
+ * Html, body
+ */
 
-html {
-
+html, body {
+  margin:0;
+  padding:0;
 }
 
 body {
   font-family: 'Open Sans Regular', sans-serif;
-  min-width: 800px;
+  min-width: 960px;
+  overflow: hidden;
 }
 
-// --- left menu
-
+/*
+ * Left menu
+ */
 $lm-bck: #7a9735; //$body-back
 $lm-txt: #eee;
 $lm-h1: #eee;
@@ -39,6 +46,12 @@ $lm-icon-hover: #ddd;
   background-color: $lm-bck;
   color: $lm-txt;
   min-height: 100vh;
+  max-height: 100vh;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
   padding-left: 0;
   padding-right: 7px;
   h1 { //app title
@@ -106,9 +119,17 @@ $lm-icon-hover: #ddd;
   }
 }
 
-// --- content
+/*
+ * Main content
+ */
 #content {
   min-height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
+  width: 100%;
+  min-width: 960px;
+  max-width: 100%;
+  padding-left: 250px;
 }
 
 // --- overview view

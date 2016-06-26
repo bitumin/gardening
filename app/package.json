@@ -2,7 +2,7 @@
   "main": "index.html",
   "name": "gardening",
   "description": "Gardening production management",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "author": "Mitxel Moriana",
   "homepage": "http://mitxelmoriana.com",
   "license": "GPL-3.0",
@@ -21,10 +21,13 @@
   ],
   "window": {
     "title": "Gardening",
-    "resizable": false,
-    "width": 1024,
-    "height": 768,
-    "position": "center"
+    "min_width": 960,
+    "min_height": 600,
+    "width": 960,
+    "height": 600,
+    "resizable": true,
+    "position": "center",
+    "icon": "./icons/dummy.png"
   },
   "devDependencies": {
     "faker": "^3.1.0"

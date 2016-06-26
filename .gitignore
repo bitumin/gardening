@@ -99,3 +99,6 @@ app/libs
 !app/libs/bootstrap-daterangepicker/daterangepicker.min.js
 ###NodeWebkit.js
 build
+###Datastores
+app/datastores/*
+!app/datastores/dummy.txt

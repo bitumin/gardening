@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.config = app.c = {
-  appName: 'GardeningTools',
+  appName: 'Gardening Tools',
   env: 'dev', //dev, pre, pro
   inAnimation: 'fadeIn',
   outAnimation: 'fadeOut',
@@ -25,6 +25,7 @@ app.log = app.l = function(msg, mode) {
     console.log(s.lpad(app.execTime(), 8, '0')+' '+app.config.appName+' ['+mode+']: '+msg);
 };
 
+//todo: to main init script
 if(app.config.env === 'dev') {
   app.l('Developer mode is ON', 'Warning');
 }

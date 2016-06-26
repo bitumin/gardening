@@ -5,17 +5,37 @@
 @import url(../libs/EasyAutocomplete/dist/easy-autocomplete.min.css);
 @import url(../libs/datatables/media/css/dataTables.bootstrap.min.css);
 @import url(../libs/animate.css/animate.min.css);
+/*
+ * Fonts
+ */
 @font-face {
   font-family: 'Open Sans Regular';
   src: url("../fonts/OpenSans-Regular.ttf"); }
+/*
+ * Html, body
+ */
+html, body {
+  margin: 0;
+  padding: 0; }
+
 body {
   font-family: 'Open Sans Regular', sans-serif;
-  min-width: 800px; }
+  min-width: 960px;
+  overflow: hidden; }
 
+/*
+ * Left menu
+ */
 #left-menu {
   background-color: #7a9735;
   color: #eee;
   min-height: 100vh;
+  max-height: 100vh;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
   padding-left: 0;
   padding-right: 7px; }
   #left-menu h1 {
@@ -57,8 +77,17 @@ body {
   #left-menu ul > li.active a, #left-menu ul > li.active a:focus, #left-menu ul > li.active a:hover {
     background-color: #0d4d4d; }
 
+/*
+ * Main content
+ */
 #content {
-  min-height: 100vh; }
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: auto;
+  width: 100%;
+  min-width: 960px;
+  max-width: 100%;
+  padding-left: 250px; }
 
 #content-welcome {
   padding-top: 150px;
