@@ -64,7 +64,8 @@ app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
       //add new plant to menu
       app.v.addNewPlantToLeftMenu(newPlant);
       //add new genetics (if it doesn't exist)
-      return app.db.insertDocIfDoesNotExist('genetics', genetic);
+      return app.db.insertDocIfDoesNotExist('genetics', genetic)
+        .then(app.v.populateGenetics);
     })
     .catch(function(err) {
       app.l('Add plant aborted with error: ' + err, 'DB');
@@ -108,7 +109,13 @@ app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
   //update plant
   app.db.updateDoc('plants', query, plant)
     //concurrently add new genetics (if it doesn't exist)
-    .then(app.db.insertDocIfDoesNotExist('genetics', genetic))
+    .then(function(nReplaced) {
+      if(nReplaced === 1) {
+        app.v.updatePlantName(query._id, plant.name);
+      }
+      return app.db.insertDocIfDoesNotExist('genetics', genetic)
+        .then(app.v.populateGenetics); 
+    })
     .catch(function(err) {
       app.l('Edit plant rejected with error: ' + err, 'DB');
     })
@@ -135,6 +142,12 @@ app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
 
   //delete plant
   app.db.removeDoc('plants', query)
+    .then(function(nRemoved) {
+      if(nRemoved === 1) {
+        //remove plant from left menu
+        app.v.removePlantFromLeftMenu(formData.deletePlantId);
+      }
+    })
     .catch(function(err) {
       app.l('Remove plant rejected with error: ' + err, 'DB');
     })

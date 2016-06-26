@@ -53,6 +53,7 @@ $lm-icon-hover: #ddd;
   overflow-y: auto;
   padding-left: 0;
   padding-right: 7px;
+  padding-bottom: 25px;
   z-index: 201;
   h1 { //app title
     font-size: 16px;
@@ -122,6 +123,8 @@ $lm-icon-hover: #ddd;
 /*
  * Main content
  */
+$tab-link: #106c6c;
+
 #content {
   z-index: 101;
   min-height: 100vh;
@@ -142,6 +145,45 @@ $lm-icon-hover: #ddd;
 //plant
 #content-plant {
   display: none;
+  max-width: 100%;
+  padding: 10px 10px 0 10px;
+}
+#content-plant-title-name {
+  font-size: 20px;
+  font-weight: 600;
+}
+#btn-open-add-child-modal {
+  margin-bottom: 10px;
+}
+.nav-tabs {
+  margin-top: 4px;
+  margin-left: -10px;
+  margin-right: -10px;
+  li:first-child {
+    margin-left: 10px;
+  }
+  li > a {
+    border-radius: 0;
+    line-height: 0.6;
+    color: $tab-link;
+  }
+}
+
+.tab-pane {
+  padding-top: 15px;
+}
+
+.tab-content {
+  margin-left: -10px;
+  margin-right: -10px;
+  padding: 10px;
+  min-width: 100%;
+  min-height: calc(100vh - 72px);
+  overflow: auto;
+}
+
+#plant-children-datatable {
+  width: 100%;
 }
 
 //child
@@ -149,14 +191,7 @@ $lm-icon-hover: #ddd;
   display: none;
 }
 
-//plants
-.nav-tabs {
-  margin-top: 15px;
-}
 
-.tab-pane {
-  padding-top: 15px;
-}
 
 .plant-children-datatable-wrapper,
 .plant-stats-datatable-wrapper {

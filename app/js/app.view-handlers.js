@@ -28,6 +28,12 @@ app.v.addNewPlantToLeftMenu = function(newPlant) {
     '</li>'
   );
 };
+app.v.removePlantFromLeftMenu = function(plantId) {
+  app.s.leftMenuItemsList.find('li[data-plant-id="' + plantId + '"]').remove();
+};
+app.v.updatePlantName = function(plantId, newPlantName) {
+  app.s.leftMenuItemsList.find('li[data-plant-id="' + plantId + '"] > a > span').text(newPlantName);
+};
 app.v.toggleActiveItem = function(el) {
   app.s.leftMenuItemsList.find('li.active').removeClass('active');
   $(el).addClass('active');

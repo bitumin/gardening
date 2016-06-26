@@ -42,15 +42,16 @@
 
     <!--plant-->
     <div id="content-plant" class="animated" data-plant-id="0">
-      <h2 id="content-plant-title">Plant name 1</h2>
-      <span id="content-plant-subtitle">Calidad, genética, procedencia</span>
+      <span id="content-plant-title-name">plant name</span>
+      <span id="content-plant-title-genetic">plant genetic</span>
+      <span id="contant-plant-title-origin">plant origin</span>
       <!--tabs nav-->
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
           <a href="#plant-children" aria-controls="children" role="tab" data-toggle="tab">Hijos</a>
         </li>
         <li role="presentation">
-          <a href="#plant-stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a>
+          <a href="#plant-stats" aria-controls="stats" role="tab" data-toggle="tab">Estadísticas</a>
         </li>
       </ul>
       <!--/tabs nav-->
@@ -58,18 +59,20 @@
       <div class="tab-content">
         <!--plant children tabpanel-->
         <div role="tabpanel" class="tab-pane active" id="plant-children">
-          <a id="btn-open-add-child-modal" class="btn btn-primary">
-            <i class="fa fa-plus-circle"></i> Añadir hijo
-          </a>
-          <table class="display" id="plant-children-datatable" cellspacing="0" width="100%">
+          <div>
+            <a id="btn-open-add-child-modal" class="btn btn-xs btn-success">
+              <i class="fa fa-plus-circle"></i> Añadir hijo
+            </a>
+          </div>
+          <table class="display table table-responsive table-striped table-bordered table-condensed" id="plant-children-datatable">
             <thead>
             <tr>
-              <th>Fecha entrada</th>
-              <th>Fecha salida</th>
-              <th>Altura entrada</th>
-              <th>Altura salida</th>
-              <th>Calidad entrada</th>
-              <th>Calidad salida</th>
+              <th>Fecha<br>entrada</th>
+              <th>Fecha<br>salida</th>
+              <th>Altura<br>entrada</th>
+              <th>Altura<br>salida</th>
+              <th>Calidad<br>entrada</th>
+              <th>Calidad<br>salida</th>
               <th>Sala</th>
               <th>Producción</th>
               <th>Defectos</th>
@@ -79,12 +82,12 @@
             </thead>
             <tfoot>
             <tr>
-              <th>Fecha entrada</th>
-              <th>Fecha salida</th>
-              <th>Altura entrada</th>
-              <th>Altura salida</th>
-              <th>Calidad entrada</th>
-              <th>Calidad salida</th>
+              <th>Fecha<br>entrada</th>
+              <th>Fecha<br>salida</th>
+              <th>Altura<br>entrada</th>
+              <th>Altura<br>salida</th>
+              <th>Calidad<br>entrada</th>
+              <th>Calidad<br>salida</th>
               <th>Sala</th>
               <th>Producción</th>
               <th>Defectos</th>
@@ -93,7 +96,7 @@
             </tr>
             </tfoot>
             <tbody>
-            <!--data loads here-->
+              <!--data goes here-->
             </tbody>
           </table>
         </div>
@@ -401,7 +404,7 @@
 </div>
 <!--/delete existing child modal-->
 
-<!--todo: use require.js to load all this more 'modularly'-->
+<!--todo: use modules to load all this in a more fashionable way-->
 <!--JS libraries-->
 <script src="libs/jquery/dist/jquery.min.js"></script>
 <script>$.fn.serializeObject = function() {var o = {};var a = this.serializeArray();$.each(a, function() {if (o[this.name] !== undefined) {if (!o[this.name].push) {o[this.name] = [o[this.name]];}o[this.name].push(this.value || '');} else {o[this.name] = this.value || '';}});return o;};</script>
