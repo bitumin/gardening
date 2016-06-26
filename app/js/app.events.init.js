@@ -10,12 +10,14 @@ app.s.leftMenu.on('click', '#btn-open-add-plant-modal', function() {
   // todo: to inject all genetics to the genetics combobox input, then...
   app.s.addPlantModal.modal('show');
 });
-app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function() {
+app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function(e) {
   // todo: inject selected plant data to respective inputs, including plant id, then...
   app.s.editPlantModal.modal('show');
+  e.stopPropagation();
 });
 app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function() {
   app.s.delPlantModal.modal('show');
+  e.stopPropagation();
 });
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
   //todo: load all plant data and related children to the plant view
