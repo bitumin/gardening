@@ -26,9 +26,13 @@ As for the database I use [NeDB](https://github.com/louischatriot/nedb), an awes
 2. Run `bower install` within `./app` folder to install front end JS libraries for the app.
 3. Run `npm install` within the root `./` folder to install node packages for development.
 
-### App building and packaging setup (nwjs-builder)
+### Running the app
 
-1. Run `node build.js`
+1. Run `node run` within the root `./` folder.
+
+### Building and packaging the app with nwjs-builder
+
+1. Run `node build` within the root `./` folder.
 
 ### Contact
 
