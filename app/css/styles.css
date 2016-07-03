@@ -24,6 +24,15 @@ body {
   overflow: hidden; }
 
 /*
+ * Tables
+ */
+th {
+  font-size: 10px; }
+
+td {
+  font-size: 11px; }
+
+/*
  * Left menu
  */
 #left-menu {
@@ -130,7 +139,7 @@ body {
   min-height: calc(100vh - 72px);
   overflow: auto; }
 
-#plant-children-datatable {
+#plant-children-table {
   width: 100%; }
 
 #content-child {

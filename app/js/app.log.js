@@ -10,3 +10,13 @@ app.log = app.l = function(msg, mode) {
   if(app.c.env === 'dev')
     console.log(s.lpad(app.execTime(), 8, '0')+' '+app.config.appName+' ['+mode+']: '+msg);
 };
+
+app.formatDate = function(date) {
+  date = new Date(date);
+  var separator = '/';
+  var d = date.getDate();
+  var m = 1 + date.getMonth();
+  var y = date.getFullYear();
+  
+  return '' + y + separator + m + separator + d;
+};

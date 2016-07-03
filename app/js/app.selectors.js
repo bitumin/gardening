@@ -39,15 +39,17 @@ app.selector = app.s = {
   contentPlant: $('#content-plant'),
   contentChild: $('#content-child'),
   //plant view
-  contentPlantTitle: $('#content-plant-title'),
-  contentPlantSubtitle: $('#content-plant-subtitle'),
+  contentPlantTitleName: $('#content-plant-title-name'),
+  contentPlantTitleGenetics: $('#content-plant-title-genetic'),
+  contentPlantTitleOrigin: $('#content-plant-title-origin'),
+  //
   btnOpenAddChildModal: $('#btn-open-add-child-modal'),
   plantChildrenTab: $('#plant-children'),
   plantStatsTab: $('#plant-stats'),
   //plant view > children tab
-  childDatatable: $('#plant-children-datatable'),
+  plantChildrenTable: $('#plant-children-table'),
   //plant view > stats tab
-  plantDatatable: $('#plant-stats-datatable')
+  //plantDatatable: $('#plant-stats-datatable')
   //child view
 };
 

@@ -29,6 +29,18 @@ body {
 }
 
 /*
+ * Tables
+ */
+th {
+  font-size: 10px;
+}
+
+td {
+  font-size: 11px;
+}
+
+
+/*
  * Left menu
  */
 $lm-bck: #7a9735; //$body-back
@@ -182,7 +194,7 @@ $tab-link: #106c6c;
   overflow: auto;
 }
 
-#plant-children-datatable {
+#plant-children-table {
   width: 100%;
 }
 

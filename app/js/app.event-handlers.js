@@ -28,7 +28,7 @@ app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
   app.s.delPlantModal.modal('show');
 });
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
-  //todo: load all plant data and related children to the plant view
+  app.v.populatePlantView($(this).closest('li').data('plantId'));
   app.v.switchView(app.s.contentPlant);
   app.v.toggleActiveItem(this.closest('li'));
 });
@@ -160,6 +160,22 @@ app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
       formElements.prop("disabled", false);
     });
 });
+app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
+  var tr = $(this).closest('tr');
+  var row = table.row( tr );
+
+  if ( row.child.isShown() ) {
+    // This row is already open - close it
+    row.child.hide();
+    tr.removeClass('shown');
+  }
+  else {
+    // Open this row
+    row.child( format(row.data()) ).show();
+    tr.addClass('shown');
+  }
+});
+
 app.s.addChildModal.on('click', 'button[type="submit"]', function() {
   //disable button
 

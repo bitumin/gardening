@@ -14,6 +14,37 @@ app.v.switchView = function(contentEl) {
     contentEl.addClass(app.c.inAnimation).show();
   }
 };
+app.v.populatePlantView = function(plantId) {
+  app.db.getOneDoc('plants', { _id: plantId })
+    .then(function (doc) {
+      //populate plant info
+      app.s.contentPlant.attr('data-plant-id', doc._id);
+      app.s.contentPlantTitleName.text(doc.name);
+      app.s.contentPlantTitleGenetics.text(doc.genetic);
+      app.s.contentPlantTitleOrigin.text(doc.origin);
+      //doc.number
+      //populate children table
+      var childrenData = [];
+      _.each(doc.children, function(child) {
+        childrenData.push({
+          'Fecha entrada': app.formatDate(child.inDate),
+          'Fecha salida': app.formatDate(child.outDate),
+          'Altura entrada': child.inHeight,
+          'Altura salida': child.outHeight,
+          'Calidad entrada': child.inQuality,
+          'Calidad salida': child.outQuality,
+          'Sala': child.room,
+          'Producción': child.production,
+          'Defectos': child.defects,
+          'Comentarios': child.comments
+        });
+      });
+      app.s.plantChildrenDatatable.rows.add(childrenData).draw('full-reset');
+    })
+    .catch(function(err) {
+      //todo: do something on exception
+    });
+};
 app.v.addNewPlantToLeftMenu = function(newPlant) {
   var newPlantId = newPlant._id;
   var newPlantName = newPlant.name;

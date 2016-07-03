@@ -6,8 +6,29 @@
 //todo: update genetics combobox at start app and at adding genetics form any form
 
 //init datatables 
-app.s.plantDatatable.DataTable();
-app.s.childDatatable.DataTable();
+app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
+  columns: [
+    { data: 'Fecha entrada' },
+    { data: 'Fecha salida' },
+    { data: 'Altura entrada' },
+    { data: 'Altura salida' },
+    { data: 'Calidad entrada' },
+    { data: 'Calidad salida' },
+    { data: 'Sala' },
+    { data: 'Producción' },
+    { data: 'Defectos' },
+    { data: 'Comentarios' },
+    {
+      "orderable": false,
+      "data": null,
+      "defaultContent":
+        '<i class="fa fa-pencil btn-edit-child"></i> ' +
+        '<i class="fa fa-times btn-delete-child"></i>'
+    }
+  ],
+  "order": [[1, 'desc']]
+});
+// app.s.childDatatable.DataTable();
 app.l('Datatables initialized');
 
 //init plant stats date range picker
