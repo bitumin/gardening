@@ -3,7 +3,7 @@
 @import url(../libs/bootstrap/dist/css/bootstrap-theme.min.css);
 @import url(../libs/bootstrap-daterangepicker/daterangepicker.min.css);
 @import url(../libs/EasyAutocomplete/dist/easy-autocomplete.min.css);
-@import url(../libs/datatables/media/css/dataTables.bootstrap.min.css);
+@import url(../libs/datatables/datatables.min.css);
 @import url(../libs/animate.css/animate.min.css);
 /*
  * Fonts
@@ -24,13 +24,40 @@ body {
   overflow: hidden; }
 
 /*
- * Tables
+ * Datatables
  */
-th {
-  font-size: 10px; }
+table.dataTable.dtr-column > tbody > tr > td.control:before,
+table.dataTable.dtr-column > tbody > tr > th.control:before {
+  height: 0;
+  width: 0;
+  margin-top: 0;
+  margin-left: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 0 0 0;
+  box-sizing: content-box;
+  font-family: sans-serif;
+  line-height: 0;
+  content: ''; }
 
-td {
-  font-size: 11px; }
+table.dataTable.dtr-column > tbody > tr.parent td.control:before,
+table.dataTable.dtr-column > tbody > tr.parent th.control:before {
+  content: ''; }
+
+.btn-details-child, .btn-edit-child, .btn-delete-child {
+  font-size: 12px; }
+
+.btn-details-child > .fa-square {
+  color: #5cb85c; }
+
+.parent > .control > .btn-details-child > .fa-square {
+  color: #337ab7; }
+
+.btn-edit-child > .fa-square {
+  color: #f0ad4e; }
+
+.btn-delete-child > .fa-square {
+  color: #d9534f; }
 
 /*
  * Left menu
@@ -134,7 +161,7 @@ td {
 .tab-content {
   margin-left: -10px;
   margin-right: -10px;
-  padding: 10px;
+  padding: 15px;
   min-width: 100%;
   min-height: calc(100vh - 72px);
   overflow: auto; }

@@ -23,8 +23,8 @@
     "title": "Gardening",
     "min_width": 960,
     "min_height": 600,
-    "width": 960,
-    "height": 600,
+    "width": 1280,
+    "height": 800,
     "resizable": true,
     "position": "center",
     "icon": "./icons/dummy.png"

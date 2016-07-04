@@ -27,8 +27,8 @@ app.v.populatePlantView = function(plantId) {
       var childrenData = [];
       _.each(doc.children, function(child) {
         childrenData.push({
-          'Fecha entrada': app.formatDate(child.inDate),
-          'Fecha salida': app.formatDate(child.outDate),
+          'Fecha entrada': child.inDate,
+          'Fecha salida': child.outDate,
           'Altura entrada': child.inHeight,
           'Altura salida': child.outHeight,
           'Calidad entrada': child.inQuality,
@@ -39,7 +39,7 @@ app.v.populatePlantView = function(plantId) {
           'Comentarios': child.comments
         });
       });
-      app.s.plantChildrenDatatable.rows.add(childrenData).draw('full-reset');
+      app.s.plantChildrenDatatable.clear().rows.add(childrenData).draw('full-reset');
     })
     .catch(function(err) {
       //todo: do something on exception

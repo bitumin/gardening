@@ -7,26 +7,72 @@
 
 //init datatables 
 app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
-  columns: [
-    { data: 'Fecha entrada' },
-    { data: 'Fecha salida' },
-    { data: 'Altura entrada' },
-    { data: 'Altura salida' },
-    { data: 'Calidad entrada' },
-    { data: 'Calidad salida' },
-    { data: 'Sala' },
-    { data: 'Producción' },
-    { data: 'Defectos' },
-    { data: 'Comentarios' },
+  "autoFill": true,
+  "colReorder": true,
+  "responsive": {
+    "details": {
+      "type": 'column' //first column displays "show more" control element
+    }
+  },
+  "columnDefs": [
     {
+      "render": function (data, type, row) { return app.formatDate(data); },
+      "targets": [1,2]
+    }
+  ],
+  "columns": [
+    {
+      "className": 'control',
       "orderable": false,
       "data": null,
       "defaultContent":
-        '<i class="fa fa-pencil btn-edit-child"></i> ' +
-        '<i class="fa fa-times btn-delete-child"></i>'
+        '<span class="fa-stack btn-details-child">' +
+          '<i class="fa fa-square fa-stack-2x"></i>' +
+          '<i class="fa fa-info fa-stack-1x fa-inverse"></i>' +
+        '</span>'
+    },
+    { "data": 'Fecha entrada' },
+    { "data": 'Fecha salida' },
+    { "data": 'Altura entrada' },
+    { "data": 'Altura salida' },
+    { "data": 'Calidad entrada' },
+    { "data": 'Calidad salida' },
+    { "data": 'Sala' },
+    { "data": 'Producción' },
+    { 
+      "data": 'Defectos',
+      "orderable": false,
+      "searchable": false,
+      "className": 'none' //this column is always hidden and it will be shown within a child row instead
+    },
+    { 
+      "data": 'Comentarios',
+      "orderable": false,
+      "searchable": false,
+      "className": 'none' //this column is always hidden and it will be shown within a child row instead
+    },
+    {
+      "orderable": false,
+      "searchable": false,
+      "data": null,
+      "defaultContent":
+        '<span class="fa-stack btn-edit-child">' +
+          '<i class="fa fa-square fa-stack-2x"></i>' +
+          '<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>' +
+        '</span>'
+    },
+    {
+      "orderable": false,
+      "searchable": false,
+      "data": null,
+      "defaultContent":
+        '<span class="fa-stack btn-delete-child">' +
+          '<i class="fa fa-square fa-stack-2x"></i>' +
+          '<i class="fa fa-times fa-stack-1x fa-inverse"></i>' +
+        '</span>'
     }
   ],
-  "order": [[1, 'desc']]
+  'order': [[1, 'desc']]
 });
 // app.s.childDatatable.DataTable();
 app.l('Datatables initialized');
