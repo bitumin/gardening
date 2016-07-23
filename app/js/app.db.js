@@ -209,7 +209,6 @@ app.db.seeders.children = function () {
     app.l('Seeding children...', 'DB');
     var faker = require('faker');
     var counter = 0;
-    var qualities = ['extremely bad','very bad','bad','normal','fine','good','very good','excellent'];
     
     app.db.getAllDocs('plants').then(function (plants) {
       _.each(plants, function (plant) {
@@ -218,21 +217,21 @@ app.db.seeders.children = function () {
           //Some children are out (have been gathered), the rest are still in (growing)
           var childIsOutProbability = app.c.seeders.childIsOutProbability;
           var outDate, outHeight, outQuality, production;
-          outDate = outHeight = outQuality = production = null;
 
+          outDate = outHeight = outQuality = production = null;
           if (Math.random() < childIsOutProbability) {
             outDate = faker.date.recent();
-            outHeight = Math.floor(Math.random() * 130) + 20; //20 - 150 cm
-            outQuality = _.sample(qualities);
-            production = Math.floor(Math.random() * 49) + 1; //1 - 50 kg
+            outHeight = Math.floor(Math.random() * 131) + 20; //20 - 150 cm
+            outQuality = Math.floor(Math.random() * 11); //0 - 10
+            production = Math.floor(Math.random() * 50) + 1; //1 - 50 kg
           }
 
           app.db.plants.update(plant, { $push: { children: {
             inDate: faker.date.past(),
             outDate: outDate,
-            inHeight: Math.floor(Math.random() * 19) + 1, // 1 - 19 cm
+            inHeight: Math.floor(Math.random() * 19) + 1, //1 - 19 cm
             outHeight: outHeight,
-            inQuality: _.sample(qualities),
+            inQuality: Math.floor(Math.random() * 11), //0 - 10
             outQuality: outQuality,
             room: faker.commerce.color(),
             production: production,
