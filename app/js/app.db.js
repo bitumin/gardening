@@ -1,4 +1,5 @@
 var NeDB = require('nedb');
+var uuid = require('node-uuid');
 
 app.db = {
   options: new NeDB({filename: './datastores/options.db', autoload: true}),
@@ -234,6 +235,7 @@ app.db.seeders.children = function () {
           }
 
           app.db.plants.update(plant, { $push: { children: {
+            uuid: uuid.v4(),
             inDate: faker.date.past(),
             outDate: outDate,
             inHeight: Math.floor(Math.random() * 19) + 1, //1 - 19 cm

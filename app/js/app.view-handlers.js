@@ -27,6 +27,7 @@ app.v.populatePlantView = function(plantId) {
       var childrenData = [];
       _.each(doc.children, function(child) {
         childrenData.push({
+          'UUID': child.uuid,
           'Fecha entrada': child.inDate,
           'Fecha salida': child.outDate,
           'Altura entrada': child.inHeight,

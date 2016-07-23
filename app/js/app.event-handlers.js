@@ -1,7 +1,11 @@
-// left menu event handlers
+/*
+ * Left menu event handlers
+ */
+
 app.s.leftMenu.on('click', '#btn-open-add-plant-modal', function() {
   app.s.addPlantModal.modal('show');
 });
+
 app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function(e) {
   e.stopPropagation();
   var plantId = $(this).closest('li').data('plantId');
@@ -21,19 +25,24 @@ app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function(e) {
       //todo: do something on exception
     });
 });
+
 app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
   e.stopPropagation();
   var plantId = $(this).closest('li').data('plantId');
   app.s.delPlantId.val(plantId);
   app.s.delPlantModal.modal('show');
 });
+
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
   app.v.populatePlantView($(this).closest('li').data('plantId'));
   app.v.switchView(app.s.contentPlant);
   app.v.toggleActiveItem(this.closest('li'));
 });
 
-// modals - add/edit data
+/*
+ * Plant modals (add, edit, delete)
+ */
+
 app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.addPlantForm.serializeObject();
   var formElements = app.s.addPlantForm.find(':input');
@@ -79,6 +88,7 @@ app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
       formElements.prop("disabled", false);
     });
 });
+
 app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.editPlantForm.serializeObject();
   var formElements = app.s.editPlantForm.find(':input');
@@ -128,6 +138,7 @@ app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
       formElements.prop("disabled", false);
     });
 });
+
 app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.delPlantForm.serializeObject();
   var formElements = app.s.delPlantForm.find(':input');
@@ -160,6 +171,11 @@ app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
       formElements.prop("disabled", false);
     });
 });
+
+/*
+ * Plant's children datatable event handlers
+ */
+
 app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
   var tr = $(this).closest('tr');
   var row = table.row( tr );
@@ -175,6 +191,47 @@ app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
     tr.addClass('shown');
   }
 });
+
+/*
+ * Content event handlers
+ */
+
+app.s.content.on('click', '.btn-open-add-child-modal', function() {
+  //todo: capture and pass plant id to add children modal
+
+  app.s.addChildModal.modal('show');
+});
+
+app.s.content.on('click', '.btn-open-edit-child-modal', function(e) {
+  //todo: capture plant and children id, pass data to children modal
+  // var plantId = $(this).closest('li').data('plantId');
+
+  // app.db.getOneDoc('plants', { _id: plantId })
+  //   .then(function (doc) {
+  //     load data into modal
+      // app.s.editPlantTitle.text(doc.name);
+      // app.s.editPlantId.val(doc._id);
+      // app.s.editPlantName.val(doc.name);
+      // app.s.editPlantNumber.val(doc.number);
+      // app.s.editPlantGenetics.val(doc.genetic);
+      // app.s.editPlantOrigin.val(doc.origin);
+      // open modal
+      // app.s.editPlantModal.modal('show');
+    // })
+    // .catch(function(err) {
+    //   todo: do something on exception
+    // });
+});
+
+app.s.content.on('click', '.btn-open-delete-child-modal', function(e) {
+  // var plantId = $(this).closest('li').data('plantId');
+  // app.s.delPlantId.val(plantId);
+  // app.s.delPlantModal.modal('show');
+});
+
+/*
+ * Child modals (add, edit, delete)
+ */
 
 app.s.addChildModal.on('click', 'button[type="submit"]', function() {
   //disable button
@@ -193,6 +250,7 @@ app.s.addChildModal.on('click', 'button[type="submit"]', function() {
 
   //re-enable button
 });
+
 app.s.editChildModal.on('click', 'button[type="submit"]', function() {
   //disable button
 
@@ -210,6 +268,7 @@ app.s.editChildModal.on('click', 'button[type="submit"]', function() {
 
   //re-enable button
 });
+
 app.s.delChildModal.on('click', 'button[type="submit"]', function() {
   //disable button
 

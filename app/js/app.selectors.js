@@ -42,15 +42,14 @@ app.selector = app.s = {
   contentPlantTitleName: $('#content-plant-title-name'),
   contentPlantTitleGenetics: $('#content-plant-title-genetic'),
   contentPlantTitleOrigin: $('#content-plant-title-origin'),
-  //
-  btnOpenAddChildModal: $('#btn-open-add-child-modal'),
   plantChildrenTab: $('#plant-children'),
   plantStatsTab: $('#plant-stats'),
-  //plant view > children tab
+  //children tab
+  btnOpenAddChildModal: $('.btn-open-add-child-modal'),
+  btnOpenEditChildModal: $('.btn-open-edit-child-modal'),
+  btnOpenDeleteChildModal: $('.btn-open-delete-child-modal'),
   plantChildrenTable: $('#plant-children-table'),
-  //plant view > stats tab
-  //plantDatatable: $('#plant-stats-datatable')
-  //child view
+  //statistics tab
 };
 
 app.l('Selectors set');

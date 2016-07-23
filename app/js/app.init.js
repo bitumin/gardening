@@ -17,8 +17,13 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
   "columnDefs": [
     {
       "render": function (data, type, row) { return app.formatDate(data); },
-      "targets": [1,2]
-    }
+      "targets": [2,3] //format date columns
+    },
+    {
+      "visible": function() { return app.config.env !== 'dev' },
+      "searchable": false,
+      "targets": [1] //hide uuid column
+    },
   ],
   "columns": [
     {
@@ -31,6 +36,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
           '<i class="fa fa-info fa-stack-1x fa-inverse"></i>' +
         '</span>'
     },
+    { "data": 'UUID' },
     { "data": 'Fecha entrada' },
     { "data": 'Fecha salida' },
     { "data": 'Altura entrada' },
@@ -56,7 +62,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
       "searchable": false,
       "data": null,
       "defaultContent":
-        '<span class="fa-stack btn-edit-child">' +
+        '<span class="fa-stack btn-open-edit-child-modal">' +
           '<i class="fa fa-square fa-stack-2x"></i>' +
           '<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>' +
         '</span>'
@@ -66,13 +72,13 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
       "searchable": false,
       "data": null,
       "defaultContent":
-        '<span class="fa-stack btn-delete-child">' +
+        '<span class="fa-stack btn-open-delete-child-modal">' +
           '<i class="fa fa-square fa-stack-2x"></i>' +
           '<i class="fa fa-times fa-stack-1x fa-inverse"></i>' +
         '</span>'
     }
   ],
-  'order': [[1, 'desc']]
+  'order': [[2, 'desc']]
 });
 // app.s.childDatatable.DataTable();
 app.l('Datatables initialized');
