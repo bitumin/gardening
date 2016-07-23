@@ -1,10 +1,9 @@
 var NwjsBuilder = require('nwjs-builder');
-
-var version = '0.15.4-sdk';
+var env = require('./env');
 
 NwjsBuilder.commands.nwbuild(['./app/'], {
   run: true,
-  version: version
+  version: env.nwjsVersion
 }, function(err, code) {
   if(err) throw err;
   else if(code == 233) return done();
