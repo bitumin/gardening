@@ -8,6 +8,13 @@ app.db = {
 app.l('NeDB datastores initialized', 'DB');
 
 // Async NeDB "promisified" helpers
+app.db.resetAllDatastores = function() {
+  if (app.config.env === 'dev') {
+    app.db.options.remove({}, { multi: true }, function (err, n) { app.l(n + ' options removed'); });
+    app.db.genetics.remove({}, { multi: true }, function (err, n) { app.l(n + ' genetics removed'); });
+    app.db.plants.remove({}, { multi: true }, function (err, n) {  app.l(n + ' plants removed'); });
+  }
+};
 app.db.countDocs = function (datastore) {
   return new Promise(function (resolve, reject) {
     app.db[datastore].count({}, function (err, count) {
