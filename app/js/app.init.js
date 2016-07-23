@@ -20,7 +20,8 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
       "targets": [2,3] //format date columns
     },
     {
-      "visible": function() { return app.config.env !== 'dev' },
+      "render": function (data, type, row) { return "<span class='uuid'>" + data + "</span>"; },
+      "visible": function() { return app.config.env !== 'dev'; },
       "searchable": false,
       "targets": [1] //hide uuid column
     },
