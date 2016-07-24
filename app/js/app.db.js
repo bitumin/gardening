@@ -270,3 +270,64 @@ app.db.runSeeder = function () {
       .then(app.db.seeders.plants)
       .then(app.db.seeders.children);
 };
+
+// plants repository
+app.db.plantsRepo = {
+  insertChild: function(plantId, child){
+    return new Promise(function(resolve, reject){
+        app.db.plants.update({_id: plantId}, {$push: {children: child}}, {}, function(err, newChild){
+        if (err) {
+          reject(Error('Unable to add child to plants datastore, with error: ' + err));
+        } else {
+          resolve(newChild);
+        }
+      });
+    });
+  },
+  updateChild: function(plantId, child){
+    return new Promise(function(resolve, reject){
+      app.db.plants.update({_id: plantId}, {$pull: {children: {uuid: child.uuid}}}, {}, function(err){
+        if (err) {
+          reject(Error('Unable to add child to plants datastore, with error: ' + err));
+        } else {
+          app.db.plants.update({_id: plantId}, {$push: {children: child}}, {}, function(err, newChild){
+            if (err) {
+              reject(Error('Unable to add child to plants datastore, with error: ' + err));
+            } else {
+              resolve(newChild);
+            }
+          });
+        }
+      });
+    });
+  },
+  deleteChild: function(plantId, childUuid){
+      return new Promise(function(resolve, reject){
+        app.db.plants.update({_id: plantId}, {$pull: {children: {uuid: childUuid}}}, {}, function(err){
+        if (err) {
+          reject(Error('Unable to delete child to plants datastore, with error: ' + err));
+        } else {
+          resolve(childUuid);
+        }
+      });
+    });
+  },
+  getChild: function(plantId, childUuid){
+      return new Promise(function(resolve, reject){
+        app.db.plants.findOne({_id: plantId}, {}, function(err, plant){
+        if (err) {
+          reject(Error('Unable to find child of plant, with error: ' + err));
+        } else {
+          var child;
+          for(var i = 0; i < plant.children.length; i++){
+            if(plant.children[i].uuid === childUuid){
+              child = plant.children[i];
+              break;
+            }
+          }
+          resolve(child);
+        }
+      });
+    });
+  }
+};

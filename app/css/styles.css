@@ -192,4 +192,8 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
 .btn-xs, .form-inline {
   display: inline-block; }
 
+.form-group.required .control-label:after {
+  content: "*";
+  color: red; }
+
 /*# sourceMappingURL=styles.css.map */

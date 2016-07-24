@@ -64,7 +64,7 @@
               <i class="fa fa-plus-circle"></i> Añadir hijo
             </a>
           </div>
-          <table id="plant-children-table" class="display table table-striped table-bordered table-condensed table-hover">
+          <table id="plant-children-table" class="display table table-striped table-bordered table-hover">
             <thead>
             <tr>
               <th></th>
@@ -266,30 +266,66 @@
           Add new child
         </h4>
       </div>
-      <form role="form" class="form-horizontal" id="newChildForm" action="javascript:">
+      <form role="form" class="form-horizontal" id="add-child-form">
         <div class="modal-body">
-          <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-name">Name:</label>
+          <div class="form-group required">
+            <label class="control-label col-xs-3" for="add-child-in-date">In date:</label>
             <div class="col-xs-9">
-              <input type="text" class="form-control" name="addChildName" id="add-child-name">
+              <input type="text" class="form-control" name="addChildInDate" id="add-child-in-date" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-number">Number:</label>
+            <label class="control-label col-xs-3" for="add-child-out-date">Out date:</label>
             <div class="col-xs-9">
-              <input type="number" class="form-control" name="addChildNumber" min="0" id="add-child-number">
+              <input type="text" class="form-control" name="addChildOutDate" id="add-child-out-date">
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="control-label col-xs-3" for="add-child-in-height">In height:</label>
+            <div class="col-xs-9">
+              <input type="number" class="form-control" name="addChildInHeight" id="add-child-in-height" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-genetics">Genetics:</label>
+            <label class="control-label col-xs-3" for="add-child-out-height">Out height:</label>
             <div class="col-xs-9">
-              <select name="addChildGenetics" id="add-child-genetics"></select>
+              <input type="number" class="form-control" name="addChildOutHeight" id="add-child-out-height">
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="control-label col-xs-3" for="add-child-in-quality">In quality:</label>
+            <div class="col-xs-9">
+              <input type="number" class="form-control" name="addChildInQuality" id="add-child-in-quality" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-origin">Origin:</label>
+            <label class="control-label col-xs-3" for="add-child-out-quality">Out quality:</label>
             <div class="col-xs-9">
-              <input type="text" class="form-control" name="addChildOrigin" id="add-child-origin">
+              <input type="number" class="form-control" name="addChildOutQuality" id="add-child-out-quality">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="add-child-room">Room:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="addChildRoom" id="add-child-room">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="add-child-production">Production:</label>
+            <div class="col-xs-9">
+              <input type="number" class="form-control" name="addChildProduction" id="add-child-production">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="add-child-defects">Defects:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="addChildDefects" id="add-child-defects">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="add-child-comments">Comments:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="addChildComments" id="add-child-comments">
             </div>
           </div>
         </div>
@@ -304,7 +340,7 @@
 <!--/add new child modal-->
 
 <!--edit existing child modal-->
-<div class="modal fade" id="editChildModal" tabindex="-1" role="dialog" aria-labelledby="editChildModalLabel">
+<div class="modal fade" id="edit-child-modal" tabindex="-1" role="dialog" aria-labelledby="editChildModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -313,36 +349,77 @@
           Edit child
         </h4>
       </div>
-      <form role="form" class="form-horizontal" id="editChildForm" action="javascript:">
+      <form role="form" class="form-horizontal" id="edit-child-form">
         <div class="modal-body">
-          <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-name">Name:</label>
+          <div class="form-group required">
             <div class="col-xs-9">
-              <input type="text" class="form-control" name="editChildName" id="edit-child-name">
+              <input type="hidden" class="form-control" name="editChildUuid" id="edit-child-uuid" required>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="control-label col-xs-3" for="edit-child-in-date">In date:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="editChildInDate" id="edit-child-in-date" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-number">Number:</label>
+            <label class="control-label col-xs-3" for="edit-child-out-date">Out date:</label>
             <div class="col-xs-9">
-              <input type="number" class="form-control" name="editChildNumber" min="0" id="edit-child-number">
+              <input type="text" class="form-control" name="editChildOutDate" id="edit-child-out-date">
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="control-label col-xs-3" for="edit-child-in-height">In height:</label>
+            <div class="col-xs-9">
+              <input type="number" class="form-control" name="editChildInHeight" id="edit-child-in-height" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-genetics">Genetics:</label>
+            <label class="control-label col-xs-3" for="edit-child-out-height">Out height:</label>
             <div class="col-xs-9">
-              <select name="editChildGenetics" id="edit-child-genetics"></select>
+              <input type="number" class="form-control" name="editChildOutHeight" id="edit-child-out-height">
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="control-label col-xs-3" for="edit-child-in-quality">In quality:</label>
+            <div class="col-xs-9">
+              <input type="number" class="form-control" name="editChildInQuality" id="edit-child-in-quality" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-origin">Origin:</label>
+            <label class="control-label col-xs-3" for="edit-child-out-quality">Out quality:</label>
             <div class="col-xs-9">
-              <input type="text" class="form-control" name="editChildOrigin" id="edit-child-origin">
+              <input type="number" class="form-control" name="editChildOutQuality" id="edit-child-out-quality">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="edit-child-room">Room:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="editChildRoom" id="edit-child-room">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="edit-child-production">Production:</label>
+            <div class="col-xs-9">
+              <input type="number" class="form-control" name="editChildProduction" id="edit-child-production">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="edit-child-defects">Defects:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="editChildDefects" id="edit-child-defects">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="edit-child-comments">Comments:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="editChildComments" id="edit-child-comments">
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save changes</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-leaf"></i> Edit child</button>
         </div>
       </form>
     </div>
@@ -351,7 +428,7 @@
 <!--/edit existing child modal-->
 
 <!--delete existing child modal-->
-<div class="modal fade" id="deleteChildModal" tabindex="-1" role="dialog" aria-labelledby="deleteChildModalLabel">
+<div class="modal fade" id="delete-child-modal" tabindex="-1" role="dialog" aria-labelledby="deleteChildModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -366,9 +443,10 @@
         Once confirmed, this action can not be undone!
       </div>
       <div class="modal-footer">
-        <form role="form" class="form-horizontal" id="deleteChildForm" action="javascript:">
+        <form role="form" class="form-horizontal" id="delete-child-form" action="javascript:">
+          <input type="hidden" name="deleteChildUuid" id="delete-child-uuid" value="" required>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger"><i class="fa fa-warning"></i> Confirm delete</button>
+          <button type="submit" class="btn btn-danger"><i class="fa fa-warning"></i> Confirm delete</button>
         </form>
       </div>
     </div>
@@ -388,8 +466,11 @@
 <script src="libs/moment/min/moment-with-locales.min.js"></script>
 <script>moment.locale('es');</script>
 <script src="libs/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
-<script src="libs/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+<script src="libs/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<link href="libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <script src="libs/EasyAutocomplete/dist/jquery.easy-autocomplete.min.js"></script>
+<script src="node_modules/node-uuid/uuid.js"></script>
 
 <!--app JS-->
 <script>var app = app || {};</script>

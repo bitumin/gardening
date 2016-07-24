@@ -266,3 +266,8 @@ $tab-link: #106c6c;
 .btn-xs, .form-inline {
   display: inline-block;
 }
+
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
+}

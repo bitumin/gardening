@@ -25,6 +25,26 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
       "searchable": false,
       "targets": [1] //hide uuid column
     },
+      {
+      "render": function (data, type, row) { 
+        return '<span class="fa-stack btn-open-edit-child-modal" child-uuid="' + data + '">' +
+          '<i class="fa fa-square fa-stack-2x"></i>' +
+          '<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>' +
+        '</span>';
+      },
+      "searchable": false,
+      "targets": [12]   
+    },
+    {
+      "render": function (data, type, row) { 
+        return '<span class="fa-stack btn-open-delete-child-modal" child-uuid="' + data + '">' +
+          '<i class="fa fa-square fa-stack-2x"></i>' +
+          '<i class="fa fa-times fa-stack-1x fa-inverse"></i>' +
+        '</span>';
+      },
+      "searchable": false,
+      "targets": [13]   
+    }
   ],
   "columns": [
     {
@@ -39,7 +59,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
     },
     { "data": 'UUID' },
     { "data": 'Fecha entrada' },
-    { "data": 'Fecha salida' },
+    { "data": 'Fecha salida'},
     { "data": 'Altura entrada' },
     { "data": 'Altura salida' },
     { "data": 'Calidad entrada' },
@@ -59,24 +79,16 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
       "className": 'none' //this column is always hidden and it will be shown within a child row instead
     },
     {
+      "data": "UUID",
       "orderable": false,
       "searchable": false,
-      "data": null,
-      "defaultContent":
-        '<span class="fa-stack btn-open-edit-child-modal">' +
-          '<i class="fa fa-square fa-stack-2x"></i>' +
-          '<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>' +
-        '</span>'
+      "defaultContent": "error"
     },
     {
+      "data": "UUID",
       "orderable": false,
       "searchable": false,
-      "data": null,
-      "defaultContent":
-        '<span class="fa-stack btn-open-delete-child-modal">' +
-          '<i class="fa fa-square fa-stack-2x"></i>' +
-          '<i class="fa fa-times fa-stack-1x fa-inverse"></i>' +
-        '</span>'
+      "defaultContent": "error"
     }
   ],
   'order': [[2, 'desc']]
@@ -84,8 +96,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
 // app.s.childDatatable.DataTable();
 app.l('Datatables initialized');
 
-//init plant stats date range picker
-app.s.plantStatsDateRange.daterangepicker({
+var daterangepickerOptions = {
   locale: {
     format: 'DD/MM/YYYY',
     separator: ' - ',
@@ -97,8 +108,30 @@ app.s.plantStatsDateRange.daterangepicker({
     monthNames: moment.months(),
     firstDay: moment.localeData().firstDayOfWeek()
   }
-});
-app.l('Date-range picker initialized');
+};
+var datepickerOptions = {
+  language: 'es',
+
+}
+$.fn.datepicker.dates['es'] = {
+  days: moment.weekdaysMin(),
+  daysShort: moment.weekdaysMin(),
+  daysMin: moment.weekdaysMin(),
+  months: moment.months(),
+  monthsShort: moment.months(),
+  today: "Today",
+  clear: "Cancelar",
+  format: 'dd/mm/yyyy',
+  titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+  weekStart: moment.localeData().firstDayOfWeek()
+};
+//init plant stats date range picker
+app.s.plantStatsDateRange.daterangepicker(daterangepickerOptions);
+app.s.addChildInDate.datepicker(datepickerOptions);
+app.s.addChildOutDate.datepicker(datepickerOptions);
+app.s.editChildInDate.datepicker(datepickerOptions);
+app.s.editChildOutDate.datepicker(datepickerOptions);
+app.l('Date(range) picker initialized');
 
 app.db.options.count({}, function (err, count) {
   if (count === 0) {

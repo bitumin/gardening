@@ -23,10 +23,28 @@ app.selector = app.s = {
   delPlantId: $('#delete-plant-id'),
   //add child modal
   addChildModal: $("#add-child-modal"),
-  //edit child modal
+  addChildForm: $('#add-child-form'),
+  addChildInDate: $('#add-child-in-date'),
+  addChildOutDate: $('#add-child-out-date'),
+  //edfit child modal
   editChildModal: $("#edit-child-modal"),
+  editChildForm: $("#edit-child-form"),
+  editChildTitle: $("#edit-child-title"),
+  editChildUuid: $("#edit-child-uuid"),
+  editChildInDate: $("#edit-child-in-date"),
+  editChildOutDate: $("#edit-child-out-date"),
+  editChildInHeight: $("#edit-child-in-height"),
+  editChildOutHeight: $("#edit-child-out-height"),
+  editChildInQuality: $("#edit-child-in-quality"),
+  editChildOutQuality: $("#edit-child-out-quality"),
+  editChildRoom: $("#edit-child-room"),
+  editChildProduction: $("#edit-child-production"),
+  editChildDefects: $("#edit-child-defects"),
+  editChildComments: $("#edit-child-comments"),
   //delete child modal
   delChildModal: $("#delete-child-modal"),
+  delChildForm: $("#delete-child-form"),
+  delChildUuid: $("#delete-child-uuid"),
   //date-range picker
   plantStatsDateRange: $('#plant-stats-date-range'),
   //left menu buttons

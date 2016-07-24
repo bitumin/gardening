@@ -197,92 +197,159 @@ app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
  */
 
 app.s.content.on('click', '.btn-open-add-child-modal', function() {
-  //todo: capture and pass plant id to add children modal
-
   app.s.addChildModal.modal('show');
 });
 
 app.s.content.on('click', '.btn-open-edit-child-modal', function(e) {
   //todo: capture plant and children id, pass data to children modal
-  // var plantId = $(this).closest('li').data('plantId');
+  var plantId = app.s.contentPlant.attr("data-plant-id");
+  var childId = $(this).attr("child-uuid");
 
-  // app.db.getOneDoc('plants', { _id: plantId })
-  //   .then(function (doc) {
-  //     load data into modal
-      // app.s.editPlantTitle.text(doc.name);
-      // app.s.editPlantId.val(doc._id);
-      // app.s.editPlantName.val(doc.name);
-      // app.s.editPlantNumber.val(doc.number);
-      // app.s.editPlantGenetics.val(doc.genetic);
-      // app.s.editPlantOrigin.val(doc.origin);
-      // open modal
-      // app.s.editPlantModal.modal('show');
-    // })
-    // .catch(function(err) {
-    //   todo: do something on exception
-    // });
+  app.db.plantsRepo.getChild(plantId, childId)
+    .then(function (doc) {
+      //load data into modal
+      app.s.editChildTitle.text(doc.name);
+      app.s.editChildUuid.val(doc.uuid);
+      app.s.editChildInDate.datepicker("update", new Date(doc.inDate));
+      app.s.editChildOutDate.datepicker("update", doc.outDate != undefined ? new Date(doc.outDate) : null);
+      app.s.editChildInHeight.val(doc.inHeight);
+      app.s.editChildOutHeight.val(doc.outHeight);
+      app.s.editChildInQuality.val(doc.inQuality);
+      app.s.editChildOutQuality.val(doc.outQuality);
+      app.s.editChildRoom.val(doc.room);
+      app.s.editChildProduction.val(doc.production);
+      app.s.editChildDefects.val(doc.defects);
+      app.s.editChildComments.val(doc.comments);
+    })
+    .catch(function(err) {
+        app.l('Edit plant child aborted with error: ' + err, 'DB');
+    })
+    .then(function(){
+      app.s.editChildModal.modal('show');
+    });
 });
 
 app.s.content.on('click', '.btn-open-delete-child-modal', function(e) {
-  // var plantId = $(this).closest('li').data('plantId');
-  // app.s.delPlantId.val(plantId);
-  // app.s.delPlantModal.modal('show');
+  app.s.delChildUuid.val($(this).attr("child-uuid"));
+  app.s.delChildModal.modal('show');
 });
 
 /*
  * Child modals (add, edit, delete)
  */
 
-app.s.addChildModal.on('click', 'button[type="submit"]', function() {
-  //disable button
-
-  //close modal
-
-  //gather form data in single var
-
+app.s.addChildForm.on('submit', function() {
+  var formData = app.s.addChildForm.serializeObject();
+  var formElements = app.s.addChildForm.find(':input');
+  //disable all form inputs, buttons, etc.
+  formElements.prop("disabled", true);
+  var child = {
+    uuid: uuid(),
+    inDate: app.s.addChildInDate.datepicker("getDate"),
+    outDate: app.s.addChildOutDate.datepicker("getDate"),
+    inHeight: formData.addChildInHeight,
+    outHeight: formData.addChildOutHeight,
+    inQuality: formData.addChildInQuality,
+    outQuality: formData.addChildOutQuality,
+    room: formData.addChildRoom,
+    production: formData.addChildProduction,
+    defects: formData.addChildDefects,
+    comments: formData.addChildComments,
+    insertDate: new Date(),
+    lastModDate: new Date()   
+  }
   //find parent plant
+  var plantId = app.s.contentPlant.attr("data-plant-id");
   
   //update plant adding child with form data
-
-  // ¿¿¿ update any currently active view with children ???
-  
-  //clear form
-
-  //re-enable button
+  app.db.plantsRepo.insertChild(plantId, child)
+    .then(function(newPlant) {
+        // reload plant data
+        app.v.populatePlantView(plantId);
+    })
+    .catch(function(err) {
+      app.l('Add plant child aborted with error: ' + err, 'DB');
+    })
+    .then(function() {
+      //close modal
+      app.s.addChildModal.modal('hide');
+      //clear form
+      app.s.addChildForm[0].reset();
+      //re-enable button
+      formElements.prop("disabled", false);
+    });
+  return false;
 });
 
-app.s.editChildModal.on('click', 'button[type="submit"]', function() {
-  //disable button
-
-  //close modal
-
-  //gather form data in single var
-
+app.s.editChildForm.on('submit', function() {
+  var formData = app.s.editChildForm.serializeObject();
+  var formElements = app.s.editChildForm.find(':input');
+  //disable all form inputs, buttons, etc.
+  formElements.prop("disabled", true);
+  var child = {
+    uuid: formData.editChildUuid,
+    inDate: app.s.editChildInDate.datepicker("getDate"),
+    outDate: app.s.editChildOutDate.datepicker("getDate"),
+    inHeight: formData.editChildInHeight,
+    outHeight: formData.editChildOutHeight,
+    inQuality: formData.editChildInQuality,
+    outQuality: formData.editChildOutQuality,
+    room: formData.editChildRoom,
+    production: formData.editChildProduction,
+    defects: formData.editChildDefects,
+    comments: formData.editChildComments,
+    insertDate: formData.editChildInsertDate,
+    lastModDate: new Date()   
+  }
   //find parent plant
-
-  //update plant updating child with form data
-
-  // ¿¿¿ update any currently active view with children ???
-
-  //clear form
-
-  //re-enable button
+  var plantId = app.s.contentPlant.attr("data-plant-id");
+  
+  //update plant adding child with form data
+  app.db.plantsRepo.updateChild(plantId, child)
+    .then(function(newPlant) {
+        // reload plant data
+        app.v.populatePlantView(plantId);
+    })
+    .catch(function(err) {
+      app.l('Add plant child aborted with error: ' + err, 'DB');
+    })
+    .then(function() {
+      //close modal
+      app.s.editChildModal.modal('hide');
+      //clear form
+      app.s.editChildForm[0].reset();
+      //re-enable button
+      formElements.prop("disabled", false);
+    });
+  return false;
 });
 
-app.s.delChildModal.on('click', 'button[type="submit"]', function() {
+app.s.delChildForm.on('submit', function() {
   //disable button
-
-  //close modal
-  
+  var formData = app.s.delChildForm.serializeObject();
+  var formElements = app.s.delChildForm.find(':input');
+  var childUuid = formData.deleteChildUuid;
   //find parent plant
+  var plantId = app.s.contentPlant.attr("data-plant-id");
 
   //update plant removing child
-
-  // ¿¿¿ update any currently active view with children ???
-
-  //clear form
-
-  //re-enable button
+  app.db.plantsRepo.deleteChild(plantId, childUuid)      
+    .then(function() {
+        // reload plant data
+        app.v.populatePlantView(plantId);
+    })
+    .catch(function(err) {
+      app.l('Add plant child aborted with error: ' + err, 'DB');
+    })
+    .then(function() {
+      //close modal
+      app.s.delChildModal.modal('hide');
+      //clear form
+      app.s.delChildForm[0].reset();
+      //re-enable button
+      formElements.prop("disabled", false);
+    });
+  return false;
 });
 
 app.l('Event handlers set');
