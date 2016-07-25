@@ -96,42 +96,33 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
 // app.s.childDatatable.DataTable();
 app.l('Datatables initialized');
 
-var daterangepickerOptions = {
-  locale: {
-    format: 'DD/MM/YYYY',
-    separator: ' - ',
-    applyLabel: 'Aplicar',
-    cancelLabel: 'Cancelar',
-    weekLabel: 'S',
-    customRangeLabel: 'Rango personalizado',
-    daysOfWeek: moment.weekdaysMin(),
-    monthNames: moment.months(),
-    firstDay: moment.localeData().firstDayOfWeek()
-  }
-};
 var datepickerOptions = {
   language: 'es',
-
+  endDate: "0d",
+  autoclose: true,
+  clearBtn: true
 }
 $.fn.datepicker.dates['es'] = {
-  days: moment.weekdaysMin(),
-  daysShort: moment.weekdaysMin(),
+  days: moment.weekdays(),
+  daysShort: moment.weekdaysShort(),
   daysMin: moment.weekdaysMin(),
   months: moment.months(),
-  monthsShort: moment.months(),
+  monthsShort: moment.monthsShort(),
   today: "Today",
   clear: "Cancelar",
   format: 'dd/mm/yyyy',
-  titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
-  weekStart: moment.localeData().firstDayOfWeek()
+  weekStart: moment.localeData().firstDayOfWeek(),
+  showOnFocus: false
 };
-//init plant stats date range picker
-app.s.plantStatsDateRange.daterangepicker(daterangepickerOptions);
 app.s.addChildInDate.datepicker(datepickerOptions);
 app.s.addChildOutDate.datepicker(datepickerOptions);
 app.s.editChildInDate.datepicker(datepickerOptions);
 app.s.editChildOutDate.datepicker(datepickerOptions);
-app.l('Date(range) picker initialized');
+app.s.plantStatsDateFrom.datepicker(datepickerOptions);
+app.s.plantStatsDateFrom.datepicker('setDate', moment(new Date()).subtract(7, "days").format("DD/MM/YYYY"));
+app.s.plantStatsDateTo.datepicker(datepickerOptions);
+app.s.plantStatsDateTo.datepicker('setDate', moment(new Date()).format("DD/MM/YYYY"));
+app.l('Datepickers initialized');
 
 app.db.options.count({}, function (err, count) {
   if (count === 0) {

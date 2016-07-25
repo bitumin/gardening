@@ -55,7 +55,8 @@
         </li>
       </ul>
       <!--/tabs nav-->
-      <!--tabs content-->
+
+      <!-- tabs content-->
       <div class="tab-content">
         <!--plant children tabpanel-->
         <div role="tabpanel" class="tab-pane active" id="plant-children">
@@ -107,14 +108,39 @@
           </table>
         </div>
         <!--/plant children tabpanel-->
+
         <!--plant stats tabpanel-->
         <div role="tabpanel" class="tab-pane" id="plant-stats">
-          <form action="javascript:">
-            <label for="plant-stats-date-range">Filter by date range:</label><br>
-            <input id="plant-stats-date-range" name="plantStatsForm" value="" type="text">
+          <form class="" id="stat-form" action="javascript:">
+            <div>
+              <label class="col-xs-3" for="plant-stats-date-range">Date range:</label>
+              <div class="input-group input-daterange col-xs-9" id="plant-stats-date-range">
+                  <input type="text" class="form-control" id="plant-stats-date-from" name="plantStatsDateFrom" value="2012-04-05" required>
+                  <span class="input-group-addon">to</span>
+                  <input type="text" class="form-control" id="plant-stats-date-to" name="plantStatsDateTo" value="2012-04-19" required>
+              </div>
+            </div>
+            <br />
+            <div>
+              <label class="col-xs-3" for="plant-stats-lines">Lines:</label>
+              <div class="input-group col-xs-9" id="plant-stats-lines">
+                <div class="checkbox">
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="total-children-production" checked/>Total children production</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-children-production"/>Average children production</label>
+                </div>
+                <div class="checkbox">
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-quality" checked/>Average in quality</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-out-quality"/>Average out quality</label>
+                </div>
+                <div class="checkbox">
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-height"/>Average in height</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-out-height"/>Average out height</label>
+                </div>
+              </div>
+            </div>
+            <input type="submit" class="btn btn-success" value="Refresh" />
           </form>
-          <!--plant stats-->
-
+          <div id="curve_chart"></div>
         </div>
         <!--/plant stats tabpanel-->
       </div>
@@ -471,6 +497,7 @@
 <link href="libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <script src="libs/EasyAutocomplete/dist/jquery.easy-autocomplete.min.js"></script>
 <script src="node_modules/node-uuid/uuid.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <!--app JS-->
 <script>var app = app || {};</script>

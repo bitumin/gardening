@@ -329,5 +329,16 @@ app.db.plantsRepo = {
         }
       });
     });
+  },
+  getChildren: function(plantId){
+      return new Promise(function(resolve, reject){
+        app.db.plants.findOne({_id: plantId}, { children: 1}, function(err, plant){
+        if (err) {
+          reject(Error('Unable to find children of plant, with error: ' + err));
+        } else {
+          resolve(plant.children);
+        }
+      });
+    });
   }
 };

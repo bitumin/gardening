@@ -193,7 +193,7 @@ app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
 });
 
 /*
- * Content event handlers
+ * Children content event handlers
  */
 
 app.s.content.on('click', '.btn-open-add-child-modal', function() {
@@ -328,6 +328,9 @@ app.s.delChildForm.on('submit', function() {
   //disable button
   var formData = app.s.delChildForm.serializeObject();
   var formElements = app.s.delChildForm.find(':input');
+  //disable all form inputs, buttons, etc.
+  formElements.prop("disabled", true);
+  //find child uuid
   var childUuid = formData.deleteChildUuid;
   //find parent plant
   var plantId = app.s.contentPlant.attr("data-plant-id");
@@ -349,6 +352,88 @@ app.s.delChildForm.on('submit', function() {
       //re-enable button
       formElements.prop("disabled", false);
     });
+  return false;
+});
+
+/*
+ * Stats content event handlers
+ */
+var reportEntryFactory = {
+  "total-children-production": function(propertyName, array){return array.length;},
+  "avg-children-production": function(propertyName, array){return array.length;},
+  "avg-in-quality": function(propertyName, array){return _.reduce(_.pluck(array, "inQuality"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;},
+  "avg-out-quality": function(propertyName, array){return _.reduce(_.pluck(array, "outQuality"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;},
+  "avg-in-height": function(propertyName, array){return _.reduce(_.pluck(array, "inHeight"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;},
+  "avg-out-height": function(propertyName, array){return _.reduce(_.pluck(array, "outQuality"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;}
+}
+app.s.plantStatsForm.on('submit', function(){
+  //disable button
+  var formData = app.s.plantStatsForm.serializeObject();
+  var formElements = app.s.plantStatsForm.find(':input');
+  //disable all form inputs, buttons, etc.
+  formElements.prop("disabled", true);
+
+  //find parent plant
+  var plantId = app.s.contentPlant.attr("data-plant-id");
+  //get lines
+  var lines = formData.plantStatsLines;
+  var dateFrom = moment(formData.plantStatsDateFrom, "DD/MM/YYYY");
+  var dateTo = moment(formData.plantStatsDateTo, "DD/MM/YYYY");
+  var desiredReports = formData.plantStatsLines;
+  if(desiredReports !== undefined && !Array.isArray(desiredReports)){
+    desiredReports = [desiredReports];
+  }
+  if(!Array.isArray(desiredReports) || desiredReports.length === 0){
+    //re-enable button
+    formElements.prop("disabled", false);
+    return false;
+  }
+
+  app.db.plantsRepo.getChildren(plantId)
+    .then(function(children){
+      var childrenInPeriod = children.filter(function(child){return moment(child.inDate) >= dateFrom && moment(child.inDate) <= dateTo});
+      var groupedChildren = _.groupBy(childrenInPeriod, function(child){return moment(child.inDate).format("DD/MM/YYYY");});
+
+      var headers = ['Date'];
+      for(var index = 0; index < desiredReports.length; index++){
+        headers.push(desiredReports[index]);
+      }
+      var reports = [];
+      for(var propertyName in groupedChildren){
+        var groupedAndCreatedChildReports = [propertyName];
+        for(var index = 0; index < desiredReports.length; index++){
+          groupedAndCreatedChildReports.push(reportEntryFactory[desiredReports[index]](propertyName, groupedChildren[propertyName]));
+        }
+        reports.push(groupedAndCreatedChildReports);
+      }
+      var sortedGroupedAndCountedChildrenReports = _.sortBy(reports, function(entry) {return moment(entry[0]);});
+
+      sortedGroupedAndCountedChildrenReports.splice(0, 0, headers);
+
+      google.charts.setOnLoadCallback(function(){drawChart(sortedGroupedAndCountedChildrenReports);});
+      google.charts.load('current', {'packages':['corechart']});
+
+        function drawChart(sortedGroupedAndCountedChildrenReports) {
+        var data = google.visualization.arrayToDataTable(sortedGroupedAndCountedChildrenReports);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+
+        //re-enable button
+        formElements.prop("disabled", false);
+      }
+    })
+    .catch(function(err) {
+      app.l('Get plant children aborted with error: ' + err, 'DB');
+    })
+
   return false;
 });
 

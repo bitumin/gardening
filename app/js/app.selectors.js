@@ -4,6 +4,22 @@ app.selector = app.s = {
   leftMenu: $('#left-menu'),
   leftMenuItemsList: $('#left-menu-items-list'),
   content: $('#content'),
+  //left menu buttons
+  btnOpenAddPlantModal: $('#btn-open-add-plant-modal'),
+  btnOpenEditPlantModal: $('.btn-open-edit-plant-modal'),
+  btnOpenDeletePlantModal: $('.btn-open-delete-plant-modal'),
+  btnLoadPlantView: $('.btn-load-plant-view'),
+  //content views
+  contentWelcome: $('#content-welcome'), 
+  contentPlant: $('#content-plant'),
+  contentChild: $('#content-child'),
+
+  //plant view
+  contentPlantTitleName: $('#content-plant-title-name'),
+  contentPlantTitleGenetics: $('#content-plant-title-genetic'),
+  contentPlantTitleOrigin: $('#content-plant-title-origin'),
+  plantChildrenTab: $('#plant-children'),
+  plantStatsTab: $('#plant-stats'),
   //add plant modal
   addPlantModal: $("#add-plant-modal"),
   addPlantForm: $('#add-plant-form'),
@@ -21,6 +37,12 @@ app.selector = app.s = {
   delPlantModal: $("#delete-plant-modal"),
   delPlantForm: $('#delete-plant-form'),
   delPlantId: $('#delete-plant-id'),
+
+  //children view
+  btnOpenAddChildModal: $('.btn-open-add-child-modal'),
+  btnOpenEditChildModal: $('.btn-open-edit-child-modal'),
+  btnOpenDeleteChildModal: $('.btn-open-delete-child-modal'),
+  plantChildrenTable: $('#plant-children-table'),
   //add child modal
   addChildModal: $("#add-child-modal"),
   addChildForm: $('#add-child-form'),
@@ -45,29 +67,11 @@ app.selector = app.s = {
   delChildModal: $("#delete-child-modal"),
   delChildForm: $("#delete-child-form"),
   delChildUuid: $("#delete-child-uuid"),
-  //date-range picker
-  plantStatsDateRange: $('#plant-stats-date-range'),
-  //left menu buttons
-  btnOpenAddPlantModal: $('#btn-open-add-plant-modal'),
-  btnOpenEditPlantModal: $('.btn-open-edit-plant-modal'),
-  btnOpenDeletePlantModal: $('.btn-open-delete-plant-modal'),
-  btnLoadPlantView: $('.btn-load-plant-view'),
-  //content views
-  contentWelcome: $('#content-welcome'), 
-  contentPlant: $('#content-plant'),
-  contentChild: $('#content-child'),
-  //plant view
-  contentPlantTitleName: $('#content-plant-title-name'),
-  contentPlantTitleGenetics: $('#content-plant-title-genetic'),
-  contentPlantTitleOrigin: $('#content-plant-title-origin'),
-  plantChildrenTab: $('#plant-children'),
-  plantStatsTab: $('#plant-stats'),
-  //children tab
-  btnOpenAddChildModal: $('.btn-open-add-child-modal'),
-  btnOpenEditChildModal: $('.btn-open-edit-child-modal'),
-  btnOpenDeleteChildModal: $('.btn-open-delete-child-modal'),
-  plantChildrenTable: $('#plant-children-table'),
-  //statistics tab
+  
+  //stats
+  plantStatsForm: $('#stat-form'),
+  plantStatsDateFrom: $('#plant-stats-date-from'),
+  plantStatsDateTo: $('#plant-stats-date-to'),
 };
 
 app.l('Selectors set');
