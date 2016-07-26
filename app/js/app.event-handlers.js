@@ -434,24 +434,29 @@ var reportEntryFactory = {
 };
 
 var dateFormatAssociations = {
-  "D": {format: "DD/MM/YYYY", addition: "days", viewChange: "days"},
-  "M": {format: "MM/YYYY", addition: "months", viewChange: "months"},
-  "Y": {format: "YYYY", addition: "months", viewChange: "years"}
+  "D": {parseFormat: "DD/MM/YYYY", displayFormat: "dd/mm/yyyy",addition: "days", viewChange: 0},
+  "M": {parseFormat: "MM/YYYY", displayFormat: "mm/yyyy", addition: "months", viewChange: 1},
+  "Y": {parseFormat: "YYYY", displayFormat: "yyyy", addition: "years", viewChange: 2}
 }
 
 app.s.plantStatsDatePeriod.find("select").on("change", function(e){
-  // var selected = $(this).val();
-  // app.s.plantStatsDateFrom.datepicker({
-  //   format: dateFormatAssociations[selected].format,
-  //   startView: dateFormatAssociations[selected].viewChange, 
-  //   minViewMode: dateFormatAssociations[selected].viewChange
-  // });
-  // app.s.plantStatsDateFrom.datepicker("update");
-  // app.s.plantStatsDateTo.datepicker({
-  //   format: dateFormatAssociations[selected].format,
-  //   startView: dateFormatAssociations[selected].viewChange, 
-  //   minViewMode: dateFormatAssociations[selected].viewChange
-  // });
+  var selected = $(this).val();
+  var periodFormatSettings = dateFormatAssociations[selected];
+  app.s.plantStatsDateFrom.datepicker('remove');
+  app.s.plantStatsDateFrom.datepicker({
+    format: periodFormatSettings.displayFormat,
+    startView: periodFormatSettings.viewChange, 
+    minViewMode: periodFormatSettings.viewChange
+  });
+  app.s.plantStatsDateFrom.datepicker("update", moment(new Date()).subtract(7, periodFormatSettings.addition).format(periodFormatSettings.parseFormat));
+
+  app.s.plantStatsDateTo.datepicker('remove');
+  app.s.plantStatsDateTo.datepicker({
+    format: periodFormatSettings.displayFormat,
+    startView: periodFormatSettings.viewChange, 
+    minViewMode: periodFormatSettings.viewChange
+  });
+  app.s.plantStatsDateTo.datepicker("update", moment(new Date()).format(periodFormatSettings.parseFormat));
 })
 app.s.plantStatsForm.on('submit', function(){
   //disable button
@@ -465,8 +470,8 @@ app.s.plantStatsForm.on('submit', function(){
   //get lines
   var periodReporting = formData.plantStatsDateReporting;
   var periodFormat = dateFormatAssociations[periodReporting];
-  var dateFrom = moment(formData.plantStatsDateFrom, "DD/MM/YYYY");
-  var dateTo = moment(formData.plantStatsDateTo, "DD/MM/YYYY");
+  var dateFrom = moment(formData.plantStatsDateFrom, periodFormat.parseFormat);
+  var dateTo = moment(formData.plantStatsDateTo, periodFormat.parseFormat);
   var desiredReports = formData.plantStatsLines;
   if(desiredReports !== undefined && !Array.isArray(desiredReports)){
     desiredReports = [desiredReports];
@@ -480,8 +485,8 @@ app.s.plantStatsForm.on('submit', function(){
   app.db.plantsRepo.getChildren(plantId)
     .then(function(children){
       var reportingRows = []; 
-      for(var currentDate = dateFrom; currentDate <= dateTo; currentDate.add(1, periodReporting)){
-        var row = {date: currentDate.format(periodFormat.format)};
+      for(var currentDate = dateFrom; currentDate <= dateTo; currentDate.add(1, periodFormat.addition)){
+        var row = {date: currentDate.format(periodFormat.parseFormat)};
         for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
           var dimension = desiredReports[indexDimension];
           row[dimension] = 0;
@@ -502,7 +507,7 @@ app.s.plantStatsForm.on('submit', function(){
           //if date dimension is in reporting range
           var reportingRow = undefined;
           if(dateDimension != undefined){
-            var dateDimensionString = moment(dateDimension).format(periodFormat.format);
+            var dateDimensionString = moment(dateDimension).format(periodFormat.parseFormat);
             reportingRow = _.find(reportingRows, function(row){return row.date === dateDimensionString;});
           }
           if(reportingRow != undefined){
