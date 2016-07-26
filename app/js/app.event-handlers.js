@@ -437,7 +437,7 @@ var dateFormatAssociations = {
   "D": {parseFormat: "DD/MM/YYYY", displayFormat: "dd/mm/yyyy",addition: "days", viewChange: 0},
   "M": {parseFormat: "MM/YYYY", displayFormat: "mm/yyyy", addition: "months", viewChange: 1},
   "Y": {parseFormat: "YYYY", displayFormat: "yyyy", addition: "years", viewChange: 2}
-}
+};
 
 app.s.plantStatsDatePeriod.find("select").on("change", function(e){
   var selected = $(this).val();

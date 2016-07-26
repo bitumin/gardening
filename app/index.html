@@ -111,10 +111,10 @@
 
         <!--plant stats tabpanel-->
         <div role="tabpanel" class="tab-pane" id="plant-stats">
-          <form class="" id="stat-form" action="javascript:">
+          <form class="" id="stat-form" action="javascript:" style="margin-bottom: 10px;">
             <div>
-              <label class="col-xs-3" for="plant-stats-date-reporting">Reporting period:</label>
-              <div class="input-group input-daterange col-xs-9" id="plant-stats-date-reporting">
+              <label class="col-xs-2" for="plant-stats-date-reporting">Reporting period:</label>
+              <div class="input-group input-daterange col-xs-2" id="plant-stats-date-reporting">
                 <select class="form-control" name="plantStatsDateReporting">
                   <option value="D">Day</option>
                   <option value="M">Month</option>
@@ -122,9 +122,10 @@
                 </select>
               </div>
             </div>
+            <br />
             <div>
-              <label class="col-xs-3" for="plant-stats-date-range">Date range:</label>
-              <div class="input-group input-daterange col-xs-9" id="plant-stats-date-range">
+              <label class="col-xs-2" for="plant-stats-date-range">Date range:</label>
+              <div class="input-group input-daterange col-xs-6" id="plant-stats-date-range">
                   <input type="text" class="form-control" id="plant-stats-date-from" name="plantStatsDateFrom" value="2012-04-05" required>
                   <span class="input-group-addon">to</span>
                   <input type="text" class="form-control" id="plant-stats-date-to" name="plantStatsDateTo" value="2012-04-19" required>
@@ -132,8 +133,8 @@
             </div>
             <br />
             <div>
-              <label class="col-xs-3" for="plant-stats-lines">Lines:</label>
-              <div class="input-group col-xs-9" id="plant-stats-lines">
+              <label class="col-xs-2" for="plant-stats-lines">Lines:</label>
+              <div class="input-group col-xs-10" id="plant-stats-lines">
                 <div class="checkbox">
                   <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="total-children-production" checked/>Total children production</label>
                   <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-children-production"/>Average children production</label>
