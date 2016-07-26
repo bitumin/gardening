@@ -359,13 +359,100 @@ app.s.delChildForm.on('submit', function() {
  * Stats content event handlers
  */
 var reportEntryFactory = {
-  "total-children-production": function(propertyName, array){return array.length;},
-  "avg-children-production": function(propertyName, array){return array.length;},
-  "avg-in-quality": function(propertyName, array){return _.reduce(_.pluck(array, "inQuality"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;},
-  "avg-out-quality": function(propertyName, array){return _.reduce(_.pluck(array, "outQuality"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;},
-  "avg-in-height": function(propertyName, array){return _.reduce(_.pluck(array, "inHeight"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;},
-  "avg-out-height": function(propertyName, array){return _.reduce(_.pluck(array, "outQuality"), function(memo, num){ return memo + parseInt(num); }, 0)/array.length;}
+  "total-children-production": {
+    getDateDimension: function(child){return child.outDate;},
+    getData: function(child){return parseInt(child.production); },
+    reduce: function(entry){
+      if(entry["total-children-production"] === undefined){
+        return 0;
+      }
+      else{
+        return entry["total-children-production"];
+      }
+    }
+  },
+  "avg-children-production": {
+    getDateDimension: function(child){return child.outDate;},
+    getData: function(child){return parseInt(child.production); },
+    reduce: function(entry){
+      if(entry["avg-children-production"] === undefined){
+        return 0;
+      }
+      else{
+        return entry["avg-children-production-count"] === 0 ? 0 : entry["avg-children-production"]/entry["avg-children-production-count"];
+      }
+    }
+  },
+  "avg-in-quality": {
+    getDateDimension: function(child){return child.inDate;},
+    getData: function(child){return parseInt(child.inQuality); },
+    reduce: function(entry){
+      if(entry["avg-in-quality"] === undefined){
+        return 0;
+      }
+      else{
+        return entry["avg-in-quality-count"] === 0 ? 0 :entry["avg-in-quality"]/entry["avg-in-quality-count"];
+      }
+    }
+  },
+  "avg-out-quality": {
+    getDateDimension: function(child){return child.outDate;},
+    getData: function(child){return parseInt(child.outQuality); },
+    reduce: function(entry){
+      if(entry["avg-out-quality"] === undefined){
+        return 0;
+      }
+      else{
+        return entry["avg-out-quality-count"] === 0 ? 0 :entry["avg-out-quality"]/entry["avg-out-quality-count"];
+      }
+    }
+  },
+  "avg-in-height": {
+    getDateDimension: function(child){return child.inDate;},
+    getData: function(child){return parseInt(child.inHeight); },
+    reduce: function(entry){
+      if(entry["avg-in-height"] === undefined){
+        return 0;
+      }
+      else{
+        return entry["avg-in-height-count"] === 0 ? 0 :entry["avg-in-height"]/entry["avg-in-height-count"];
+      }
+    }
+  },
+  "avg-out-height": {
+    getDateDimension: function(child){return child.outDate;},
+    getData: function(child){return parseInt(child.outHeight); },
+    reduce: function(entry){
+      if(entry["avg-out-height"] === undefined){
+        return 0;
+      }
+      else{
+        return entry["avg-out-height-count"] === 0 ? 0 :entry["avg-out-height"]/entry["avg-out-height-count"];
+      }
+    }
+  }
+};
+
+var dateFormatAssociations = {
+  "D": {format: "DD/MM/YYYY", addition: "days", viewChange: "days"},
+  "M": {format: "MM/YYYY", addition: "months", viewChange: "months"},
+  "Y": {format: "YYYY", addition: "months", viewChange: "years"}
 }
+
+app.s.plantStatsDatePeriod.find("select").on("change", function(e){
+  // var selected = $(this).val();
+  // app.s.plantStatsDateFrom.datepicker({
+  //   format: dateFormatAssociations[selected].format,
+  //   startView: dateFormatAssociations[selected].viewChange, 
+  //   minViewMode: dateFormatAssociations[selected].viewChange
+  // });
+  // app.s.plantStatsDateFrom.datepicker("update");
+  // app.s.plantStatsDateTo.datepicker({
+  //   format: dateFormatAssociations[selected].format,
+  //   startView: dateFormatAssociations[selected].viewChange, 
+  //   minViewMode: dateFormatAssociations[selected].viewChange
+  // });
+})
 app.s.plantStatsForm.on('submit', function(){
   //disable button
   var formData = app.s.plantStatsForm.serializeObject();
@@ -376,7 +463,8 @@ app.s.plantStatsForm.on('submit', function(){
   //find parent plant
   var plantId = app.s.contentPlant.attr("data-plant-id");
   //get lines
-  var lines = formData.plantStatsLines;
+  var periodReporting = formData.plantStatsDateReporting;
+  var periodFormat = dateFormatAssociations[periodReporting];
   var dateFrom = moment(formData.plantStatsDateFrom, "DD/MM/YYYY");
   var dateTo = moment(formData.plantStatsDateTo, "DD/MM/YYYY");
   var desiredReports = formData.plantStatsLines;
@@ -391,30 +479,68 @@ app.s.plantStatsForm.on('submit', function(){
 
   app.db.plantsRepo.getChildren(plantId)
     .then(function(children){
-      var childrenInPeriod = children.filter(function(child){return moment(child.inDate) >= dateFrom && moment(child.inDate) <= dateTo});
-      var groupedChildren = _.groupBy(childrenInPeriod, function(child){return moment(child.inDate).format("DD/MM/YYYY");});
+      var reportingRows = []; 
+      for(var currentDate = dateFrom; currentDate <= dateTo; currentDate.add(1, periodReporting)){
+        var row = {date: currentDate.format(periodFormat.format)};
+        for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
+          var dimension = desiredReports[indexDimension];
+          row[dimension] = 0;
+          row[dimension + "-count"] = 0;
+        }
+        reportingRows.push(row);
+      }
+
+      //process each child
+      for(var childIndex = 0; childIndex < children.length; childIndex++){
+        var child = children[childIndex];
+        //process each reporting dimension
+        for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
+          var dimension = desiredReports[indexDimension];
+          var dimensionFactory = reportEntryFactory[dimension];
+          //get date
+          var dateDimension = dimensionFactory.getDateDimension(child);
+          //if date dimension is in reporting range
+          var reportingRow = undefined;
+          if(dateDimension != undefined){
+            var dateDimensionString = moment(dateDimension).format(periodFormat.format);
+            reportingRow = _.find(reportingRows, function(row){return row.date === dateDimensionString;});
+          }
+          if(reportingRow != undefined){
+            var data = dimensionFactory.getData(child);
+            if(!isNaN(data)){
+              //within reporting range
+              reportingRow[dimension] += data;
+              reportingRow[dimension + "-count"] += 1;
+            }
+          }
+        }
+      }
 
       var headers = ['Date'];
       for(var index = 0; index < desiredReports.length; index++){
         headers.push(desiredReports[index]);
       }
-      var reports = [];
-      for(var propertyName in groupedChildren){
-        var groupedAndCreatedChildReports = [propertyName];
-        for(var index = 0; index < desiredReports.length; index++){
-          groupedAndCreatedChildReports.push(reportEntryFactory[desiredReports[index]](propertyName, groupedChildren[propertyName]));
+
+      var reducedData = [headers];
+      for(var reportingIndex = 0; reportingIndex < reportingRows.length; reportingIndex++){
+        var reportingRow = reportingRows[reportingIndex];
+        var reducedRow = [reportingRow.date];
+
+        for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
+          var dimension = desiredReports[indexDimension];
+          var dimensionFactory = reportEntryFactory[dimension];
+
+          reducedRow.push(dimensionFactory.reduce(reportingRow));
         }
-        reports.push(groupedAndCreatedChildReports);
+
+        reducedData.push(reducedRow);
       }
-      var sortedGroupedAndCountedChildrenReports = _.sortBy(reports, function(entry) {return moment(entry[0]);});
 
-      sortedGroupedAndCountedChildrenReports.splice(0, 0, headers);
+      google.charts.setOnLoadCallback(function(){drawChart(reducedData);});
+      google.charts.load('current', {'packages':['line']});
 
-      google.charts.setOnLoadCallback(function(){drawChart(sortedGroupedAndCountedChildrenReports);});
-      google.charts.load('current', {'packages':['corechart']});
-
-        function drawChart(sortedGroupedAndCountedChildrenReports) {
-        var data = google.visualization.arrayToDataTable(sortedGroupedAndCountedChildrenReports);
+        function drawChart(reducedData) {
+        var data = google.visualization.arrayToDataTable(reducedData);
 
         var options = {
           title: 'Company Performance',
@@ -422,7 +548,7 @@ app.s.plantStatsForm.on('submit', function(){
           legend: { position: 'bottom' }
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        var chart = new google.charts.Line(document.getElementById('curve_chart'));
 
         chart.draw(data, options);
 

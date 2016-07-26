@@ -113,6 +113,16 @@
         <div role="tabpanel" class="tab-pane" id="plant-stats">
           <form class="" id="stat-form" action="javascript:">
             <div>
+              <label class="col-xs-3" for="plant-stats-date-reporting">Reporting period:</label>
+              <div class="input-group input-daterange col-xs-9" id="plant-stats-date-reporting">
+                <select class="form-control" name="plantStatsDateReporting">
+                  <option value="D">Day</option>
+                  <option value="M">Month</option>
+                  <option value="Y">Year</option>
+                </select>
+              </div>
+            </div>
+            <div>
               <label class="col-xs-3" for="plant-stats-date-range">Date range:</label>
               <div class="input-group input-daterange col-xs-9" id="plant-stats-date-range">
                   <input type="text" class="form-control" id="plant-stats-date-from" name="plantStatsDateFrom" value="2012-04-05" required>
@@ -129,7 +139,7 @@
                   <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-children-production"/>Average children production</label>
                 </div>
                 <div class="checkbox">
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-quality" checked/>Average in quality</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-quality" />Average in quality</label>
                   <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-out-quality"/>Average out quality</label>
                 </div>
                 <div class="checkbox">

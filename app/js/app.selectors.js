@@ -70,6 +70,7 @@ app.selector = app.s = {
   
   //stats
   plantStatsForm: $('#stat-form'),
+  plantStatsDatePeriod: $("#plant-stats-date-reporting"),
   plantStatsDateFrom: $('#plant-stats-date-from'),
   plantStatsDateTo: $('#plant-stats-date-to'),
 };
