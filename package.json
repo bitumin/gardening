@@ -3,7 +3,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "nwjs-builder": "^1.10.9",
+    "node-sass": "^3.8.0",
+    "nwjs-builder": "^1.13.1",
     "yuicompressor": "^2.4.8"
   }
 }

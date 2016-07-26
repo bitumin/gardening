@@ -49,7 +49,7 @@ table.dataTable.dtr-column>tbody>tr.parent td.control:before,
 table.dataTable.dtr-column>tbody>tr.parent th.control:before {
   content: '';
 }
-.btn-details-child, .btn-edit-child, .btn-delete-child {
+.btn-details-child, .btn-open-edit-child-modal, .btn-open-delete-child-modal {
   font-size: 12px;
 }
 .btn-details-child > .fa-square {
@@ -58,10 +58,10 @@ table.dataTable.dtr-column>tbody>tr.parent th.control:before {
 .parent > .control > .btn-details-child > .fa-square {
   color: #337ab7;
 }
-.btn-edit-child > .fa-square {
+.btn-open-edit-child-modal > .fa-square {
   color: #f0ad4e;
 }
-.btn-delete-child > .fa-square {
+.btn-open-delete-child-modal > .fa-square {
   color: #d9534f;
 }
 
@@ -189,7 +189,7 @@ $tab-link: #106c6c;
   font-size: 20px;
   font-weight: 600;
 }
-#btn-open-add-child-modal {
+.btn-open-add-child-modal {
   margin-bottom: 10px;
 }
 .nav-tabs {
@@ -228,8 +228,6 @@ $tab-link: #106c6c;
   display: none;
 }
 
-
-
 .plant-children-datatable-wrapper,
 .plant-stats-datatable-wrapper {
   margin-top: 15px;
@@ -267,4 +265,9 @@ $tab-link: #106c6c;
 
 .btn-xs, .form-inline {
   display: inline-block;
+}
+
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
 }

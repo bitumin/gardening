@@ -12,6 +12,9 @@ app.log = app.l = function(msg, mode) {
 };
 
 app.formatDate = function(date) {
+  if(date === null){
+    return '';
+  }
   date = new Date(date);
   var separator = '/';
   var d = date.getDate();

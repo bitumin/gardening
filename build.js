@@ -1,11 +1,10 @@
 var NwjsBuilder = require('nwjs-builder');
-
-var version = '0.15.4-sdk';
+var env = require('./env');
 
 NwjsBuilder.commands.nwbuild('./app/', {
-  version: version,
+  version: env.nwjsVersion,
   platforms: 'linux64',
-  outputDir: './build/'+version,
+  outputDir: './build/' + env.nwjsVersion,
   includes: [
     ['./', 'README.md', './'] // cp -r ./README.md ${DIR_BUILD}/README.md
   ],

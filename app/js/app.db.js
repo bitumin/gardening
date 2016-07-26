@@ -1,4 +1,5 @@
 var NeDB = require('nedb');
+var uuid = require('node-uuid');
 
 app.db = {
   options: new NeDB({filename: './datastores/options.db', autoload: true}),
@@ -8,6 +9,13 @@ app.db = {
 app.l('NeDB datastores initialized', 'DB');
 
 // Async NeDB "promisified" helpers
+app.db.resetAllDatastores = function() {
+  if (app.config.env === 'dev') {
+    app.db.options.remove({}, { multi: true }, function (err, n) { app.l(n + ' options removed'); });
+    app.db.genetics.remove({}, { multi: true }, function (err, n) { app.l(n + ' genetics removed'); });
+    app.db.plants.remove({}, { multi: true }, function (err, n) {  app.l(n + ' plants removed'); });
+  }
+};
 app.db.countDocs = function (datastore) {
   return new Promise(function (resolve, reject) {
     app.db[datastore].count({}, function (err, count) {
@@ -209,7 +217,6 @@ app.db.seeders.children = function () {
     app.l('Seeding children...', 'DB');
     var faker = require('faker');
     var counter = 0;
-    var qualities = ['extremely bad','very bad','bad','normal','fine','good','very good','excellent'];
     
     app.db.getAllDocs('plants').then(function (plants) {
       _.each(plants, function (plant) {
@@ -218,21 +225,22 @@ app.db.seeders.children = function () {
           //Some children are out (have been gathered), the rest are still in (growing)
           var childIsOutProbability = app.c.seeders.childIsOutProbability;
           var outDate, outHeight, outQuality, production;
-          outDate = outHeight = outQuality = production = null;
 
+          outDate = outHeight = outQuality = production = null;
           if (Math.random() < childIsOutProbability) {
             outDate = faker.date.recent();
-            outHeight = Math.floor(Math.random() * 130) + 20; //20 - 150 cm
-            outQuality = _.sample(qualities);
-            production = Math.floor(Math.random() * 49) + 1; //1 - 50 kg
+            outHeight = Math.floor(Math.random() * 131) + 20; //20 - 150 cm
+            outQuality = Math.floor(Math.random() * 11); //0 - 10
+            production = Math.floor(Math.random() * 50) + 1; //1 - 50 kg
           }
 
           app.db.plants.update(plant, { $push: { children: {
+            uuid: uuid.v4(),
             inDate: faker.date.past(),
             outDate: outDate,
-            inHeight: Math.floor(Math.random() * 19) + 1, // 1 - 19 cm
+            inHeight: Math.floor(Math.random() * 19) + 1, //1 - 19 cm
             outHeight: outHeight,
-            inQuality: _.sample(qualities),
+            inQuality: Math.floor(Math.random() * 11), //0 - 10
             outQuality: outQuality,
             room: faker.commerce.color(),
             production: production,
@@ -261,4 +269,76 @@ app.db.runSeeder = function () {
   return app.db.seeders.genetics()
       .then(app.db.seeders.plants)
       .then(app.db.seeders.children);
+};
+
+// plants repository
+app.db.plantsRepo = {
+  insertChild: function(plantId, child){
+    return new Promise(function(resolve, reject){
+        app.db.plants.update({_id: plantId}, {$push: {children: child}}, {}, function(err, newChild){
+        if (err) {
+          reject(Error('Unable to add child to plants datastore, with error: ' + err));
+        } else {
+          resolve(newChild);
+        }
+      });
+    });
+  },
+  updateChild: function(plantId, child){
+    return new Promise(function(resolve, reject){
+      app.db.plants.update({_id: plantId}, {$pull: {children: {uuid: child.uuid}}}, {}, function(err){
+        if (err) {
+          reject(Error('Unable to add child to plants datastore, with error: ' + err));
+        } else {
+          app.db.plants.update({_id: plantId}, {$push: {children: child}}, {}, function(err, newChild){
+            if (err) {
+              reject(Error('Unable to add child to plants datastore, with error: ' + err));
+            } else {
+              resolve(newChild);
+            }
+          });
+        }
+      });
+    });
+  },
+  deleteChild: function(plantId, childUuid){
+      return new Promise(function(resolve, reject){
+        app.db.plants.update({_id: plantId}, {$pull: {children: {uuid: childUuid}}}, {}, function(err){
+        if (err) {
+          reject(Error('Unable to delete child to plants datastore, with error: ' + err));
+        } else {
+          resolve(childUuid);
+        }
+      });
+    });
+  },
+  getChild: function(plantId, childUuid){
+      return new Promise(function(resolve, reject){
+        app.db.plants.findOne({_id: plantId}, {}, function(err, plant){
+        if (err) {
+          reject(Error('Unable to find child of plant, with error: ' + err));
+        } else {
+          var child;
+          for(var i = 0; i < plant.children.length; i++){
+            if(plant.children[i].uuid === childUuid){
+              child = plant.children[i];
+              break;
+            }
+          }
+          resolve(child);
+        }
+      });
+    });
+  },
+  getChildren: function(plantId){
+      return new Promise(function(resolve, reject){
+        app.db.plants.findOne({_id: plantId}, { children: 1}, function(err, plant){
+        if (err) {
+          reject(Error('Unable to find children of plant, with error: ' + err));
+        } else {
+          resolve(plant.children);
+        }
+      });
+    });
+  }
 };

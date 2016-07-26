@@ -17,7 +17,33 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
   "columnDefs": [
     {
       "render": function (data, type, row) { return app.formatDate(data); },
-      "targets": [1,2]
+      "targets": [2,3] //format date columns
+    },
+    {
+      "render": function (data, type, row) { return "<span class='uuid'>" + data + "</span>"; },
+      "visible": function() { return app.config.env !== 'dev'; },
+      "searchable": false,
+      "targets": [1] //hide uuid column
+    },
+      {
+      "render": function (data, type, row) { 
+        return '<span class="fa-stack btn-open-edit-child-modal" child-uuid="' + data + '">' +
+          '<i class="fa fa-square fa-stack-2x"></i>' +
+          '<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>' +
+        '</span>';
+      },
+      "searchable": false,
+      "targets": [12]   
+    },
+    {
+      "render": function (data, type, row) { 
+        return '<span class="fa-stack btn-open-delete-child-modal" child-uuid="' + data + '">' +
+          '<i class="fa fa-square fa-stack-2x"></i>' +
+          '<i class="fa fa-times fa-stack-1x fa-inverse"></i>' +
+        '</span>';
+      },
+      "searchable": false,
+      "targets": [13]   
     }
   ],
   "columns": [
@@ -31,8 +57,9 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
           '<i class="fa fa-info fa-stack-1x fa-inverse"></i>' +
         '</span>'
     },
+    { "data": 'UUID' },
     { "data": 'Fecha entrada' },
-    { "data": 'Fecha salida' },
+    { "data": 'Fecha salida'},
     { "data": 'Altura entrada' },
     { "data": 'Altura salida' },
     { "data": 'Calidad entrada' },
@@ -52,46 +79,50 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
       "className": 'none' //this column is always hidden and it will be shown within a child row instead
     },
     {
+      "data": "UUID",
       "orderable": false,
       "searchable": false,
-      "data": null,
-      "defaultContent":
-        '<span class="fa-stack btn-edit-child">' +
-          '<i class="fa fa-square fa-stack-2x"></i>' +
-          '<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>' +
-        '</span>'
+      "defaultContent": "error"
     },
     {
+      "data": "UUID",
       "orderable": false,
       "searchable": false,
-      "data": null,
-      "defaultContent":
-        '<span class="fa-stack btn-delete-child">' +
-          '<i class="fa fa-square fa-stack-2x"></i>' +
-          '<i class="fa fa-times fa-stack-1x fa-inverse"></i>' +
-        '</span>'
+      "defaultContent": "error"
     }
   ],
-  'order': [[1, 'desc']]
+  'order': [[2, 'desc']]
 });
 // app.s.childDatatable.DataTable();
 app.l('Datatables initialized');
 
-//init plant stats date range picker
-app.s.plantStatsDateRange.daterangepicker({
-  locale: {
-    format: 'DD/MM/YYYY',
-    separator: ' - ',
-    applyLabel: 'Aplicar',
-    cancelLabel: 'Cancelar',
-    weekLabel: 'S',
-    customRangeLabel: 'Rango personalizado',
-    daysOfWeek: moment.weekdaysMin(),
-    monthNames: moment.months(),
-    firstDay: moment.localeData().firstDayOfWeek()
-  }
-});
-app.l('Date-range picker initialized');
+var datepickerOptions = {
+  language: 'es',
+  endDate: "0d",
+  autoclose: true,
+  clearBtn: true
+}
+$.fn.datepicker.dates['es'] = {
+  days: moment.weekdays(),
+  daysShort: moment.weekdaysShort(),
+  daysMin: moment.weekdaysMin(),
+  months: moment.months(),
+  monthsShort: moment.monthsShort(),
+  today: "Today",
+  clear: "Cancelar",
+  format: 'dd/mm/yyyy',
+  weekStart: moment.localeData().firstDayOfWeek(),
+  showOnFocus: false
+};
+app.s.addChildInDate.datepicker(datepickerOptions);
+app.s.addChildOutDate.datepicker(datepickerOptions);
+app.s.editChildInDate.datepicker(datepickerOptions);
+app.s.editChildOutDate.datepicker(datepickerOptions);
+app.s.plantStatsDateFrom.datepicker(datepickerOptions);
+app.s.plantStatsDateFrom.datepicker('setDate', moment(new Date()).subtract(7, "days").format("DD/MM/YYYY"));
+app.s.plantStatsDateTo.datepicker(datepickerOptions);
+app.s.plantStatsDateTo.datepicker('setDate', moment(new Date()).format("DD/MM/YYYY"));
+app.l('Datepickers initialized');
 
 app.db.options.count({}, function (err, count) {
   if (count === 0) {
