@@ -62,6 +62,12 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
 .btn-open-delete-child-modal > .fa-square {
   color: #d9534f; }
 
+#plant-children-table > thead > tr > th input {
+  max-width: 100px; }
+
+#plant-children-table > tbody > tr > td.child span.dtr-title input {
+  display: none; }
+
 /*
  * Left menu
  */

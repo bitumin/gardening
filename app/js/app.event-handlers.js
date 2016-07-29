@@ -191,6 +191,25 @@ app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
     tr.addClass('shown');
   }
 });
+app.s.plantChildrenTable.find("thead th input").click(function(event){
+  if(event) event.preventDefault();
+  return false;
+});
+app.s.plantChildrenTableInDateFilter.change(function(e){
+  var index = $(e.target).parent().index();
+  app.s.plantChildrenDatatable.column(index).search($(this).val()).draw();
+});
+app.s.plantChildrenTable.find("thead th input").keydown(function(e){
+    if(e.keyCode == 13)
+    {
+      //if(e.target !== app.s.plantChildrenTableInDateFilter[0] && e.target !== app.s.plantChildrenTableOutDateFilter[0]){
+        var index = $(e.target).parent().index();
+        app.s.plantChildrenDatatable.column(index).search($(this).val()).draw();
+        if(event) event.preventDefault();
+        return false;
+      //}
+    }
+});
 
 /*
  * Children content event handlers
