@@ -65,6 +65,10 @@ table.dataTable.dtr-column>tbody>tr.parent th.control:before {
   color: #d9534f;
 }
 
+.btn-open-edit-child-modal, .btn-open-delete-child-modal {
+  cursor: pointer;
+}
+
 /*
  * Left menu
  */

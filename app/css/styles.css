@@ -59,6 +59,9 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
 .btn-open-delete-child-modal > .fa-square {
   color: #d9534f; }
 
+.btn-open-edit-child-modal, .btn-open-delete-child-modal {
+  cursor: pointer; }
+
 /*
  * Left menu
  */
