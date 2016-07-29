@@ -3,7 +3,7 @@ var env = require('./env');
 
 NwjsBuilder.commands.nwbuild('./app/', {
   version: env.nwjsVersion,
-  platforms: 'linux64',
+  platforms: 'linux64,osx64,win64',
   outputDir: './build/' + env.nwjsVersion,
   includes: [
     ['./', 'README.md', './'] // cp -r ./README.md ${DIR_BUILD}/README.md
