@@ -1,17 +1,23 @@
 app.view = app.v = {};
-app.v.switchView = function(contentEl) {
+app.v.switchView = function(contentEl, callback) {
   if(! contentEl.attr('id').startsWith('content-'))
     return;
 
-  if(contentEl.is(':hidden')) {
-    app.s.content.children()
-      .filter(function() {
-        return $(this).is(':visible');
-      })
-      .hide()
-      .removeClass(app.c.inAnimation);
-
-    contentEl.addClass(app.c.inAnimation).show();
+  if(contentEl.is(':visible')) {
+    app.s.content.children()[app.c.outAnimation](300);
+    setTimeout(function(){ 
+      callback();
+      contentEl[app.c.inAnimation](300);
+    }, 300);
+  }
+  else{
+    if(contentEl.is(':hidden')) {
+      app.s.content.children()[app.c.outAnimation](300);
+      setTimeout(function(){
+        callback();
+        contentEl[app.c.inAnimation](300);
+      }, 300);
+    }
   }
 };
 app.v.populatePlantView = function(plantId) {

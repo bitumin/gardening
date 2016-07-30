@@ -16,7 +16,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
   },
   "columnDefs": [
     {
-      "render": function (data, type, row) { return app.formatDate(data); },
+      "render": function (data, type, row) { return data !== null ? moment(data).format("DD/MM/YYYY") : ""; },
       "targets": [2,3] //format date columns
     },
     {
@@ -122,6 +122,8 @@ app.s.plantStatsDateFrom.datepicker(datepickerOptions);
 app.s.plantStatsDateFrom.datepicker('setDate', moment(new Date()).subtract(7, "days").format("DD/MM/YYYY"));
 app.s.plantStatsDateTo.datepicker(datepickerOptions);
 app.s.plantStatsDateTo.datepicker('setDate', moment(new Date()).format("DD/MM/YYYY"));
+app.s.plantChildrenTableInDateFilter.datepicker(datepickerOptions);
+app.s.plantChildrenTableOutDateFilter.datepicker(datepickerOptions);
 app.l('Datepickers initialized');
 
 app.db.options.count({}, function (err, count) {

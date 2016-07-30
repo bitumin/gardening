@@ -1,7 +1,6 @@
 @import url(../libs/font-awesome/css/font-awesome.min.css);
 @import url(../libs/bootstrap/dist/css/bootstrap.min.css);
 @import url(../libs/bootstrap/dist/css/bootstrap-theme.min.css);
-@import url(../libs/bootstrap-daterangepicker/daterangepicker.min.css);
 @import url(../libs/EasyAutocomplete/dist/easy-autocomplete.min.css);
 @import url(../libs/datatables/datatables.min.css);
 @import url(../libs/animate.css/animate.min.css);
@@ -12,7 +11,7 @@
   font-family: 'Open Sans Regular';
   src: url("../fonts/OpenSans-Regular.ttf"); }
 /*
- * Html, body
+ * Html, body, general
  */
 html, body {
   margin: 0;
@@ -23,13 +22,16 @@ body {
   min-width: 960px;
   overflow: hidden; }
 
+.form-group.required .control-label:after {
+  content: "*";
+  color: red; }
+
 /*
  * Datatables
  */
 table.dataTable.dtr-column > tbody > tr > td.control:before,
 table.dataTable.dtr-column > tbody > tr > th.control:before {
   height: 0;
-  width: 0;
   margin-top: 0;
   margin-left: 0;
   border: 0;
@@ -58,6 +60,12 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
 
 .btn-open-delete-child-modal > .fa-square {
   color: #d9534f; }
+
+#plant-children-table > thead > tr > th input {
+  max-width: 100px; }
+
+#plant-children-table > tbody > tr > td.child span.dtr-title input {
+  display: none; }
 
 .btn-open-edit-child-modal, .btn-open-delete-child-modal {
   cursor: pointer; }
@@ -158,9 +166,6 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
     line-height: 0.6;
     color: #106c6c; }
 
-.tab-pane {
-  padding-top: 15px; }
-
 .tab-content {
   margin-left: -10px;
   margin-right: -10px;
@@ -168,9 +173,8 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
   min-width: 100%;
   min-height: calc(100vh - 72px);
   overflow: auto; }
-
-#plant-children-table {
-  width: 100%; }
+  .tab-content .tab-pane {
+    padding-top: 15px; }
 
 #content-child {
   display: none; }
@@ -191,12 +195,5 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
     line-height: 31px; }
   .select2 > .selection > .select2-selection .select2-selection__arrow {
     top: 4px; }
-
-.btn-xs, .form-inline {
-  display: inline-block; }
-
-.form-group.required .control-label:after {
-  content: "*";
-  color: red; }
 
 /*# sourceMappingURL=styles.css.map */

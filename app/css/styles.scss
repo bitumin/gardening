@@ -1,7 +1,6 @@
 @import '../libs/font-awesome/css/font-awesome.min.css';
 @import '../libs/bootstrap/dist/css/bootstrap.min.css';
 @import '../libs/bootstrap/dist/css/bootstrap-theme.min.css';
-@import '../libs/bootstrap-daterangepicker/daterangepicker.min.css';
 @import '../libs/EasyAutocomplete/dist/easy-autocomplete.min.css';
 @import '../libs/datatables/datatables.min.css';
 @import '../libs/animate.css/animate.min.css';
@@ -15,11 +14,11 @@
 }
 
 /*
- * Html, body
+ * Html, body, general
  */
 html, body {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -28,13 +27,17 @@ body {
   overflow: hidden;
 }
 
+.form-group.required .control-label:after {
+  content: "*";
+  color: red;
+}
+
 /*
  * Datatables
  */
-table.dataTable.dtr-column>tbody>tr>td.control:before,
-table.dataTable.dtr-column>tbody>tr>th.control:before {
+table.dataTable.dtr-column > tbody > tr > td.control:before,
+table.dataTable.dtr-column > tbody > tr > th.control:before {
   height: 0;
-  width: 0;
   margin-top: 0;
   margin-left: 0;
   border: 0;
@@ -45,24 +48,38 @@ table.dataTable.dtr-column>tbody>tr>th.control:before {
   line-height: 0;
   content: '';
 }
-table.dataTable.dtr-column>tbody>tr.parent td.control:before,
-table.dataTable.dtr-column>tbody>tr.parent th.control:before {
+
+table.dataTable.dtr-column > tbody > tr.parent td.control:before,
+table.dataTable.dtr-column > tbody > tr.parent th.control:before {
   content: '';
 }
+
 .btn-details-child, .btn-open-edit-child-modal, .btn-open-delete-child-modal {
   font-size: 12px;
 }
+
 .btn-details-child > .fa-square {
   color: #5cb85c;
 }
+
 .parent > .control > .btn-details-child > .fa-square {
   color: #337ab7;
 }
+
 .btn-open-edit-child-modal > .fa-square {
   color: #f0ad4e;
 }
+
 .btn-open-delete-child-modal > .fa-square {
   color: #d9534f;
+}
+
+#plant-children-table > thead > tr > th input {
+  max-width: 100px;
+}
+
+#plant-children-table > tbody > tr > td.child span.dtr-title input {
+  display: none;
 }
 
 .btn-open-edit-child-modal, .btn-open-delete-child-modal {
@@ -189,13 +206,16 @@ $tab-link: #106c6c;
   max-width: 100%;
   padding: 10px 10px 0 10px;
 }
+
 #content-plant-title-name {
   font-size: 20px;
   font-weight: 600;
 }
+
 .btn-open-add-child-modal {
   margin-bottom: 10px;
 }
+
 .nav-tabs {
   margin-top: 4px;
   margin-left: -10px;
@@ -210,10 +230,6 @@ $tab-link: #106c6c;
   }
 }
 
-.tab-pane {
-  padding-top: 15px;
-}
-
 .tab-content {
   margin-left: -10px;
   margin-right: -10px;
@@ -221,10 +237,9 @@ $tab-link: #106c6c;
   min-width: 100%;
   min-height: calc(100vh - 72px);
   overflow: auto;
-}
-
-#plant-children-table {
-  width: 100%;
+  .tab-pane {
+    padding-top: 15px;
+  }
 }
 
 //child
@@ -239,12 +254,10 @@ $tab-link: #106c6c;
 
 // --- plants > stats
 .tab-plant-stats {
-
 }
 
 // --- plants > children
 .tab-plant-children {
-
 }
 
 /*
@@ -257,21 +270,10 @@ $tab-link: #106c6c;
 // --- select2
 .select2 > .selection > .select2-selection {
   height: 34px;
-
   .select2-selection__rendered {
     line-height: 31px;
   }
-
   .select2-selection__arrow {
     top: 4px;
   }
-}
-
-.btn-xs, .form-inline {
-  display: inline-block;
-}
-
-.form-group.required .control-label:after { 
-   content:"*";
-   color:red;
 }
