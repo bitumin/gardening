@@ -1,7 +1,54 @@
 /*
+ * Helper
+ */
+  google.charts.setOnLoadCallback(function(){});
+  google.charts.load('current', {'packages':['line']});
+function disableForm(form){
+  form.find(':input').prop("disabled", true);
+}
+function enableForm(form){
+  form.find(':input').prop("disabled", false);
+}
+function reportInfo(message, obj){
+  toastr.success(message);
+  app.l("Info > " + message + " (" + JSON.stringify(obj) + ")");
+}
+function reportSuccess(message, obj){
+  toastr.success(message);
+  app.l("Success > " + message + " (" + JSON.stringify(obj) + ")");
+}
+function reportError(message, obj){
+  toastr.error(message);
+  app.l("Error > " + message + " (" + JSON.stringify(obj) + ")");
+}
+function resetModals(){
+  app.s.addPlantModal.modal('hide');
+  app.s.addPlantForm[0].reset();
+  enableForm(app.s.addPlantForm);
+
+  app.s.editPlantModal.modal('hide');
+  app.s.editPlantForm[0].reset();
+  enableForm(app.s.editPlantForm);
+
+  app.s.delPlantModal.modal('hide');
+  app.s.delPlantForm[0].reset();
+  enableForm(app.s.delPlantForm);
+
+  app.s.addChildModal.modal('hide');
+  app.s.addChildForm[0].reset();
+  enableForm(app.s.addChildForm);
+
+  app.s.editChildModal.modal('hide');
+  app.s.editChildForm[0].reset();
+  enableForm(app.s.editChildForm);
+
+  app.s.delChildModal.modal('hide');
+  app.s.delChildForm[0].reset();
+  enableForm(app.s.delChildForm);
+}
+/*
  * Left menu event handlers
  */
-
 app.s.leftMenu.on('click', '#btn-open-add-plant-modal', function() {
   app.s.addPlantModal.modal('show');
 });
@@ -21,9 +68,7 @@ app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function(e) {
       //open modal
       app.s.editPlantModal.modal('show');
     })
-    .catch(function(err) {
-      //todo: do something on exception
-    });
+    .catch(function(err) {reportError('Could not retrieve plant', err);});
 });
 
 app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
@@ -36,23 +81,21 @@ app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
   var self = $(this);
   app.v.switchView(app.s.contentPlant, function(){
-    app.v.populatePlantView(self.closest('li').data('plantId'));
+    var plantId = self.closest('li').data('plantId');
+    app.v.populatePlantView(plantId);
     app.v.toggleActiveItem(self.closest('li'));
+
+    reportSuccess("Loaded plant", plantId);
   });
 });
 
 /*
  * Plant modals (add, edit, delete)
  */
-
 app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.addPlantForm.serializeObject();
-  var formElements = app.s.addPlantForm.find(':input');
+  disableForm(app.s.addPlantForm);
   
-  //disable all form inputs, buttons, etc.
-  formElements.prop("disabled", true);
-  
-  //plant doc
   var plant = {
     name: formData.addPlantName,
     number: formData.addPlantNumber,
@@ -61,49 +104,29 @@ app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
     insertDate: new Date(),
     lastModDate: new Date()
   };
-  
-  //genetic doc
   var genetic = {
     name: formData.addPlantGenetics,
     insertDate: new Date(),
     lastModDate: new Date()
   };
   
-  //add plant
   app.db.insertDoc('plants', plant)
     .then(function(newPlant) {
-      //add new plant to menu
+      reportSuccess("Added new plant", newPlant);
       app.v.addNewPlantToLeftMenu(newPlant);
-      //add new genetics (if it doesn't exist)
-      return app.db.insertDocIfDoesNotExist('genetics', genetic)
-        .then(app.v.populateGenetics);
+      resetModals();
+
+      app.db.insertDocIfDoesNotExist('genetics', genetic)
+        .then(function(newGenetic){app.v.populateGenetics(newGenetic);})
     })
-    .catch(function(err) {
-      app.l('Add plant aborted with error: ' + err, 'DB');
-    })
-    .then(function() {
-      //close modal
-      app.s.addPlantModal.modal('hide');
-      //clear form
-      app.s.addPlantForm[0].reset();
-      //re-enable button
-      formElements.prop("disabled", false);
-    });
+    .catch(function(err) { reportError("Could not add plant", err); });
 });
 
 app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.editPlantForm.serializeObject();
-  var formElements = app.s.editPlantForm.find(':input');
+  disableForm(app.s.editPlantForm);
 
-  //disable all form inputs, buttons, etc.
-  formElements.prop("disabled", true);
-
-  //query
-  var query = {
-    _id: formData.editPlantId
-  };
-
-  //plant doc
+  var query = { _id: formData.editPlantId };
   var plant = {
     name: formData.editPlantName,
     number: formData.editPlantNumber,
@@ -111,73 +134,42 @@ app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
     origin: formData.editPlantOrigin,
     lastModDate: new Date()
   };
-
-  //genetic doc
   var genetic = {
     name: formData.editPlantGenetics,
     lastModDate: new Date()
   };
 
-  //update plant
   app.db.updateDoc('plants', query, plant)
-    //concurrently add new genetics (if it doesn't exist)
-    .then(function(nReplaced) {
-      if(nReplaced === 1) {
-        app.v.updatePlantName(query._id, plant.name);
-      }
-      return app.db.insertDocIfDoesNotExist('genetics', genetic)
-        .then(app.v.populateGenetics); 
+    .then(function(nameReplaced) {
+      if(nameReplaced === 1) { app.v.updatePlantName(query._id, plant.name); }
+      
+      reportSuccess("Edited plant", plant);
+      resetModals();
+      app.db.insertDocIfDoesNotExist('genetics', genetic)
+        .then(function(editedGenetic){app.v.populateGenetics(editedGenetic)}); 
     })
-    .catch(function(err) {
-      app.l('Edit plant rejected with error: ' + err, 'DB');
-    })
-    .then(function() {
-      //close modal
-      app.s.editPlantModal.modal('hide');
-      //clear form
-      app.s.editPlantForm[0].reset();
-      //re-enable button
-      formElements.prop("disabled", false);
-    });
+    .catch(function(err) { reportError("Could not edit plant", err); });
 });
 
 app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.delPlantForm.serializeObject();
-  var formElements = app.s.delPlantForm.find(':input');
+  disableForm(app.s.delPlantForm);
 
-  //disable all form inputs, buttons, etc.
-  formElements.prop("disabled", true);
+  var query = { _id: formData.deletePlantId };
 
-  //query
-  var query = {
-    _id: formData.deletePlantId
-  };
-
-  //delete plant
   app.db.removeDoc('plants', query)
-    .then(function(nRemoved) {
-      if(nRemoved === 1) {
-        //remove plant from left menu
-        app.v.removePlantFromLeftMenu(formData.deletePlantId);
-      }
+    .then(function(removed) {
+      if(removed === 1) { app.v.removePlantFromLeftMenu(formData.deletePlantId); }
+
+      reportSuccess("Deleted plant", formData.deletePlantId);
+      resetModals();
     })
-    .catch(function(err) {
-      app.l('Remove plant rejected with error: ' + err, 'DB');
-    })
-    .then(function() {
-      //close modal
-      app.s.delPlantModal.modal('hide');
-      //clear form
-      app.s.delPlantForm[0].reset();
-      //re-enable button
-      formElements.prop("disabled", false);
-    });
+    .catch(function(err) { reportError("Could not delete plant", err); });
 });
 
 /*
  * Plant's children datatable event handlers
  */
-
 app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
   var tr = $(this).closest('tr');
   var row = table.row( tr );
@@ -194,6 +186,7 @@ app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
   }
 });
 app.s.plantChildrenTable.find("thead th input").click(function(event){
+  //prevent sorting when attempting to filter
   if(event) event.preventDefault();
   return false;
 });
@@ -201,34 +194,34 @@ app.s.plantChildrenTableInDateFilter.change(function(e){
   var index = $(e.target).parent().index();
   app.s.plantChildrenDatatable.column(index).search($(this).val()).draw();
 });
+app.s.plantChildrenTableOutDateFilter.change(function(e){
+  var index = $(e.target).parent().index();
+  app.s.plantChildrenDatatable.column(index).search($(this).val()).draw();
+});
 app.s.plantChildrenTable.find("thead th input").keydown(function(e){
-    if(e.keyCode == 13)
-    {
-      //if(e.target !== app.s.plantChildrenTableInDateFilter[0] && e.target !== app.s.plantChildrenTableOutDateFilter[0]){
-        var index = $(e.target).parent().index();
-        app.s.plantChildrenDatatable.column(index).search($(this).val()).draw();
-        if(event) event.preventDefault();
-        return false;
-      //}
-    }
+  //execute filtering when hitting "Enter" button
+  if(e.keyCode == 13)
+  {
+    var index = $(e.target).parent().index();
+    app.s.plantChildrenDatatable.column(index).search($(this).val()).draw();
+    if(event) event.preventDefault();
+    return false;
+  }
 });
 
 /*
- * Children content event handlers
+ * Plant children content event handlers
  */
-
 app.s.content.on('click', '.btn-open-add-child-modal', function() {
   app.s.addChildModal.modal('show');
 });
 
 app.s.content.on('click', '.btn-open-edit-child-modal', function(e) {
-  //todo: capture plant and children id, pass data to children modal
   var plantId = app.s.contentPlant.attr("data-plant-id");
   var childId = $(this).attr("child-uuid");
 
   app.db.plantsRepo.getChild(plantId, childId)
     .then(function (doc) {
-      //load data into modal
       app.s.editChildTitle.text(doc.name);
       app.s.editChildUuid.val(doc.uuid);
       app.s.editChildInDate.datepicker("update", new Date(doc.inDate));
@@ -241,13 +234,10 @@ app.s.content.on('click', '.btn-open-edit-child-modal', function(e) {
       app.s.editChildProduction.val(doc.production);
       app.s.editChildDefects.val(doc.defects);
       app.s.editChildComments.val(doc.comments);
-    })
-    .catch(function(err) {
-        app.l('Edit plant child aborted with error: ' + err, 'DB');
-    })
-    .then(function(){
+
       app.s.editChildModal.modal('show');
-    });
+    })
+    .catch(function(err) { reportError('Could not retrieve plant child', err); });
 });
 
 app.s.content.on('click', '.btn-open-delete-child-modal', function(e) {
@@ -256,14 +246,13 @@ app.s.content.on('click', '.btn-open-delete-child-modal', function(e) {
 });
 
 /*
- * Child modals (add, edit, delete)
+ * Plant child modals (add, edit, delete)
  */
-
 app.s.addChildForm.on('submit', function() {
   var formData = app.s.addChildForm.serializeObject();
-  var formElements = app.s.addChildForm.find(':input');
-  //disable all form inputs, buttons, etc.
-  formElements.prop("disabled", true);
+  disableForm(app.s.addChildForm);
+
+  var plantId = app.s.contentPlant.attr("data-plant-id");
   var child = {
     uuid: uuid(),
     inDate: app.s.addChildInDate.datepicker("getDate"),
@@ -279,34 +268,24 @@ app.s.addChildForm.on('submit', function() {
     insertDate: new Date(),
     lastModDate: new Date()   
   }
-  //find parent plant
-  var plantId = app.s.contentPlant.attr("data-plant-id");
   
-  //update plant adding child with form data
   app.db.plantsRepo.insertChild(plantId, child)
-    .then(function(newPlant) {
-        // reload plant data
+    .then(function(newPlantChild) {
         app.v.populatePlantView(plantId);
+
+        reportSuccess("Added plant child", newPlantChild);
+        resetModals();
     })
-    .catch(function(err) {
-      app.l('Add plant child aborted with error: ' + err, 'DB');
-    })
-    .then(function() {
-      //close modal
-      app.s.addChildModal.modal('hide');
-      //clear form
-      app.s.addChildForm[0].reset();
-      //re-enable button
-      formElements.prop("disabled", false);
-    });
+    .catch(function(err) { reportError("Could not add plant child", err); });
+
   return false;
 });
 
 app.s.editChildForm.on('submit', function() {
   var formData = app.s.editChildForm.serializeObject();
-  var formElements = app.s.editChildForm.find(':input');
-  //disable all form inputs, buttons, etc.
-  formElements.prop("disabled", true);
+  disableForm(app.s.editChildForm);
+
+  var plantId = app.s.contentPlant.attr("data-plant-id");
   var child = {
     uuid: formData.editChildUuid,
     inDate: app.s.editChildInDate.datepicker("getDate"),
@@ -322,57 +301,33 @@ app.s.editChildForm.on('submit', function() {
     insertDate: formData.editChildInsertDate,
     lastModDate: new Date()   
   }
-  //find parent plant
-  var plantId = app.s.contentPlant.attr("data-plant-id");
-  
-  //update plant adding child with form data
+
   app.db.plantsRepo.updateChild(plantId, child)
-    .then(function(newPlant) {
-        // reload plant data
+    .then(function(editedPlantChild) {
         app.v.populatePlantView(plantId);
+
+        reportSuccess("Edited plant child", editedPlantChild);
+        resetModals();
     })
-    .catch(function(err) {
-      app.l('Add plant child aborted with error: ' + err, 'DB');
-    })
-    .then(function() {
-      //close modal
-      app.s.editChildModal.modal('hide');
-      //clear form
-      app.s.editChildForm[0].reset();
-      //re-enable button
-      formElements.prop("disabled", false);
-    });
+    .catch(function(err) { reportError("Could not edit plant child", err); });
   return false;
 });
 
 app.s.delChildForm.on('submit', function() {
-  //disable button
   var formData = app.s.delChildForm.serializeObject();
-  var formElements = app.s.delChildForm.find(':input');
-  //disable all form inputs, buttons, etc.
-  formElements.prop("disabled", true);
-  //find child uuid
-  var childUuid = formData.deleteChildUuid;
-  //find parent plant
-  var plantId = app.s.contentPlant.attr("data-plant-id");
+  disableForm(app.s.delChildForm);
 
-  //update plant removing child
+  var plantId = app.s.contentPlant.attr("data-plant-id");
+  var childUuid = formData.deleteChildUuid;
+
   app.db.plantsRepo.deleteChild(plantId, childUuid)      
     .then(function() {
-        // reload plant data
         app.v.populatePlantView(plantId);
+
+        reportSuccess("Deleted plant child", {plantId: plantId, childId: childUuid});
+        resetModals();
     })
-    .catch(function(err) {
-      app.l('Add plant child aborted with error: ' + err, 'DB');
-    })
-    .then(function() {
-      //close modal
-      app.s.delChildModal.modal('hide');
-      //clear form
-      app.s.delChildForm[0].reset();
-      //re-enable button
-      formElements.prop("disabled", false);
-    });
+    .catch(function(err) {reportError("Could not delete plant child", err); });
   return false;
 });
 
@@ -480,15 +435,10 @@ app.s.plantStatsDatePeriod.find("select").on("change", function(e){
   app.s.plantStatsDateTo.datepicker("update", moment(new Date()).format(periodFormatSettings.parseFormat));
 })
 app.s.plantStatsForm.on('submit', function(){
-  //disable button
   var formData = app.s.plantStatsForm.serializeObject();
-  var formElements = app.s.plantStatsForm.find(':input');
-  //disable all form inputs, buttons, etc.
-  formElements.prop("disabled", true);
+  disableForm(app.s.plantStatsForm);
 
-  //find parent plant
   var plantId = app.s.contentPlant.attr("data-plant-id");
-  //get lines
   var periodReporting = formData.plantStatsDateReporting;
   var periodFormat = dateFormatAssociations[periodReporting];
   var dateFrom = moment(formData.plantStatsDateFrom, periodFormat.parseFormat);
@@ -498,8 +448,8 @@ app.s.plantStatsForm.on('submit', function(){
     desiredReports = [desiredReports];
   }
   if(!Array.isArray(desiredReports) || desiredReports.length === 0){
-    //re-enable button
-    formElements.prop("disabled", false);
+    reportError("Could not generate report - no checkbox selected");
+    enableForm(app.s.plantStatsForm);
     return false;
   }
 
@@ -562,14 +512,11 @@ app.s.plantStatsForm.on('submit', function(){
         reducedData.push(reducedRow);
       }
 
-      google.charts.setOnLoadCallback(function(){drawChart(reducedData);});
-      google.charts.load('current', {'packages':['line']});
-
-        function drawChart(reducedData) {
+      (function drawChart(reducedData) {
         var data = google.visualization.arrayToDataTable(reducedData);
 
         var options = {
-          title: 'Company Performance',
+          title: 'Gardening report',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
@@ -578,13 +525,13 @@ app.s.plantStatsForm.on('submit', function(){
 
         chart.draw(data, options);
 
-        //re-enable button
-        formElements.prop("disabled", false);
-      }
+        reportSuccess("Generated report", data);
+        enableForm(app.s.plantStatsForm);
+      })(reducedData);
     })
-    .catch(function(err) {
-      app.l('Get plant children aborted with error: ' + err, 'DB');
-    })
+    .catch(function(err) { 
+      reportError("Could not retrieve plant children", err); 
+    });
 
   return false;
 });
