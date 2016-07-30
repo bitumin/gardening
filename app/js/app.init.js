@@ -1,12 +1,8 @@
-//todo: implementar toastr messages
-//todo: filter form to db data
-//todo: implementar loading spinners within modals
-//todo: build up plants stats by date range
-//todo: pick date range -> filter plants stats by date range
-//todo: update genetics combobox at start app and at adding genetics form any form
-
-//init datatables 
+//init datatables
 app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
+  "language": {
+    "url": "../libs/datatables/i18n/Spanish.json"
+  },
   "autoFill": true,
   "colReorder": true,
   "responsive": {
@@ -33,7 +29,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
         '</span>';
       },
       "searchable": false,
-      "targets": [12]   
+      "targets": [12]
     },
     {
       "render": function (data, type, row) { 
@@ -101,7 +97,7 @@ var datepickerOptions = {
   endDate: "0d",
   autoclose: true,
   clearBtn: true
-}
+};
 $.fn.datepicker.dates['es'] = {
   days: moment.weekdays(),
   daysShort: moment.weekdaysShort(),
@@ -159,4 +155,4 @@ $(function() {
   //todo: remove splash screen
 });
 
-app.l('App initialized', 'DB');
+app.l('App initialized', 'Notice');

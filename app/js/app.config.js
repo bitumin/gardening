@@ -5,8 +5,8 @@ app.config = app.c = {
   outAnimation: 'fadeOut',
   seeders: {
     genetics: 50,
-    plants: 25,
-    childrenPerPlant: 10,
+    plants: 10,
+    childrenPerPlant: 200,
     childIsOutProbability: 0.8
   }
 };

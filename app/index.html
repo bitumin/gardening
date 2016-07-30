@@ -13,9 +13,9 @@
 
   <!--left menu-->
   <div id="left-menu">
-    <h1 class="title">Gardening Tools</h1>
+    <h1 class="title" data-lang-key="appName">Gardening Tools</h1>
     <h2 class="parent-title">
-      PLANTAS
+      <span data-lang-key="parents">PLANTAS</span>
       <a id="btn-open-add-plant-modal"><i class="fa fa-plus-circle"></i></a>
     </h2>
     <ul id="left-menu-items-list" class="nav nav-pills nav-stacked">
@@ -28,8 +28,8 @@
 
     <!--welcome-->
     <div id="content-welcome" class="row animated">
-      <h1>Bienvenido/a a <br>Gardening Tools</h1>
-      <p>
+      <h1 data-lang-key="welcomeMsg">Bienvenido/a a <br>Gardening Tools</h1>
+      <p data-lang-key="poweredBy">
         Powered by Node.js <script>document.write(process.versions.node);</script>,
         <script>(function(){let match = navigator.userAgent.match(/(Chrom[e|ium])\/([0-9]+)\./);
           document.write(match[1] + ' ' + match[2]);})();</script>
@@ -46,10 +46,10 @@
       <!--tabs nav-->
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
-          <a href="#plant-children" aria-controls="children" role="tab" data-toggle="tab">Hijos</a>
+          <a href="#plant-children" aria-controls="children" role="tab" data-toggle="tab" data-lang-key="children">Hijos</a>
         </li>
         <li role="presentation">
-          <a href="#plant-stats" aria-controls="stats" role="tab" data-toggle="tab">Estadísticas</a>
+          <a href="#plant-stats" aria-controls="stats" role="tab" data-toggle="tab" data-lang-key="statistics">Estadísticas</a>
         </li>
       </ul>
       <!--/tabs nav-->
@@ -60,41 +60,41 @@
         <div role="tabpanel" class="tab-pane active col-md-12" id="plant-children">
           <div>
             <a class="btn btn-success btn-open-add-child-modal">
-              <i class="fa fa-plus-circle"></i> Añadir hijo
+              <i class="fa fa-plus-circle"></i> <span data-lang-key="addChild">Añadir hijo</span>
             </a>
           </div>
           <table id="plant-children-table" class="display table table-striped table-bordered table-hover" style="width: 100%;">
             <thead>
             <tr>
               <th></th>
-              <th>UUID</th>
-              <th>Fecha entrada<input style="max-width: 100px;" type="text" id="plant-child-in-date-filter"/></th>
-              <th>Fecha salida<input style="max-width: 100px;" type="text" id="plant-child-out-date-filter"/></th>
-              <th>Altura entrada<input style="max-width: 100px;" type="number" id="plant-child-in-height-filter"/></th>
-              <th>Altura salida<input style="max-width: 100px;" type="number" id="plant-child-out-height-filter"/></th>
-              <th>Calidad entrada<input style="max-width: 100px;" type="number" id="plant-child-in-quality-filter"/></th>
-              <th>Calidad salida<input style="max-width: 100px;" type="number" id="plant-child-out-quality-filter"/></th>
-              <th>Sala<input style="max-width: 100px;" type="text" id="plant-child-room-filter"/></th>
-              <th>Producción<input style="max-width: 100px;" type="number" id="plant-child-production-filter"/></th>
-              <th>Defectos</th>
-              <th>Comentarios</th>
+              <th><span data-lang-key="uuid">UUID</span></th>
+              <th><span data-lang-key="dateIn">Fecha entrada</span><br><input style="max-width: 100px;" type="text" id="plant-child-in-date-filter"/></th>
+              <th><span data-lang-key="dateOut">Fecha salida</span><br><input style="max-width: 100px;" type="text" id="plant-child-out-date-filter"/></th>
+              <th><span data-lang-key="heightIn">Altura entrada</span><br><input style="max-width: 100px;" type="number" id="plant-child-in-height-filter"/></th>
+              <th><span data-lang-key="heightOut">Altura salida</span><br><input style="max-width: 100px;" type="number" id="plant-child-out-height-filter"/></th>
+              <th><span data-lang-key="qualityIn">Calidad entrada</span><br><input style="max-width: 100px;" type="number" id="plant-child-in-quality-filter"/></th>
+              <th><span data-lang-key="qualityOut">Calidad salida</span><br><input style="max-width: 100px;" type="number" id="plant-child-out-quality-filter"/></th>
+              <th><span data-lang-key="room">Sala</span><br><input style="max-width: 100px;" type="text" id="plant-child-room-filter"/></th>
+              <th><span data-lang-key="production">Producción</span><br><input style="max-width: 100px;" type="number" id="plant-child-production-filter"/></th>
+              <th><span data-lang-key="defects">Defectos</span></th>
+              <th><span data-lang-key="comments">Comentarios</span></th>
               <th></th><th></th>
             </tr>
             </thead>
             <tfoot>
             <tr>
               <th></th>
-              <th>UUID</th>
-              <th>Fecha entrada</th>
-              <th>Fecha salida</th>
-              <th>Altura entrada</th>
-              <th>Altura salida</th>
-              <th>Calidad entrada</th>
-              <th>Calidad salida</th>
-              <th>Sala</th>
-              <th>Producción</th>
-              <th>Defectos</th>
-              <th>Comentarios</th>
+              <th><span data-lang-key="uuid">UUID</span></th>
+              <th><span data-lang-key="dateIn">Fecha entrada</span></th>
+              <th><span data-lang-key="dateOut">Fecha salida</span></th>
+              <th><span data-lang-key="heightIn">Altura entrada</span></th>
+              <th><span data-lang-key="heightOut">Altura salida</span></th>
+              <th><span data-lang-key="qualityIn">Calidad entrada</span></th>
+              <th><span data-lang-key="qualityOut">Calidad salida</span></th>
+              <th><span data-lang-key="room">Sala</span></th>
+              <th><span data-lang-key="production">Producción</span></th>
+              <th><span data-lang-key="defects">Defectos</span></th>
+              <th><span data-lang-key="comments">Comentarios</span></th>
               <th></th><th></th>
             </tr>
             </tfoot>
@@ -108,43 +108,43 @@
         <div role="tabpanel" class="tab-pane" id="plant-stats">
           <form class="" id="stat-form" action="javascript:" style="margin-bottom: 10px;">
             <div>
-              <label class="col-xs-2" for="plant-stats-date-reporting">Reporting period:</label>
+              <label class="col-xs-2" for="plant-stats-date-reporting" data-lang-key="reportingPeriod">Reporting period:</label>
               <div class="input-group input-daterange col-xs-2" id="plant-stats-date-reporting">
                 <select class="form-control" name="plantStatsDateReporting">
-                  <option value="D">Day</option>
-                  <option value="M">Month</option>
-                  <option value="Y">Year</option>
+                  <option value="D" data-lang-key="day">Day</option>
+                  <option value="M" data-lang-key="month">Month</option>
+                  <option value="Y" data-lang-key="year">Year</option>
                 </select>
               </div>
             </div>
             <br />
             <div>
-              <label class="col-xs-2" for="plant-stats-date-range">Date range:</label>
+              <label class="col-xs-2" for="plant-stats-date-range" data-lang-key="dateRange">Date range:</label>
               <div class="input-group input-daterange col-xs-6" id="plant-stats-date-range">
                   <input type="text" class="form-control" id="plant-stats-date-from" name="plantStatsDateFrom" value="2012-04-05" required>
-                  <span class="input-group-addon">to</span>
+                  <span class="input-group-addon" data-lang-key="to">to</span>
                   <input type="text" class="form-control" id="plant-stats-date-to" name="plantStatsDateTo" value="2012-04-19" required>
               </div>
             </div>
             <br />
             <div>
-              <label class="col-xs-2" for="plant-stats-lines">Lines:</label>
+              <label class="col-xs-2" for="plant-stats-lines" data-lang-key="variables">Lines:</label>
               <div class="input-group col-xs-10" id="plant-stats-lines">
                 <div class="checkbox">
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="total-children-production" checked/>Total children production</label>
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-children-production"/>Average children production</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="totalChildrenProduction" value="total-children-production" checked/>Total children production</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageChildrenProduction" value="avg-children-production"/>Average children production</label>
                 </div>
                 <div class="checkbox">
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-quality" />Average in quality</label>
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-out-quality"/>Average out quality</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageInQuality" value="avg-in-quality" />Average in quality</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageOutQuality" value="avg-out-quality"/>Average out quality</label>
                 </div>
                 <div class="checkbox">
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-height"/>Average in height</label>
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-out-height"/>Average out height</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageInHeight" value="avg-in-height"/>Average in height</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageOutHeight" value="avg-out-height"/>Average out height</label>
                 </div>
               </div>
             </div>
-            <input type="submit" class="btn btn-success" value="Refresh" />
+            <button type="submit" class="btn btn-success" data-lang-key="apply">Refresh</button>
           </form>
           <div id="curve_chart"></div>
         </div>
@@ -153,12 +153,6 @@
       <!--/tabs content-->
     </div>
     <!--/plant-->
-
-    <!--child-->
-    <div id="content-child" class="animated">
-      <h1>Child content</h1>
-    </div>
-    <!--/child-->
 
   </div>
   <!--/content-->
@@ -172,40 +166,40 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addPlantModalLabel">
+        <h4 class="modal-title" id="addPlantModalLabel" data-lang-key="addNewParent">
           Add new plant
         </h4>
       </div>
       <form role="form" class="form-horizontal" id="add-plant-form" action="javascript:">
         <div class="modal-body">
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-plant-name">Name:</label>
+            <label class="control-label col-xs-3" for="add-plant-name" data-lang-key="name">Name:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addPlantName" id="add-plant-name" maxlength="24">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-plant-number">Number:</label>
+            <label class="control-label col-xs-3" for="add-plant-number"data-lang-key="number">Number:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="addPlantNumber" id="add-plant-number" min="0" step="1">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-plant-genetics">Genetics:</label>
+            <label class="control-label col-xs-3" for="add-plant-genetics" data-lang-key="genetics">Genetics:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addPlantGenetics" id="add-plant-genetics">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-plant-origin">Origin:</label>
+            <label class="control-label col-xs-3" for="add-plant-origin" data-lang-key="origin">Origin:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addPlantOrigin" id="add-plant-origin">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-success"><i class="fa fa-leaf"></i> Add new plant</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-lang-key="cancel">Cancel</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-leaf"></i> <span data-lang-key="addNewParent">Add new plant</span></button>
         </div>
       </form>
     </div>
@@ -220,40 +214,40 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="editPlantModalLabel">
-          Edit plant: <span id="edit-plant-title"></span>
+          <span data-lang-key="editParent">Edit plant:</span> <span id="edit-plant-title"></span>
         </h4>
       </div>
       <form role="form" class="form-horizontal" id="edit-plant-form" action="javascript:">
         <div class="modal-body">
           <input type="hidden" name="editPlantId" id="edit-plant-id" value="">
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-plant-name">Name:</label>
+            <label class="control-label col-xs-3" for="edit-plant-name" data-lang-key="name">Name:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editPlantName" id="edit-plant-name" maxlength="24">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-plant-number">Number:</label>
+            <label class="control-label col-xs-3" for="edit-plant-number" data-lang-key="number">Number:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="editPlantNumber" id="edit-plant-number" min="0" step="1">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-plant-genetics">Genetics:</label>
+            <label class="control-label col-xs-3" for="edit-plant-genetics" data-lang-key="genetics">Genetics:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editPlantGenetics" style="width: 100%;" id="edit-plant-genetics">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-plant-origin">Origin:</label>
+            <label class="control-label col-xs-3" for="edit-plant-origin" data-lang-key="origin">Origin:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editPlantOrigin" id="edit-plant-origin">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save changes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-lang-key="cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span data-lang-key="saveChanges">Save changes</span></button>
         </div>
       </form>
     </div>
@@ -267,11 +261,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deletePlantModalLabel">
+        <h4 class="modal-title" id="deletePlantModalLabel" data-lang-key="deleteParent">
           Delete plant
         </h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" data-lang-key="deleteParentWarning">
         Are you sure you want to delete this plant? All the plant information will be erased from
         database, including its children and related stats.<br>
         Once confirmed, this action can not be undone!
@@ -279,8 +273,8 @@
       <div class="modal-footer">
         <form role="form" class="form-horizontal" id="delete-plant-form" action="javascript:">
           <input type="hidden" name="deletePlantId" id="delete-plant-id" value="">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-danger"><i class="fa fa-warning"></i> Confirm delete</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-lang-key="cancel">Cancel</button>
+          <button type="submit" class="btn btn-danger"><i class="fa fa-warning"></i> <span data-lang-key="confirmDelete">Confirm delete</span></button>
         </form>
       </div>
     </div>
@@ -294,76 +288,76 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addChildModalLabel">
+        <h4 class="modal-title" id="addChildModalLabel" data-lang-key="addNewChild">
           Add new child
         </h4>
       </div>
       <form role="form" class="form-horizontal" id="add-child-form">
         <div class="modal-body">
           <div class="form-group required">
-            <label class="control-label col-xs-3" for="add-child-in-date">In date:</label>
+            <label class="control-label col-xs-3" for="add-child-in-date" data-lang-key="dateIn">In date:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addChildInDate" id="add-child-in-date" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-out-date">Out date:</label>
+            <label class="control-label col-xs-3" for="add-child-out-date" data-lang-key="dateOut">Out date:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addChildOutDate" id="add-child-out-date">
             </div>
           </div>
           <div class="form-group required">
-            <label class="control-label col-xs-3" for="add-child-in-height">In height:</label>
+            <label class="control-label col-xs-3" for="add-child-in-height" data-lang-key="heightIn">In height:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="addChildInHeight" id="add-child-in-height" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-out-height">Out height:</label>
+            <label class="control-label col-xs-3" for="add-child-out-height" data-lang-key="heightOut">Out height:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="addChildOutHeight" id="add-child-out-height">
             </div>
           </div>
           <div class="form-group required">
-            <label class="control-label col-xs-3" for="add-child-in-quality">In quality:</label>
+            <label class="control-label col-xs-3" for="add-child-in-quality" data-lang-key="qualityIn">In quality:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="addChildInQuality" id="add-child-in-quality" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-out-quality">Out quality:</label>
+            <label class="control-label col-xs-3" for="add-child-out-quality" data-lang-key="qualityOut">Out quality:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="addChildOutQuality" id="add-child-out-quality">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-room">Room:</label>
+            <label class="control-label col-xs-3" for="add-child-room" data-lang-key="room">Room:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addChildRoom" id="add-child-room">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-production">Production:</label>
+            <label class="control-label col-xs-3" for="add-child-production" data-lang-key="production">Production:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="addChildProduction" id="add-child-production">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-defects">Defects:</label>
+            <label class="control-label col-xs-3" for="add-child-defects" data-lang-key="defects">Defects:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addChildDefects" id="add-child-defects">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="add-child-comments">Comments:</label>
+            <label class="control-label col-xs-3" for="add-child-comments" data-lang-key="comments">Comments:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="addChildComments" id="add-child-comments">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-success"><i class="fa fa-leaf"></i> Add new child</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-lang-key="cancel">Cancel</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-leaf"></i> <span data-lang-key="addNewChild">Add new child</span></button>
         </div>
       </form>
     </div>
@@ -377,7 +371,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="editChildModalLabel">
+        <h4 class="modal-title" id="editChildModalLabel" data-lang-key="editChild">
           Edit child
         </h4>
       </div>
@@ -389,69 +383,69 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="control-label col-xs-3" for="edit-child-in-date">In date:</label>
+            <label class="control-label col-xs-3" for="edit-child-in-date" data-lang-key="dateIn">In date:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editChildInDate" id="edit-child-in-date" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-out-date">Out date:</label>
+            <label class="control-label col-xs-3" for="edit-child-out-date" data-lang-key="dateOut">Out date:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editChildOutDate" id="edit-child-out-date">
             </div>
           </div>
           <div class="form-group required">
-            <label class="control-label col-xs-3" for="edit-child-in-height">In height:</label>
+            <label class="control-label col-xs-3" for="edit-child-in-height" data-lang-key="heightIn">In height:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="editChildInHeight" id="edit-child-in-height" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-out-height">Out height:</label>
+            <label class="control-label col-xs-3" for="edit-child-out-height" data-lang-key="heightOut">Out height:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="editChildOutHeight" id="edit-child-out-height">
             </div>
           </div>
           <div class="form-group required">
-            <label class="control-label col-xs-3" for="edit-child-in-quality">In quality:</label>
+            <label class="control-label col-xs-3" for="edit-child-in-quality" data-lang-key="qualityIn">In quality:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="editChildInQuality" id="edit-child-in-quality" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-out-quality">Out quality:</label>
+            <label class="control-label col-xs-3" for="edit-child-out-quality" data-lang-key="qualityOut">Out quality:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="editChildOutQuality" id="edit-child-out-quality">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-room">Room:</label>
+            <label class="control-label col-xs-3" for="edit-child-room" data-lang-key="room">Room:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editChildRoom" id="edit-child-room">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-production">Production:</label>
+            <label class="control-label col-xs-3" for="edit-child-production" data-lang-key="production">Production:</label>
             <div class="col-xs-9">
               <input type="number" class="form-control" name="editChildProduction" id="edit-child-production">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-defects">Defects:</label>
+            <label class="control-label col-xs-3" for="edit-child-defects" data-lang-key="defects">Defects:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editChildDefects" id="edit-child-defects">
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-xs-3" for="edit-child-comments">Comments:</label>
+            <label class="control-label col-xs-3" for="edit-child-comments" data-lang-key="comments">Comments:</label>
             <div class="col-xs-9">
               <input type="text" class="form-control" name="editChildComments" id="edit-child-comments">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-success"><i class="fa fa-leaf"></i> Edit child</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-lang-key="cancel">Cancel</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-leaf"></i> <span data-lang-key="editChild">Edit child</span></button>
         </div>
       </form>
     </div>
@@ -465,11 +459,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deleteChildModalLabel">
+        <h4 class="modal-title" id="deleteChildModalLabel" data-lang-key="deleteChild">
           Delete child
         </h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" data-lang-key="deleteChildWarning">
         Are you sure you want to delete this child? All the child information will be erased from
         database, including its children and related stats.<br>
         Once confirmed, this action can not be undone!
@@ -477,8 +471,8 @@
       <div class="modal-footer">
         <form role="form" class="form-horizontal" id="delete-child-form" action="javascript:">
           <input type="hidden" name="deleteChildUuid" id="delete-child-uuid" value="" required>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-danger"><i class="fa fa-warning"></i> Confirm delete</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-lang-key="cancel">Cancel</button>
+          <button type="submit" class="btn btn-danger"><i class="fa fa-warning"></i> <span data-lang-key="confirmDelete">Confirm delete</span></button>
         </form>
       </div>
     </div>
@@ -512,6 +506,8 @@
 <script src="js/app.db.js"></script>
 <script src="js/app.view-handlers.js"></script>
 <script src="js/app.event-handlers.js"></script>
+<script src="js/lang/es.js"></script>
+<script src="js/app.lang.js"></script>
 <script src="js/app.init.js"></script>
 </body>
 </html>
