@@ -4,19 +4,19 @@ app.v.switchView = function(contentEl, callback) {
     return;
 
   if(contentEl.is(':visible')) {
-    app.s.content.children()[app.c.outAnimation](300);
+    app.s.content.children()[app.c.outAnimation](150);
     setTimeout(function(){ 
       callback();
-      contentEl[app.c.inAnimation](300);
-    }, 300);
+      contentEl[app.c.inAnimation](150);
+    }, 150);
   }
   else{
     if(contentEl.is(':hidden')) {
-      app.s.content.children()[app.c.outAnimation](300);
+      app.s.content.children()[app.c.outAnimation](150);
       setTimeout(function(){
         callback();
-        contentEl[app.c.inAnimation](300);
-      }, 300);
+        contentEl[app.c.inAnimation](150);
+      }, 150);
     }
   }
 };

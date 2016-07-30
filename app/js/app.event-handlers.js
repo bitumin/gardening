@@ -80,12 +80,11 @@ app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
 
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
   var self = $(this);
+  app.v.toggleActiveItem(self.closest('li'));
   app.v.switchView(app.s.contentPlant, function(){
     var plantId = self.closest('li').data('plantId');
     app.v.populatePlantView(plantId);
-    app.v.toggleActiveItem(self.closest('li'));
-
-    reportSuccess("Loaded plant", plantId);
+    // reportSuccess("Loaded plant", plantId);
   });
 });
 
