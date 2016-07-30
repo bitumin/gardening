@@ -1,26 +1,35 @@
 /*
  * Helper
  */
-  google.charts.setOnLoadCallback(function(){});
-  google.charts.load('current', {'packages':['line']});
+google.charts.setOnLoadCallback(function(){});
+google.charts.load('current', {'packages':['line']});
+
 function disableForm(form){
   form.find(':input').prop("disabled", true);
 }
+
 function enableForm(form){
   form.find(':input').prop("disabled", false);
 }
+
 function reportInfo(message, obj){
   toastr.success(message);
-  app.l("Info > " + message + " (" + JSON.stringify(obj) + ")");
+  if(app.c.env === 'dev')
+    app.l("Info > " + message + " (" + JSON.stringify(obj) + ")");
 }
+
 function reportSuccess(message, obj){
   toastr.success(message);
-  app.l("Success > " + message + " (" + JSON.stringify(obj) + ")");
+  if(app.c.env === 'dev')
+    app.l("Success > " + message + " (" + JSON.stringify(obj) + ")");
 }
+
 function reportError(message, obj){
   toastr.error(message);
-  app.l("Error > " + message + " (" + JSON.stringify(obj) + ")");
+  if(app.c.env === 'dev')
+    app.l("Error > " + message + " (" + JSON.stringify(obj) + ")");
 }
+
 function resetModals(){
   app.s.addPlantModal.modal('hide');
   app.s.addPlantForm[0].reset();
@@ -46,6 +55,7 @@ function resetModals(){
   app.s.delChildForm[0].reset();
   enableForm(app.s.delChildForm);
 }
+
 /*
  * Left menu event handlers
  */
@@ -94,7 +104,7 @@ app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
 app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.addPlantForm.serializeObject();
   disableForm(app.s.addPlantForm);
-  
+
   var plant = {
     name: formData.addPlantName,
     number: formData.addPlantNumber,
@@ -108,7 +118,7 @@ app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
     insertDate: new Date(),
     lastModDate: new Date()
   };
-  
+
   app.db.insertDoc('plants', plant)
     .then(function(newPlant) {
       reportSuccess("Added new plant", newPlant);
@@ -141,11 +151,11 @@ app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
   app.db.updateDoc('plants', query, plant)
     .then(function(nameReplaced) {
       if(nameReplaced === 1) { app.v.updatePlantName(query._id, plant.name); }
-      
+
       reportSuccess("Edited plant", plant);
       resetModals();
       app.db.insertDocIfDoesNotExist('genetics', genetic)
-        .then(function(editedGenetic){app.v.populateGenetics(editedGenetic)}); 
+        .then(function(editedGenetic){app.v.populateGenetics(editedGenetic)});
     })
     .catch(function(err) { reportError("Could not edit plant", err); });
 });
@@ -265,9 +275,9 @@ app.s.addChildForm.on('submit', function() {
     defects: formData.addChildDefects,
     comments: formData.addChildComments,
     insertDate: new Date(),
-    lastModDate: new Date()   
-  }
-  
+    lastModDate: new Date()
+  };
+
   app.db.plantsRepo.insertChild(plantId, child)
     .then(function(newPlantChild) {
         app.v.populatePlantView(plantId);
@@ -298,8 +308,8 @@ app.s.editChildForm.on('submit', function() {
     defects: formData.editChildDefects,
     comments: formData.editChildComments,
     insertDate: formData.editChildInsertDate,
-    lastModDate: new Date()   
-  }
+    lastModDate: new Date()
+  };
 
   app.db.plantsRepo.updateChild(plantId, child)
     .then(function(editedPlantChild) {
@@ -319,7 +329,7 @@ app.s.delChildForm.on('submit', function() {
   var plantId = app.s.contentPlant.attr("data-plant-id");
   var childUuid = formData.deleteChildUuid;
 
-  app.db.plantsRepo.deleteChild(plantId, childUuid)      
+  app.db.plantsRepo.deleteChild(plantId, childUuid)
     .then(function() {
         app.v.populatePlantView(plantId);
 
@@ -420,7 +430,7 @@ app.s.plantStatsDatePeriod.find("select").on("change", function(e){
   app.s.plantStatsDateFrom.datepicker('remove');
   app.s.plantStatsDateFrom.datepicker({
     format: periodFormatSettings.displayFormat,
-    startView: periodFormatSettings.viewChange, 
+    startView: periodFormatSettings.viewChange,
     minViewMode: periodFormatSettings.viewChange
   });
   app.s.plantStatsDateFrom.datepicker("update", moment(new Date()).subtract(7, periodFormatSettings.addition).format(periodFormatSettings.parseFormat));
@@ -428,11 +438,11 @@ app.s.plantStatsDatePeriod.find("select").on("change", function(e){
   app.s.plantStatsDateTo.datepicker('remove');
   app.s.plantStatsDateTo.datepicker({
     format: periodFormatSettings.displayFormat,
-    startView: periodFormatSettings.viewChange, 
+    startView: periodFormatSettings.viewChange,
     minViewMode: periodFormatSettings.viewChange
   });
   app.s.plantStatsDateTo.datepicker("update", moment(new Date()).format(periodFormatSettings.parseFormat));
-})
+});
 app.s.plantStatsForm.on('submit', function(){
   var formData = app.s.plantStatsForm.serializeObject();
   disableForm(app.s.plantStatsForm);
@@ -454,11 +464,13 @@ app.s.plantStatsForm.on('submit', function(){
 
   app.db.plantsRepo.getChildren(plantId)
     .then(function(children){
-      var reportingRows = []; 
+      var reportingRows = [];
+      var indexDimension, dimension, dimensionFactory, reportingRow;
+
       for(var currentDate = dateFrom; currentDate <= dateTo; currentDate.add(1, periodFormat.addition)){
         var row = {date: currentDate.format(periodFormat.parseFormat)};
-        for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
-          var dimension = desiredReports[indexDimension];
+        for(indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
+          dimension = desiredReports[indexDimension];
           row[dimension] = 0;
           row[dimension + "-count"] = 0;
         }
@@ -469,13 +481,13 @@ app.s.plantStatsForm.on('submit', function(){
       for(var childIndex = 0; childIndex < children.length; childIndex++){
         var child = children[childIndex];
         //process each reporting dimension
-        for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
-          var dimension = desiredReports[indexDimension];
-          var dimensionFactory = reportEntryFactory[dimension];
+        for(indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
+          dimension = desiredReports[indexDimension];
+          dimensionFactory = reportEntryFactory[dimension];
           //get date
           var dateDimension = dimensionFactory.getDateDimension(child);
           //if date dimension is in reporting range
-          var reportingRow = undefined;
+          reportingRow = undefined;
           if(dateDimension != undefined){
             var dateDimensionString = moment(dateDimension).format(periodFormat.parseFormat);
             reportingRow = _.find(reportingRows, function(row){return row.date === dateDimensionString;});
@@ -498,12 +510,12 @@ app.s.plantStatsForm.on('submit', function(){
 
       var reducedData = [headers];
       for(var reportingIndex = 0; reportingIndex < reportingRows.length; reportingIndex++){
-        var reportingRow = reportingRows[reportingIndex];
+        reportingRow = reportingRows[reportingIndex];
         var reducedRow = [reportingRow.date];
 
-        for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
-          var dimension = desiredReports[indexDimension];
-          var dimensionFactory = reportEntryFactory[dimension];
+        for(indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
+          dimension = desiredReports[indexDimension];
+          dimensionFactory = reportEntryFactory[dimension];
 
           reducedRow.push(dimensionFactory.reduce(reportingRow));
         }
@@ -528,8 +540,8 @@ app.s.plantStatsForm.on('submit', function(){
         enableForm(app.s.plantStatsForm);
       })(reducedData);
     })
-    .catch(function(err) { 
-      reportError("Could not retrieve plant children", err); 
+    .catch(function(err) {
+      reportError("Could not retrieve plant children", err);
     });
 
   return false;
