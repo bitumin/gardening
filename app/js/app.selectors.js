@@ -13,7 +13,6 @@ app.selector = app.s = {
   contentWelcome: $('#content-welcome'), 
   contentPlant: $('#content-plant'),
   contentChild: $('#content-child'),
-
   //plant view
   contentPlantTitleName: $('#content-plant-title-name'),
   contentPlantTitleGenetics: $('#content-plant-title-genetic'),
@@ -37,7 +36,6 @@ app.selector = app.s = {
   delPlantModal: $("#delete-plant-modal"),
   delPlantForm: $('#delete-plant-form'),
   delPlantId: $('#delete-plant-id'),
-
   //children view
   btnOpenAddChildModal: $('.btn-open-add-child-modal'),
   btnOpenEditChildModal: $('.btn-open-edit-child-modal'),
@@ -75,7 +73,6 @@ app.selector = app.s = {
   delChildModal: $("#delete-child-modal"),
   delChildForm: $("#delete-child-form"),
   delChildUuid: $("#delete-child-uuid"),
-  
   //stats
   plantStatsForm: $('#stat-form'),
   plantStatsDatePeriod: $("#plant-stats-date-reporting"),

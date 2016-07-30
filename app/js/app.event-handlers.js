@@ -34,9 +34,11 @@ app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
 });
 
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
-  app.v.populatePlantView($(this).closest('li').data('plantId'));
-  app.v.switchView(app.s.contentPlant);
-  app.v.toggleActiveItem(this.closest('li'));
+  var self = $(this);
+  app.v.switchView(app.s.contentPlant, function(){
+    app.v.populatePlantView(self.closest('li').data('plantId'));
+    app.v.toggleActiveItem(self.closest('li'));
+  });
 });
 
 /*
