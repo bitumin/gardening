@@ -99,6 +99,7 @@ app/libs
 app/libs/*
 !app/libs/datatables/
 !app/libs/bootstrap-daterangepicker/daterangepicker.min.js
+!app/libs/charts/
 ###NodeWebkit.js
 build
 ###Datastores
