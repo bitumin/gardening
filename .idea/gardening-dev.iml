@@ -18,5 +18,8 @@
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="underscore" level="application" />
     <orderEntry type="library" name="moment-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="loader" level="application" />
+    <orderEntry type="library" name="toastr-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="google.visualization-DefinitelyTyped" level="application" />
   </component>
 </module>

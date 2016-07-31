@@ -4,15 +4,13 @@
 @import url(../libs/EasyAutocomplete/dist/easy-autocomplete.min.css);
 @import url(../libs/datatables/datatables.min.css);
 @import url(../libs/animate.css/animate.min.css);
-/*
- * Fonts
- */
+@import url(../libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css);
+@import url(../node_modules/toastr/build/toastr.min.css);
+/* Fonts */
 @font-face {
   font-family: 'Open Sans Regular';
   src: url("../fonts/OpenSans-Regular.ttf"); }
-/*
- * Html, body, general
- */
+/* Html, body, general */
 html, body {
   margin: 0;
   padding: 0; }
@@ -26,9 +24,7 @@ body {
   content: "*";
   color: red; }
 
-/*
- * Datatables
- */
+/* Datatables */
 table.dataTable.dtr-column > tbody > tr > td.control:before,
 table.dataTable.dtr-column > tbody > tr > th.control:before {
   height: 0;
@@ -70,9 +66,7 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
 .btn-open-edit-child-modal, .btn-open-delete-child-modal {
   cursor: pointer; }
 
-/*
- * Left menu
- */
+/* Left menu */
 #left-menu {
   background-color: #7a9735;
   color: #eee;
@@ -126,9 +120,7 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
   #left-menu ul > li.active a, #left-menu ul > li.active a:focus, #left-menu ul > li.active a:hover {
     background-color: #0d4d4d; }
 
-/*
- * Main content
- */
+/* Content */
 #content {
   z-index: 101;
   min-height: 100vh;
@@ -176,16 +168,11 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
   .tab-content .tab-pane {
     padding-top: 15px; }
 
-#content-child {
-  display: none; }
-
 .plant-children-datatable-wrapper,
 .plant-stats-datatable-wrapper {
   margin-top: 15px; }
 
-/*
- * Modals
- */
+/* Modals */
 .easy-autocomplete {
   width: 100% !important; }
 

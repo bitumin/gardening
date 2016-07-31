@@ -3,13 +3,7 @@ app.l('Loading spanish (es_es) strings.', 'Lang');
 app.lang = {};
 
 app.lang.strings = {
-  appName: "GardeningTools",
-  poweredBy: function() { // Powered by node, chrome and nodeWebkit (nw.js)
-    let match = navigator.userAgent.match(/(Chrom[e|ium])\/([0-9]+)\./);
-    return "Powered by Node.js " + process.versions.node + " "
-      + match[1] + " " + match[2] + " " +
-      "y NW.js " + process.versions['node-webkit'] + ".";
-  },
+  appName: "Gestión de Plantas",
   statistics: "Estadísticas",
   add: "Añadir",
   edit: "Editar",
@@ -59,28 +53,50 @@ app.lang.strings = {
   thisF: "Esta",
   deleteParentWarning: "¿Seguro que deseas eliminar esta planta? Se eliminará de la base de datos, incluidos los datos de sus hijos y estadísticas. Una vez confirmada la eliminación, esta acción no podrá deshacerse.",
   deleteChildWarning: "¿Seguro que deseas eliminar este hijo? Se eliminará de la base de datos, junto con sus estadísitcas. Una vez confirmada la eliminación, esta acción no podrá deshacerse.",
-  confirmDelete: "Confirmar eliminación"
+  confirmDelete: "Confirmar eliminación",
+  //Powered by node, chrome and nodeWebkit (nw.js)
+  poweredBy: function() {
+    let match = navigator.userAgent.match(/(Chrom[e|ium])\/([0-9]+)\./);
+    return "Impulsado por Node.js " + process.versions.node + " " + match[1] + " " + match[2] + " y NW.js " + process.versions['node-webkit'];
+  },
+  welcomeMsg: function() { return "Bienvenido/a a " + app.lang.strings.appName; },
+  saveChanges: function() { return app.lang.strings.save + " " + app.lang.strings.changes.toLowerCase(); },
+  addParent: function() { return app.lang.strings.add + " " + app.lang.strings.parent.toLowerCase(); },
+  addNewParent: function() { return app.lang.strings.add + " " + app.lang.strings.newF.toLowerCase() + " " + app.lang.strings.parent.toLowerCase(); },
+  editParent: function() { return app.lang.strings.edit + " " + app.lang.strings.parent.toLowerCase(); },
+  deleteParent: function() { return app.lang.strings.del + " " + app.lang.strings.parent.toLowerCase(); },
+  addChild: function() { return app.lang.strings.add + " " + app.lang.strings.child.toLowerCase(); },
+  addNewChild: function() { return app.lang.strings.add + " " + app.lang.strings.newM.toLowerCase() + " " + app.lang.strings.child.toLowerCase(); },
+  editChild: function() { return app.lang.strings.edit + " " + app.lang.strings.child.toLowerCase(); },
+  deleteChild: function() { return app.lang.strings.del + " " + app.lang.strings.child.toLowerCase(); },
+  dateIn: function() { return app.lang.strings.date + " " + app.lang.strings.inW.toLowerCase(); },
+  dateOut: function() { return app.lang.strings.date + " " + app.lang.strings.outW.toLowerCase(); },
+  heightIn: function() { return app.lang.strings.height + " " + app.lang.strings.inW.toLowerCase(); },
+  heightOut: function() { return app.lang.strings.height + " " + app.lang.strings.outW.toLowerCase(); },
+  qualityIn: function() { return app.lang.strings.quality + " " + app.lang.strings.inW.toLowerCase(); },
+  qualityOut: function() { return app.lang.strings.quality + " " + app.lang.strings.outW.toLowerCase(); },
+  totalChildrenProduction: function() { return app.lang.strings.production + " " + app.lang.strings.total.toLowerCase() + " de " + app.lang.strings.children.toLowerCase(); },
+  averageChildrenProduction: function() { return app.lang.strings.production + " " + app.lang.strings.average.toLowerCase() + " de " + app.lang.strings.children.toLowerCase(); },
+  averageInQuality: function() { return app.lang.strings.quality + " de " + app.lang.strings.inW.toLowerCase() + " " + app.lang.strings.average.toLowerCase(); },
+  averageOutQuality: function() { return app.lang.strings.quality + " de " + app.lang.strings.outW.toLowerCase() + " " + app.lang.strings.average.toLowerCase(); },
+  averageInHeight: function() { return app.lang.strings.height + " de " + app.lang.strings.inW.toLowerCase() + " " + app.lang.strings.average.toLowerCase(); },
+  averageOutHeight: function() { return app.lang.strings.height + " de " + app.lang.strings.inW.toLowerCase() + " " + app.lang.strings.average.toLowerCase(); },
+  retrievedParent: "Datos de la planta cargados con éxito",
+  couldNotRetrieveParent: "Error al tratar de cargar datos de la planta",
+  addedParent: "Planta añadida con éxito",
+  couldNotAddParent: "Error al tratar de añadir planta",
+  savedParent: "Datos de la planta actualizados con éxito",
+  couldNotSaveParent: "Error al tratar de actualizar datos de la planta",
+  deletedParent: "Planta eliminada con éxito",
+  couldNotDeleteParent: "Error al tratar de eliminar planta",
+  retrievedChild: "Datos del hijo cargados con éxito",
+  couldNotRetrieveChild: "Error al tratar de obtener datos del hijo",
+  addedChild: "Hijo añadido con éxito",
+  couldNotAddChild: "Error al tratar de agregar nuevo hijo",
+  savedChild: "Datos del hijo actualizados con éxito",
+  couldNotSaveChild: "Error al tratar de actualizar los datos del hijo",
+  deletedChild: "Hijo eliminado",
+  couldNotDeleteChild: "Error al tratar de eliminar hijo",
+  generated: "Informe generado con éxito",
+  couldNotGenerate: "Error al tratar de generar informe"
 };
-
-app.lang.strings.welcomeMsg = "Bienvenido/a a " + app.lang.strings.appName;
-app.lang.strings.saveChanges = app.lang.strings.save + " " + app.lang.strings.changes.toLowerCase();
-app.lang.strings.addParent = app.lang.strings.add + " " + app.lang.strings.parent.toLowerCase();
-app.lang.strings.addNewParent = app.lang.strings.add + " " + app.lang.strings.newM.toLowerCase() + " " + app.lang.strings.parent.toLowerCase();
-app.lang.strings.editParent = app.lang.strings.edit + " " + app.lang.strings.parent.toLowerCase();
-app.lang.strings.deleteParent = app.lang.strings.del + " " + app.lang.strings.parent.toLowerCase();
-app.lang.strings.addChild = app.lang.strings.add + " " + app.lang.strings.child.toLowerCase();
-app.lang.strings.addNewChild = app.lang.strings.add + " " + app.lang.strings.newM.toLowerCase() + " " + app.lang.strings.child.toLowerCase();
-app.lang.strings.editChild = app.lang.strings.edit + " " + app.lang.strings.child.toLowerCase();
-app.lang.strings.deleteChild = app.lang.strings.del + " " + app.lang.strings.child.toLowerCase();
-app.lang.strings.dateIn = app.lang.strings.date + " " + app.lang.strings.inW.toLowerCase();
-app.lang.strings.dateOut = app.lang.strings.date + " " + app.lang.strings.outW.toLowerCase();
-app.lang.strings.heightIn = app.lang.strings.height + " " + app.lang.strings.inW.toLowerCase();
-app.lang.strings.heightOut = app.lang.strings.height + " " + app.lang.strings.outW.toLowerCase();
-app.lang.strings.qualityIn = app.lang.strings.quality + " " + app.lang.strings.inW.toLowerCase();
-app.lang.strings.qualityOut = app.lang.strings.quality + " " + app.lang.strings.outW.toLowerCase();
-app.lang.strings.totalChildrenProduction = app.lang.strings.production + " " + app.lang.strings.total.toLowerCase() + " de " + app.lang.strings.children.toLowerCase();
-app.lang.strings.averageChildrenProduction = app.lang.strings.production + " " + app.lang.strings.average.toLowerCase() + " de " + app.lang.strings.children.toLowerCase();
-app.lang.strings.averageInQuality = app.lang.strings.quality + " de " + app.lang.strings.inW.toLowerCase() + " " + app.lang.strings.average.toLowerCase();
-app.lang.strings.averageOutQuality = app.lang.strings.quality + " de " + app.lang.strings.outW.toLowerCase() + " " + app.lang.strings.average.toLowerCase();
-app.lang.strings.averageInHeight = app.lang.strings.height + " de " + app.lang.strings.inW.toLowerCase() + " " + app.lang.strings.average.toLowerCase();
-app.lang.strings.averageOutHeight = app.lang.strings.height + " de " + app.lang.strings.inW.toLowerCase() + " " + app.lang.strings.average.toLowerCase();

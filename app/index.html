@@ -131,16 +131,16 @@
               <label class="col-xs-2" for="plant-stats-lines" data-lang-key="variables">Lines:</label>
               <div class="input-group col-xs-10" id="plant-stats-lines">
                 <div class="checkbox">
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="totalChildrenProduction" value="total-children-production" checked/>Total children production</label>
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageChildrenProduction" value="avg-children-production"/>Average children production</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="total-children-production" checked/><span data-lang-key="totalChildrenProduction">Total children production</span></label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-children-production"/><span data-lang-key="averageChildrenProduction">Average children production</span></label>
                 </div>
                 <div class="checkbox">
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageInQuality" value="avg-in-quality" />Average in quality</label>
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageOutQuality" value="avg-out-quality"/>Average out quality</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-quality" /><span data-lang-key="averageInQuality">Average in quality</span></label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-out-quality"/><span data-lang-key="averageOutQuality">Average out quality</span></label>
                 </div>
                 <div class="checkbox">
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageInHeight" value="avg-in-height"/>Average in height</label>
-                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" data-lang-key="averageOutHeight" value="avg-out-height"/>Average out height</label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-in-height"/><span data-lang-key="averageInHeight">Average in height</span></label>
+                  <label class="col-xs-5"><input type="checkbox" name="plantStatsLines" value="avg-out-height"/><span data-lang-key="averageOutHeight">Average out height</span></label>
                 </div>
               </div>
             </div>
@@ -493,12 +493,10 @@
 <script>moment.locale('es');</script>
 <script src="libs/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
 <script src="libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-<link href="libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <script src="libs/EasyAutocomplete/dist/jquery.easy-autocomplete.min.js"></script>
 <script src="node_modules/node-uuid/uuid.js"></script>
 <script src="node_modules/toastr/build/toastr.min.js"></script>
-<link href="node_modules/toastr/build/toastr.min.css" rel="stylesheet"/>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="libs/charts/loader.js"></script>
 
 <!--app JS-->
 <script>var app = app || {};</script>

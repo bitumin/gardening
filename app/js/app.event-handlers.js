@@ -1,68 +1,69 @@
-/*
- * Helper
- */
 google.charts.setOnLoadCallback(function(){});
 google.charts.load('current', {'packages':['line']});
 
-function disableForm(form){
-  form.find(':input').prop("disabled", true);
-}
+/*
+ * Helpers
+ */
+app.eventHandlers = app.eh = {
+  disableForm: function disableForm (form) {
+    form.find(':input').prop("disabled", true);
+  },
+  enableForm: function enableForm (form) {
+    form.find(':input').prop("disabled", false);
+  },
+  reportInfo: function reportInfo (message, obj) {
+    toastr.info(message);
+    if(app.c.env === 'dev')
+      app.l("Info > " + message + " (" + JSON.stringify(obj) + ")");
+  },
+  reportWarning: function reportWarning (message, obj) {
+    toastr.warning(message);
+    if(app.c.env === 'dev')
+      app.l("Warning > " + message + " (" + JSON.stringify(obj) + ")");
+  },
+  reportSuccess: function reportSuccess(message, obj){
+    toastr.success(message);
+    if(app.c.env === 'dev')
+      app.l("Success > " + message + " (" + JSON.stringify(obj) + ")");
+  },
+  reportError: function reportError(message, obj){
+    toastr.error(message);
+    if(app.c.env === 'dev')
+      app.l("Error > " + message + " (" + JSON.stringify(obj) + ")");
+  },
+  resetModals: function resetModals(){
+    app.s.addPlantModal.modal('hide');
+    app.s.addPlantForm[0].reset();
+    app.eh.enableForm(app.s.addPlantForm);
 
-function enableForm(form){
-  form.find(':input').prop("disabled", false);
-}
+    app.s.editPlantModal.modal('hide');
+    app.s.editPlantForm[0].reset();
+    app.eh.enableForm(app.s.editPlantForm);
 
-function reportInfo(message, obj){
-  toastr.success(message);
-  if(app.c.env === 'dev')
-    app.l("Info > " + message + " (" + JSON.stringify(obj) + ")");
-}
+    app.s.delPlantModal.modal('hide');
+    app.s.delPlantForm[0].reset();
+    app.eh.enableForm(app.s.delPlantForm);
 
-function reportSuccess(message, obj){
-  toastr.success(message);
-  if(app.c.env === 'dev')
-    app.l("Success > " + message + " (" + JSON.stringify(obj) + ")");
-}
+    app.s.addChildModal.modal('hide');
+    app.s.addChildForm[0].reset();
+    app.eh.enableForm(app.s.addChildForm);
 
-function reportError(message, obj){
-  toastr.error(message);
-  if(app.c.env === 'dev')
-    app.l("Error > " + message + " (" + JSON.stringify(obj) + ")");
-}
+    app.s.editChildModal.modal('hide');
+    app.s.editChildForm[0].reset();
+    app.eh.enableForm(app.s.editChildForm);
 
-function resetModals(){
-  app.s.addPlantModal.modal('hide');
-  app.s.addPlantForm[0].reset();
-  enableForm(app.s.addPlantForm);
-
-  app.s.editPlantModal.modal('hide');
-  app.s.editPlantForm[0].reset();
-  enableForm(app.s.editPlantForm);
-
-  app.s.delPlantModal.modal('hide');
-  app.s.delPlantForm[0].reset();
-  enableForm(app.s.delPlantForm);
-
-  app.s.addChildModal.modal('hide');
-  app.s.addChildForm[0].reset();
-  enableForm(app.s.addChildForm);
-
-  app.s.editChildModal.modal('hide');
-  app.s.editChildForm[0].reset();
-  enableForm(app.s.editChildForm);
-
-  app.s.delChildModal.modal('hide');
-  app.s.delChildForm[0].reset();
-  enableForm(app.s.delChildForm);
-}
+    app.s.delChildModal.modal('hide');
+    app.s.delChildForm[0].reset();
+    app.eh.enableForm(app.s.delChildForm);
+  }
+};
 
 /*
- * Left menu event handlers
+ * Left menu
  */
 app.s.leftMenu.on('click', '#btn-open-add-plant-modal', function() {
   app.s.addPlantModal.modal('show');
 });
-
 app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function(e) {
   e.stopPropagation();
   var plantId = $(this).closest('li').data('plantId');
@@ -78,32 +79,32 @@ app.s.leftMenu.on('click', '.btn-open-edit-plant-modal', function(e) {
       //open modal
       app.s.editPlantModal.modal('show');
     })
-    .catch(function(err) {reportError('Could not retrieve plant', err);});
+    .catch(function(err) {
+      app.eh.reportError(app.lang.getString('couldNotRetrieveParent'), err);
+    });
 });
-
 app.s.leftMenu.on('click', '.btn-open-delete-plant-modal', function(e) {
   e.stopPropagation();
   var plantId = $(this).closest('li').data('plantId');
   app.s.delPlantId.val(plantId);
   app.s.delPlantModal.modal('show');
 });
-
 app.s.leftMenu.on('click', '.btn-load-plant-view', function() {
   var self = $(this);
   app.v.toggleActiveItem(self.closest('li'));
   app.v.switchView(app.s.contentPlant, function(){
     var plantId = self.closest('li').data('plantId');
     app.v.populatePlantView(plantId);
-    // reportSuccess("Loaded plant", plantId);
+    // app.eh.reportSuccess(app.lang.getString('retrievedParent'), plantId);
   });
 });
 
 /*
- * Plant modals (add, edit, delete)
+ * Plant modals
  */
 app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.addPlantForm.serializeObject();
-  disableForm(app.s.addPlantForm);
+  app.eh.disableForm(app.s.addPlantForm);
 
   var plant = {
     name: formData.addPlantName,
@@ -121,19 +122,18 @@ app.s.addPlantModal.on('click', 'button[type="submit"]', function() {
 
   app.db.insertDoc('plants', plant)
     .then(function(newPlant) {
-      reportSuccess("Added new plant", newPlant);
+      app.eh.reportSuccess(app.lang.getString('addedParent'), newPlant);
       app.v.addNewPlantToLeftMenu(newPlant);
-      resetModals();
+      app.eh.resetModals();
 
       app.db.insertDocIfDoesNotExist('genetics', genetic)
         .then(function(newGenetic){app.v.populateGenetics(newGenetic);})
     })
-    .catch(function(err) { reportError("Could not add plant", err); });
+    .catch(function(err) { app.eh.reportError(app.lang.getString('couldNotAddParent'), err); });
 });
-
 app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.editPlantForm.serializeObject();
-  disableForm(app.s.editPlantForm);
+  app.eh.disableForm(app.s.editPlantForm);
 
   var query = { _id: formData.editPlantId };
   var plant = {
@@ -152,17 +152,16 @@ app.s.editPlantModal.on('click', 'button[type="submit"]', function() {
     .then(function(nameReplaced) {
       if(nameReplaced === 1) { app.v.updatePlantName(query._id, plant.name); }
 
-      reportSuccess("Edited plant", plant);
-      resetModals();
+      app.eh.reportSuccess(app.lang.getString('savedParent'), plant);
+      app.eh.resetModals();
       app.db.insertDocIfDoesNotExist('genetics', genetic)
         .then(function(editedGenetic){app.v.populateGenetics(editedGenetic)});
     })
-    .catch(function(err) { reportError("Could not edit plant", err); });
+    .catch(function(err) { app.eh.reportError(app.lang.getString('couldNotSaveParent'), err); });
 });
-
 app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
   var formData = app.s.delPlantForm.serializeObject();
-  disableForm(app.s.delPlantForm);
+  app.eh.disableForm(app.s.delPlantForm);
 
   var query = { _id: formData.deletePlantId };
 
@@ -170,14 +169,14 @@ app.s.delPlantModal.on('click', 'button[type="submit"]', function() {
     .then(function(removed) {
       if(removed === 1) { app.v.removePlantFromLeftMenu(formData.deletePlantId); }
 
-      reportSuccess("Deleted plant", formData.deletePlantId);
-      resetModals();
+      app.eh.reportSuccess(app.lang.getString('deletedParent'), formData.deletePlantId);
+      app.eh.resetModals();
     })
-    .catch(function(err) { reportError("Could not delete plant", err); });
+    .catch(function(err) { app.eh.reportError(app.lang.getString('couldNotDeleteParent'), err); });
 });
 
 /*
- * Plant's children datatable event handlers
+ * Plant's children datatable
  */
 app.s.plantChildrenTable.on('click', 'btn-details-child', function() {
   var tr = $(this).closest('tr');
@@ -219,12 +218,11 @@ app.s.plantChildrenTable.find("thead th input").keydown(function(e){
 });
 
 /*
- * Plant children content event handlers
+ * Plant children content
  */
 app.s.content.on('click', '.btn-open-add-child-modal', function() {
   app.s.addChildModal.modal('show');
 });
-
 app.s.content.on('click', '.btn-open-edit-child-modal', function(e) {
   var plantId = app.s.contentPlant.attr("data-plant-id");
   var childId = $(this).attr("child-uuid");
@@ -246,9 +244,8 @@ app.s.content.on('click', '.btn-open-edit-child-modal', function(e) {
 
       app.s.editChildModal.modal('show');
     })
-    .catch(function(err) { reportError('Could not retrieve plant child', err); });
+    .catch(function(err) { app.eh.reportError(app.lang.getString('couldNotRetrieveChild'), err); });
 });
-
 app.s.content.on('click', '.btn-open-delete-child-modal', function(e) {
   app.s.delChildUuid.val($(this).attr("child-uuid"));
   app.s.delChildModal.modal('show');
@@ -259,7 +256,7 @@ app.s.content.on('click', '.btn-open-delete-child-modal', function(e) {
  */
 app.s.addChildForm.on('submit', function() {
   var formData = app.s.addChildForm.serializeObject();
-  disableForm(app.s.addChildForm);
+  app.eh.disableForm(app.s.addChildForm);
 
   var plantId = app.s.contentPlant.attr("data-plant-id");
   var child = {
@@ -282,17 +279,16 @@ app.s.addChildForm.on('submit', function() {
     .then(function(newPlantChild) {
         app.v.populatePlantView(plantId);
 
-        reportSuccess("Added plant child", newPlantChild);
-        resetModals();
+        app.eh.reportSuccess(app.lang.getString('addedChild'), newPlantChild);
+        app.eh.resetModals();
     })
-    .catch(function(err) { reportError("Could not add plant child", err); });
+    .catch(function(err) { app.eh.reportError(app.lang.getString('couldNotAddChild'), err); });
 
   return false;
 });
-
 app.s.editChildForm.on('submit', function() {
   var formData = app.s.editChildForm.serializeObject();
-  disableForm(app.s.editChildForm);
+  app.eh.disableForm(app.s.editChildForm);
 
   var plantId = app.s.contentPlant.attr("data-plant-id");
   var child = {
@@ -315,16 +311,15 @@ app.s.editChildForm.on('submit', function() {
     .then(function(editedPlantChild) {
         app.v.populatePlantView(plantId);
 
-        reportSuccess("Edited plant child", editedPlantChild);
-        resetModals();
+        app.eh.reportSuccess(app.lang.getString('savedChild'), editedPlantChild);
+        app.eh.resetModals();
     })
-    .catch(function(err) { reportError("Could not edit plant child", err); });
+    .catch(function(err) { app.eh.reportError(app.lang.getString('couldNotSaveChild'), err); });
   return false;
 });
-
 app.s.delChildForm.on('submit', function() {
   var formData = app.s.delChildForm.serializeObject();
-  disableForm(app.s.delChildForm);
+  app.eh.disableForm(app.s.delChildForm);
 
   var plantId = app.s.contentPlant.attr("data-plant-id");
   var childUuid = formData.deleteChildUuid;
@@ -333,17 +328,17 @@ app.s.delChildForm.on('submit', function() {
     .then(function() {
         app.v.populatePlantView(plantId);
 
-        reportSuccess("Deleted plant child", {plantId: plantId, childId: childUuid});
-        resetModals();
+        app.eh.reportSuccess(app.lang.getString('deletedChild'), {plantId: plantId, childId: childUuid});
+        app.eh.resetModals();
     })
-    .catch(function(err) {reportError("Could not delete plant child", err); });
+    .catch(function(err) {app.eh.reportError(app.lang.getString('couldNotDeleteChild'), err); });
   return false;
 });
 
 /*
- * Stats content event handlers
+ * Stats content
  */
-var reportEntryFactory = {
+app.eh.reportEntryFactory = {
   "total-children-production": {
     getDateDimension: function(child){return child.outDate;},
     getData: function(child){return parseInt(child.production); },
@@ -417,16 +412,14 @@ var reportEntryFactory = {
     }
   }
 };
-
-var dateFormatAssociations = {
+app.eh.dateFormatAssociations = {
   "D": {parseFormat: "DD/MM/YYYY", displayFormat: "dd/mm/yyyy",addition: "days", viewChange: 0},
   "M": {parseFormat: "MM/YYYY", displayFormat: "mm/yyyy", addition: "months", viewChange: 1},
   "Y": {parseFormat: "YYYY", displayFormat: "yyyy", addition: "years", viewChange: 2}
 };
-
 app.s.plantStatsDatePeriod.find("select").on("change", function(e){
   var selected = $(this).val();
-  var periodFormatSettings = dateFormatAssociations[selected];
+  var periodFormatSettings = app.eh.dateFormatAssociations[selected];
   app.s.plantStatsDateFrom.datepicker('remove');
   app.s.plantStatsDateFrom.datepicker({
     format: periodFormatSettings.displayFormat,
@@ -445,11 +438,11 @@ app.s.plantStatsDatePeriod.find("select").on("change", function(e){
 });
 app.s.plantStatsForm.on('submit', function(){
   var formData = app.s.plantStatsForm.serializeObject();
-  disableForm(app.s.plantStatsForm);
+  app.eh.disableForm(app.s.plantStatsForm);
 
   var plantId = app.s.contentPlant.attr("data-plant-id");
   var periodReporting = formData.plantStatsDateReporting;
-  var periodFormat = dateFormatAssociations[periodReporting];
+  var periodFormat = app.eh.dateFormatAssociations[periodReporting];
   var dateFrom = moment(formData.plantStatsDateFrom, periodFormat.parseFormat);
   var dateTo = moment(formData.plantStatsDateTo, periodFormat.parseFormat);
   var desiredReports = formData.plantStatsLines;
@@ -457,8 +450,8 @@ app.s.plantStatsForm.on('submit', function(){
     desiredReports = [desiredReports];
   }
   if(!Array.isArray(desiredReports) || desiredReports.length === 0){
-    reportError("Could not generate report - no checkbox selected");
-    enableForm(app.s.plantStatsForm);
+    app.eh.reportError("Could not generate report - no checkbox selected");
+    app.eh.enableForm(app.s.plantStatsForm);
     return false;
   }
 
@@ -483,7 +476,7 @@ app.s.plantStatsForm.on('submit', function(){
         //process each reporting dimension
         for(indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
           dimension = desiredReports[indexDimension];
-          dimensionFactory = reportEntryFactory[dimension];
+          dimensionFactory = app.eh.reportEntryFactory[dimension];
           //get date
           var dateDimension = dimensionFactory.getDateDimension(child);
           //if date dimension is in reporting range
@@ -515,7 +508,7 @@ app.s.plantStatsForm.on('submit', function(){
 
         for(indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
           dimension = desiredReports[indexDimension];
-          dimensionFactory = reportEntryFactory[dimension];
+          dimensionFactory = app.eh.reportEntryFactory[dimension];
 
           reducedRow.push(dimensionFactory.reduce(reportingRow));
         }
@@ -536,12 +529,12 @@ app.s.plantStatsForm.on('submit', function(){
 
         chart.draw(data, options);
 
-        reportSuccess("Generated report", data);
-        enableForm(app.s.plantStatsForm);
+        app.eh.reportSuccess(app.lang.getString('generated'), data);
+        app.eh.enableForm(app.s.plantStatsForm);
       })(reducedData);
     })
     .catch(function(err) {
-      reportError("Could not retrieve plant children", err);
+      app.eh.reportError(app.lang.getString('couldNotGenerate'), err);
     });
 
   return false;

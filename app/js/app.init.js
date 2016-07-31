@@ -89,7 +89,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
   ],
   'order': [[2, 'desc']]
 });
-// app.s.childDatatable.DataTable();
+
 app.l('Datatables initialized');
 
 var datepickerOptions = {
@@ -120,6 +120,7 @@ app.s.plantStatsDateTo.datepicker(datepickerOptions);
 app.s.plantStatsDateTo.datepicker('setDate', moment(new Date()).format("DD/MM/YYYY"));
 app.s.plantChildrenTableInDateFilter.datepicker(datepickerOptions);
 app.s.plantChildrenTableOutDateFilter.datepicker(datepickerOptions);
+
 app.l('Datepickers initialized');
 
 app.db.options.count({}, function (err, count) {

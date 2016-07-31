@@ -10,8 +10,6 @@ app.config = app.c = {
     childIsOutProbability: 0.8
   }
 };
-
-//todo: to main init script
 if(app.config.env === 'dev') {
   app.l('Developer mode is ON', 'Warning');
 }
