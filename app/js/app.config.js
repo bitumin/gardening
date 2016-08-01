@@ -1,3 +1,4 @@
+app = app || {};
 app.config = app.c = {
   appName: 'Gardening Tools',
   env: 'dev', //dev, pre, pro

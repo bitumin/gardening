@@ -5,6 +5,9 @@
 //todo: pick date range -> filter plants stats by date range
 //todo: update genetics combobox at start app and at adding genetics form any form
 
+$.fn.serializeObject = function() {var o = {};var a = this.serializeArray();$.each(a, function() {if (o[this.name] !== undefined) {if (!o[this.name].push) {o[this.name] = [o[this.name]];}o[this.name].push(this.value || '');} else {o[this.name] = this.value || '';}});return o;};
+moment.locale('es');
+
 //init datatables 
 app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
   "autoFill": true,
@@ -25,7 +28,7 @@ app.s.plantChildrenDatatable = app.s.plantChildrenTable.DataTable({
       "searchable": false,
       "targets": [1] //hide uuid column
     },
-      {
+    {
       "render": function (data, type, row) { 
         return '<span class="fa-stack btn-open-edit-child-modal" child-uuid="' + data + '">' +
           '<i class="fa fa-square fa-stack-2x"></i>' +

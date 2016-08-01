@@ -1,9 +1,13 @@
-@import '../libs/font-awesome/css/font-awesome.min.css';
-@import '../libs/bootstrap/dist/css/bootstrap.min.css';
-@import '../libs/bootstrap/dist/css/bootstrap-theme.min.css';
-@import '../libs/EasyAutocomplete/dist/easy-autocomplete.min.css';
-@import '../libs/datatables/datatables.min.css';
-@import '../libs/animate.css/animate.min.css';
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/bootstrap/dist/css/bootstrap-theme.min.css';
+@import '../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+@import '../node_modules/easy-autocomplete/dist/easy-autocomplete.min.css';
+@import '../node_modules/datatables/media/css/jquery.dataTables.min.css';
+@import '../node_modules/datatables-responsive/css/responsive.dataTables.scss';
+@import '../node_modules/datatables-responsive/css/responsive.bootstrap.scss';
+@import '../node_modules/animate.css/animate.min.css';
+@import '../node_modules/toastr/build/toastr.min.css';
 
 /*
  * Fonts

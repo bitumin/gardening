@@ -55,10 +55,12 @@ app.db.getRandomDoc = function (datastore) {
       });
   });
 };
-app.db.getAllDocs = function (datastore, sortField) {
+app.db.getAllDocs = function (datastore, sf) {
   return new Promise(function (resolve, reject) {
-    if(typeof sortField === 'string') {
-      app.db[datastore].find({}).sort({ [sortField]: 1 }).exec(function (err, docs) {
+    if(typeof sf === 'string') {
+      var sortObj = {};
+      sortObj[sf] = 1;
+      app.db[datastore].find({}).sort(sortObj).exec(function (err, docs) {
         if (err) {
           reject(Error('Unable to all docs from datastore ' + datastore + ', with error: ' + err));
         } else {

@@ -1,8 +1,6 @@
 /*
  * Helper
  */
-  google.charts.setOnLoadCallback(function(){});
-  google.charts.load('current', {'packages':['line']});
 function disableForm(form){
   form.find(':input').prop("disabled", true);
 }
@@ -492,42 +490,35 @@ app.s.plantStatsForm.on('submit', function(){
         }
       }
 
-      var headers = ['Date'];
-      for(var index = 0; index < desiredReports.length; index++){
-        headers.push(desiredReports[index]);
-      }
-
-      var reducedData = [headers];
+      var headers = [];
       for(var reportingIndex = 0; reportingIndex < reportingRows.length; reportingIndex++){
-        var reportingRow = reportingRows[reportingIndex];
-        var reducedRow = [reportingRow.date];
-
-        for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
-          var dimension = desiredReports[indexDimension];
-          var dimensionFactory = reportEntryFactory[dimension];
-
-          reducedRow.push(dimensionFactory.reduce(reportingRow));
+          headers.push(reportingRows[reportingIndex].date);
         }
 
-        reducedData.push(reducedRow);
+      var datasets = [];
+      for(var indexDimension = 0; indexDimension < desiredReports.length; indexDimension++){
+        var dimension = desiredReports[indexDimension];
+        var dimensionFactory = reportEntryFactory[dimension];
+
+        var reducedRow = [];
+        for(var reportingIndex = 0; reportingIndex < reportingRows.length; reportingIndex++){
+          reducedRow.push(dimensionFactory.reduce(reportingRows[reportingIndex]));
+        }
+
+        datasets.push({data: reducedRow, label: dimension, borderColor: randomColor()});
       }
-
-      (function drawChart(reducedData) {
-        var data = google.visualization.arrayToDataTable(reducedData);
-
-        var options = {
-          title: 'Gardening report',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.charts.Line(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-
-        reportSuccess("Generated report", data);
-        enableForm(app.s.plantStatsForm);
-      })(reducedData);
+      var canvas = document.getElementById('curve_chart');
+      var context = canvas.getContext('2d');
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      var myLineChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: headers,
+          datasets: datasets
+        }
+      });
+      reportSuccess("Generated report", data);
+      enableForm(app.s.plantStatsForm);
     })
     .catch(function(err) { 
       reportError("Could not retrieve plant children", err); 
